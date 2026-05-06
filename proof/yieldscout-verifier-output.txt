@@ -1,0 +1,12 @@
+CREDIT_DESK_VALID
+agent: YieldScout
+owner: 0x8fd379246834eac74B8419FfdA202CF8051F7A03
+signatures: 9/9
+score: 73/100
+cap: 500 USD
+refusal: 1200 > 500, no payment broadcast
+allowed use: 250 <= 500
+evidence root: 0xe357839888b8b5e124b3dfbeefdfc27428f68a3c37307dcd6ee74840188c702c
+mandate root: 0xe38a98bac92600ee3f60df9cc011a8b45d4b8055f2eb54f0d6e421e2a1e749c3
+refusal root: 0x7b4ed17f8f987f122a6d6923e4542191bc075893eff1ef134643caedcceb438b
+allowed use root: 0xaef2d1395bb65386251aa2a4354227a916fd0dc7673441f0f98b1ae3f54fa4cc

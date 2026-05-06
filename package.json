@@ -1,0 +1,32 @@
+{
+  "name": "actionfeed-credit-desk",
+  "version": "0.0.1",
+  "private": true,
+  "license": "MIT",
+  "description": "0G-native credit and authority layer for autonomous agents",
+  "type": "module",
+  "scripts": {
+    "dev": "next dev -p 3400",
+    "build": "next build",
+    "start": "next start -p 3400",
+    "typecheck": "tsc --noEmit",
+    "verify:credit": "node --import tsx scripts/verify-credit.ts",
+    "proof:export": "node --import tsx scripts/export-proof.ts",
+    "openclaw:inspect": "node --import tsx examples/openclaw-credit-desk/inspect.ts",
+    "deploy:mainnet": "node --import tsx scripts/deploy-mainnet.ts",
+    "seed:mainnet": "node --import tsx scripts/seed-mainnet.ts"
+  },
+  "dependencies": {
+    "ethers": "^6.13.0",
+    "next": "^16.2.4",
+    "react": "^19.2.5",
+    "react-dom": "^19.2.5"
+  },
+  "devDependencies": {
+    "@types/node": "^22.0.0",
+    "@types/react": "^19.0.0",
+    "@types/react-dom": "^19.0.0",
+    "tsx": "^4.19.0",
+    "typescript": "^5.6.0"
+  }
+}

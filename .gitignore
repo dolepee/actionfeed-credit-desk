@@ -1,0 +1,13 @@
+node_modules
+.next
+out
+dist
+.env
+.env.local
+tsconfig.tsbuildinfo
+cache
+broadcast
+artifacts
+contracts/cache
+contracts/out
+contracts/broadcast

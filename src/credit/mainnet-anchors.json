@@ -1,0 +1,16 @@
+{
+  "chainId": 16661,
+  "chainName": "0G mainnet",
+  "registryAddress": "pending-mainnet-deploy",
+  "explorerUrl": "pending-mainnet-deploy",
+  "storageNote": "Local deterministic fixture now; replace with 0G Storage roots after mainnet seed.",
+  "transactions": {
+    "deploy": "",
+    "registerAgent": "",
+    "scoreCredit": "",
+    "grantMandate": "",
+    "refuseMandate": "",
+    "useDelegation": ""
+  }
+}
+
