@@ -2,8 +2,8 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "ActionFeed Credit Desk",
-  description: "0G-native credit and authority layer for autonomous agents.",
+  title: "CreditGate",
+  description: "0G-native underwriting and authority gate for autonomous agents.",
 };
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
@@ -13,4 +13,3 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
     </html>
   );
 }
-

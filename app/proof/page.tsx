@@ -10,21 +10,23 @@ export default async function ProofPage() {
   return (
     <main className="shell">
       <Nav />
-      <section className="hero">
-        <div className="eyebrow">judge packet - replayable mainnet proof</div>
-        <h1>Every authority decision has a root.</h1>
-        <p className="lede">
-          This page is the APAC proof packet. The current scaffold uses deterministic
-          local roots; after 0G mainnet seeding, these fields become live Storage roots
-          and 0G Explorer links.
-        </p>
-        {isMainnetPending ? (
-          <p>
-            Mainnet deployment is the only missing external step. The contract, verifier,
-            UI, and seed scripts are ready; once a funded 0G mainnet key is configured,
-            `npm run deploy:mainnet` and `npm run seed:mainnet` replace this pending
-            state with live explorer evidence.
+      <section className="hero proof-hero">
+        <div>
+          <div className="eyebrow">judge packet - replayable authority proof</div>
+          <h1>Verify the decision, not the pitch.</h1>
+          <p className="lede">
+            CreditGate ships a semantic verifier: signatures, roots, cap math,
+            refusal ordering, allowed action policy, and no-payment-broadcast checks.
           </p>
+        </div>
+        {isMainnetPending ? (
+          <div className="pending-box">
+            <strong>Mainnet funding pending</strong>
+            <span>
+              Deploy and seed scripts are ready. A funded 0G mainnet key replaces
+              this pending state with live explorer evidence.
+            </span>
+          </div>
         ) : null}
       </section>
 
@@ -83,12 +85,13 @@ export default async function ProofPage() {
       </section>
 
       <section className="section">
-        <div className="eyebrow">semantic verifier</div>
-        <h2>The verifier checks meaning, not just signatures.</h2>
-        <p>Run: <span className="mono">npm run verify:credit</span></p>
+        <div className="section-heading">
+          <div className="eyebrow">semantic verifier</div>
+          <h2>The verifier checks meaning, not just signatures.</h2>
+          <p>Run: <span className="mono">npm run verify:credit</span></p>
+        </div>
         <pre>{verification.lines.join("\n")}</pre>
       </section>
     </main>
   );
 }
-

@@ -1,6 +1,6 @@
-# ActionFeed Credit Desk
+# CreditGate
 
-ActionFeed Credit Desk is a 0G-native credit and authority layer for autonomous agents.
+CreditGate is a 0G-native underwriting and authority gate for autonomous agents.
 
 It reads a signed public agent history from 0G Storage, calculates a replayable credit score, grants a bounded spend cap, refuses over-cap actions, and anchors every decision on 0G Chain.
 
@@ -11,13 +11,13 @@ It reads a signed public agent history from 0G Storage, calculates a replayable 
 - **Demo agent:** YieldScout, an OpenClaw-style autonomous yield agent
 - **Core claim:** signed 0G history becomes enforceable agent authority
 
-This project is a standalone APAC submission. It is inspired by earlier ActionFeed work, but is packaged as a new product with its own repo, UI, verifier, contract, and 0G mainnet proof path.
+This project is a standalone APAC submission. It uses ActionFeed's signed-history idea as a base, but packages it as a new product with its own repo, UI, verifier, contract, and 0G mainnet proof path.
 
 ## Why This Matters
 
 Autonomous agents can already quote, rebalance, and spend. The harder problem is deciding how much authority an agent has earned.
 
-ActionFeed Credit Desk gives operators a concrete answer:
+CreditGate gives operators a concrete answer:
 
 1. Read the agent's signed public history.
 2. Calculate a deterministic credit score.
@@ -35,11 +35,11 @@ The APAC demo is intentionally short:
 2. Show `YieldScout` with a `73/100` credit score.
 3. Show the authorized cap: `$500`.
 4. Show an attempted `$1,200` action.
-5. Credit Desk refuses the action with `MANDATE_REFUSED`.
+5. CreditGate refuses the action with `MANDATE_REFUSED`.
 6. Show an allowed `$250` action under the same mandate.
 7. Open `/proof` or run `npm run verify:credit`.
 
-The refusal is the core product moment. Most agent projects show agents acting. Credit Desk shows an agent being denied when its public history does not justify the requested authority.
+The refusal is the core product moment. Most agent projects show agents acting. CreditGate shows an agent being denied when its public history does not justify the requested authority.
 
 ## 0G Components
 
@@ -155,4 +155,4 @@ ZG_PRIVATE_KEY=0x... npm run seed:mainnet
 
 ## One-Liner
 
-ActionFeed Credit Desk gives 0G agents a credit history, then turns that history into bounded spend authority.
+CreditGate gives 0G agents a credit history, then turns that history into bounded spend authority.
