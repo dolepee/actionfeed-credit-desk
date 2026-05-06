@@ -1,8 +1,10 @@
 import { buildCreditDeskProof } from "@/src/credit/demo";
+import { verifyCreditDeskProof } from "@/src/credit/verifier";
 import { Nav, shortHash } from "../shared";
 
 export default async function CreditPage() {
   const proof = await buildCreditDeskProof();
+  const verification = verifyCreditDeskProof(proof);
   const signatureCount = proof.signedHistory.length;
 
   return (
@@ -100,6 +102,10 @@ export default async function CreditPage() {
         <div className="section-heading">
           <div className="eyebrow">evidence trail</div>
           <h2>From signed history to spend control.</h2>
+          <p>
+            The operator gets the proof signal in the same screen: the verifier
+            checks signatures, roots, cap math, refusal semantics, and allowed-use policy.
+          </p>
         </div>
         <div className="timeline">
           <div>
@@ -122,6 +128,11 @@ export default async function CreditPage() {
             <span>allowed use</span>
             <strong>{shortHash(proof.allowedUseRoot)}</strong>
           </div>
+        </div>
+        <div className="inline-proof">
+          <span>verifier</span>
+          <strong>{verification.lines[0]}</strong>
+          <code>npm run verify:credit</code>
         </div>
       </section>
     </main>

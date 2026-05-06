@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { ThemeToggle } from "./theme-toggle";
 
 export function Nav() {
   return (
@@ -9,8 +10,8 @@ export function Nav() {
       <div className="links">
         <Link href="/">desk</Link>
         <Link href="/credit">credit</Link>
-        <Link href="/proof">proof</Link>
         <a href="https://github.com/dolepee/actionfeed-credit-desk">source</a>
+        <ThemeToggle />
       </div>
     </nav>
   );

@@ -16,12 +16,14 @@ export default async function HomePage() {
           <p className="lede">
             CreditGate turns signed 0G action history into a spend cap, then
             enforces the cap with public allow and refusal receipts.
-          </p>
-          <div className="actions">
-            <Link className="button" href="/credit">Open live desk</Link>
-            <Link className="button secondary" href="/proof">Verify the packet</Link>
+            </p>
+            <div className="actions">
+              <Link className="button" href="/credit">Open live desk</Link>
+              <a className="button secondary" href="https://github.com/dolepee/actionfeed-credit-desk">
+                Read source
+              </a>
+            </div>
           </div>
-        </div>
 
         <div className="decision-board" aria-label="YieldScout underwriting summary">
           <div className="board-header">
