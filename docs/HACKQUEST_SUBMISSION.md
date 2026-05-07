@@ -8,11 +8,11 @@ Project name:
 
 One-sentence description, under 30 words:
 
-> A 0G-native credit desk where signed agent history becomes enforceable spend authority, with over-cap refusals anchored on-chain.
+> A 0G-native credit gate where signed agent history becomes enforceable spend authority, with over-cap refusals anchored on-chain.
 
 Short summary:
 
-> CreditGate gives autonomous agents a replayable public credit history. It compares two signed agent histories, calculates different credit scores and spend caps, refuses over-cap actions, stores the canonical proof packet on 0G Storage, and anchors refusals, allowed uses, and the Storage root on 0G Chain.
+> CreditGate gives autonomous agents a replayable public credit history. It compares two signed agent histories, calculates different credit scores and spend caps, refuses over-cap actions, stores the canonical portfolio record on 0G Storage, and anchors refusals, allowed uses, and the Storage root on 0G Chain.
 
 ## Track
 
@@ -26,7 +26,7 @@ Supporting angle:
 
 ## Required Links
 
-- GitHub repo: `https://github.com/dolepee/actionfeed-credit-desk`
+- GitHub repo: `https://github.com/dolepee/creditgate`
 - Demo URL: `https://creditgate.vercel.app`
 - Demo video: `TODO after recording`
 - 0G mainnet contract: `0xd65BE781fF6e6b8Dd514Aa4A13EfD3860a509854`
@@ -36,10 +36,10 @@ Supporting angle:
 
 ## 0G Integration Proof
 
-Final proof packet:
+Final verification packet:
 
 - `AgentCreditRegistry` address on 0G mainnet
-- canonical portfolio proof JSON uploaded to 0G Storage
+- canonical portfolio JSON uploaded to 0G Storage
 - explorer link showing deployment
 - explorer links for two agents' score, mandate, refusal, and allowed-use txs
 - explorer links for Storage upload and Storage-root anchor txs
@@ -54,8 +54,8 @@ Final proof packet:
 - DriftBot score `41/100` and cap `$150`
 - over-cap attempts refused with `MANDATE_REFUSED`
 - under-cap uses allowed with `DELEGATION_USED`
-- `/proof` page or verifier output
-- 0G Storage proof root and `CREDIT_DESK_STORAGE_VALID`
+- verifier output
+- 0G Storage proof root and `CREDITGATE_STORAGE_VALID`
 - 0G explorer link for the deployed registry
 
 ## Public X Post Draft
@@ -68,7 +68,7 @@ Autonomous agents need more than wallets. They need earned authority.
 YieldScout earns 73/100 and a $500 cap. DriftBot earns 41/100 and a $150 cap. Both over-cap attempts are refused before spend. The full proof packet is stored on 0G Storage and anchored on 0G mainnet.
 
 Live app: https://creditgate.vercel.app
-Repo: https://github.com/dolepee/actionfeed-credit-desk
+Repo: https://github.com/dolepee/creditgate
 
 #0GHackathon #BuildOn0G
 @0G_labs @0g_CN @0g_Eco @HackQuest_

@@ -1,14 +1,14 @@
 import { verifyMessage } from "ethers";
 import { canonicalJson, hashCanonical } from "./canonical";
 import { capForScore, scoreYieldScout } from "./policy";
-import type { CreditDeskPortfolio, CreditDeskProof, Hex } from "./types";
+import type { CreditGatePortfolio, CreditGateProof, Hex } from "./types";
 
 export type CreditVerificationResult = {
   valid: true;
   lines: string[];
 };
 
-export function verifyCreditDeskProof(proof: CreditDeskProof): CreditVerificationResult {
+export function verifyCreditGateProof(proof: CreditGateProof): CreditVerificationResult {
   const lines: string[] = [];
 
   assert(proof.signedHistory.length >= 6, "history too short");
@@ -48,7 +48,7 @@ export function verifyCreditDeskProof(proof: CreditDeskProof): CreditVerificatio
   assert(proof.mandate.allowedActions.includes(proof.allowedUse.action), "allowed use action not in mandate");
   assert(proof.allowedUseRoot === hashCanonical(proof.allowedUse), "allowed use root mismatch");
 
-  lines.push("CREDIT_DESK_VALID");
+  lines.push("CREDITGATE_VALID");
   lines.push(`agent: ${proof.agent.name}`);
   lines.push(`owner: ${proof.agent.owner}`);
   lines.push(`signatures: ${validSignatures}/${proof.signedHistory.length}`);
@@ -64,9 +64,9 @@ export function verifyCreditDeskProof(proof: CreditDeskProof): CreditVerificatio
   return { valid: true, lines };
 }
 
-export function verifyCreditDeskPortfolio(portfolio: CreditDeskPortfolio): CreditVerificationResult {
-  const primary = verifyCreditDeskProof(portfolio.primary);
-  const challenger = verifyCreditDeskProof(portfolio.challenger);
+export function verifyCreditGatePortfolio(portfolio: CreditGatePortfolio): CreditVerificationResult {
+  const primary = verifyCreditGateProof(portfolio.primary);
+  const challenger = verifyCreditGateProof(portfolio.challenger);
 
   assert(portfolio.proofs.length === 2, "portfolio must contain two agents");
   assert(portfolio.primary.agent.name === "YieldScout", "primary agent mismatch");
@@ -81,7 +81,7 @@ export function verifyCreditDeskPortfolio(portfolio: CreditDeskPortfolio): Credi
   return {
     valid: true,
     lines: [
-      "CREDIT_DESK_PORTFOLIO_VALID",
+      "CREDITGATE_PORTFOLIO_VALID",
       `agents: ${portfolio.primary.agent.name}, ${portfolio.challenger.agent.name}`,
       `comparison: ${portfolio.primary.credit.score}/100 -> $${portfolio.primary.credit.capUsd}; ${portfolio.challenger.credit.score}/100 -> $${portfolio.challenger.credit.capUsd}`,
       `primary: ${primary.lines[0]}`,

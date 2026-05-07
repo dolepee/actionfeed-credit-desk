@@ -2,8 +2,8 @@ import { readFile } from "node:fs/promises";
 import { Contract, JsonRpcProvider, type InterfaceAbi } from "ethers";
 import { canonicalJson, hashCanonical } from "../src/credit/canonical";
 import { buildStoragePayload } from "../src/credit/storage-object";
-import type { CreditDeskPortfolio, Hex } from "../src/credit/types";
-import { verifyCreditDeskPortfolio } from "../src/credit/verifier";
+import type { CreditGatePortfolio, Hex } from "../src/credit/types";
+import { verifyCreditGatePortfolio } from "../src/credit/verifier";
 import { CreditGateStorage } from "../src/credit/zg-storage";
 import mainnetAnchors from "../src/credit/mainnet-anchors.json";
 import { loadLocalEnv } from "./lib/env";
@@ -32,7 +32,7 @@ type AnchorFile = typeof mainnetAnchors & {
 type StorageObject = {
   kind: "creditgate.portfolio-proof";
   schemaVersion: 1;
-  portfolio: CreditDeskPortfolio;
+  portfolio: CreditGatePortfolio;
 };
 
 const DEFAULT_RPC = "https://evmrpc.0g.ai";
@@ -58,7 +58,7 @@ async function main() {
   const currentPayload = await buildStoragePayload();
   assert(currentPayload.objectHash === anchors.storage.objectHash, "repo proof object drifted from storage object");
 
-  const portfolioCheck = verifyCreditDeskPortfolio(object.portfolio);
+  const portfolioCheck = verifyCreditGatePortfolio(object.portfolio);
   const registry = new Contract(
     anchors.registryAddress,
     (await readArtifact()).abi,
@@ -70,7 +70,7 @@ async function main() {
   assert(String(agent.metadataURI) === anchors.storage.metadataUri, "onchain storage metadata mismatch");
 
   const lines = [
-    "CREDIT_DESK_STORAGE_VALID",
+    "CREDITGATE_STORAGE_VALID",
     `portfolio verifier: ${portfolioCheck.lines[0]}`,
     `storage root: ${anchors.storage.rootHash}`,
     `object hash: ${anchors.storage.objectHash}`,

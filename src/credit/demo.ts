@@ -5,8 +5,8 @@ import { capForScore, isOverCap, scoreYieldScout } from "./policy";
 import type {
   AgentActionEvent,
   AgentName,
-  CreditDeskPortfolio,
-  CreditDeskProof,
+  CreditGatePortfolio,
+  CreditGateProof,
   CreditScoredEvent,
   DelegationUsedEvent,
   Hex,
@@ -43,11 +43,11 @@ const AGENTS = {
 
 const RECIPIENT: Hex = "0x1111111111111111111111111111111111111111";
 
-export async function buildCreditDeskProof(): Promise<CreditDeskProof> {
+export async function buildCreditGateProof(): Promise<CreditGateProof> {
   return buildAgentProof("YieldScout");
 }
 
-export async function buildCreditDeskPortfolio(): Promise<CreditDeskPortfolio> {
+export async function buildCreditGatePortfolio(): Promise<CreditGatePortfolio> {
   const primary = await buildAgentProof("YieldScout");
   const challenger = await buildAgentProof("DriftBot");
   return {
@@ -57,7 +57,7 @@ export async function buildCreditDeskPortfolio(): Promise<CreditDeskPortfolio> {
   };
 }
 
-async function buildAgentProof(agent: AgentName): Promise<CreditDeskProof> {
+async function buildAgentProof(agent: AgentName): Promise<CreditGateProof> {
   const config = AGENTS[agent];
   const wallet = new Wallet(config.privateKey);
   const unsignedHistory = buildHistory(agent);
@@ -135,7 +135,7 @@ async function buildAgentProof(agent: AgentName): Promise<CreditDeskProof> {
     anchors: {
       chainId: mainnetAnchors.chainId,
       chainName: mainnetAnchors.chainName,
-      registryAddress: mainnetAnchors.registryAddress as CreditDeskProof["anchors"]["registryAddress"],
+      registryAddress: mainnetAnchors.registryAddress as CreditGateProof["anchors"]["registryAddress"],
       explorerUrl: mainnetAnchors.explorerUrl,
       storageNote: mainnetAnchors.storageNote,
     },

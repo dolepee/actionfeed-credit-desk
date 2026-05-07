@@ -1,10 +1,10 @@
 import Link from "next/link";
-import { buildCreditDeskPortfolio } from "@/src/credit/demo";
+import { buildCreditGatePortfolio } from "@/src/credit/demo";
 import mainnetAnchors from "@/src/credit/mainnet-anchors.json";
-import { Nav, shortHash } from "./shared";
+import { Nav } from "./shared";
 
 export default async function HomePage() {
-  const portfolio = await buildCreditDeskPortfolio();
+  const portfolio = await buildCreditGatePortfolio();
   const proof = portfolio.primary;
   const challenger = portfolio.challenger;
   const historyCount = proof.signedHistory.length;
@@ -15,24 +15,30 @@ export default async function HomePage() {
       <Nav />
       <section className="hero product-hero">
         <div className="hero-copy">
-          <div className="eyebrow">0G APAC - agent authority desk</div>
-          <h1>Underwrite an agent before it spends.</h1>
+          <div className="eyebrow">0G APAC - agent credit gate</div>
+          <h1>Stop unsafe agent spend before it leaves.</h1>
           <p className="lede">
-            CreditGate turns signed 0G action history into a spend cap, then
-            enforces the cap with public allow and refusal receipts.
+            CreditGate turns signed 0G action history into a credit score and
+            spend cap. If an agent asks for too much, the gate records a public
+            refusal instead of broadcasting payment.
           </p>
           <div className="actions">
-            <Link className="button" href="/credit">Open live desk</Link>
-            <a className="button secondary" href="https://github.com/dolepee/actionfeed-credit-desk">
+            <Link className="button" href="/credit">Open live gate</Link>
+            <a className="button secondary" href="https://github.com/dolepee/creditgate">
               Read source
             </a>
           </div>
         </div>
 
-        <div className="decision-board" aria-label="YieldScout underwriting summary">
+        <div className="decision-board" aria-label="YieldScout gate decision">
           <div className="board-header">
             <span>YIELDSCOUT</span>
-            <strong>AUTHORITY REVIEW</strong>
+            <strong>LIVE GATE</strong>
+          </div>
+          <div className="gate-verdict denied">
+            <span>request ${proof.refusal.attemptedUsd}</span>
+            <strong>DENIED</strong>
+            <p>Cap is ${proof.credit.capUsd}. No payment broadcast.</p>
           </div>
           <div className="grade-ring">
             <span>{proof.credit.score}</span>
@@ -48,10 +54,6 @@ export default async function HomePage() {
               <strong>{historyCount}/{historyCount}</strong>
             </div>
           </div>
-          <div className="request denied">
-            <span>request ${proof.refusal.attemptedUsd}</span>
-            <strong>DENIED</strong>
-          </div>
           <div className="request approved">
             <span>request ${proof.allowedUse.amountUsd}</span>
             <strong>APPROVED</strong>
@@ -65,7 +67,7 @@ export default async function HomePage() {
         <p>
           YieldScout earns ${proof.credit.capUsd}. DriftBot earns ${challenger.credit.capUsd}.
           Same verifier, different history, different authority.
-          {hasStorage ? " The canonical proof JSON is retrievable from 0G Storage." : ""}
+          {hasStorage ? " The canonical record is retrievable from 0G Storage." : ""}
         </p>
       </section>
 
@@ -100,30 +102,30 @@ export default async function HomePage() {
 
       <section className="section split-section">
         <div>
-          <div className="eyebrow">why judges should care</div>
-          <h2>This is not another memory viewer.</h2>
+          <div className="eyebrow">why operators should care</div>
+          <h2>History becomes spending authority.</h2>
           <p>
             CreditGate is the missing enforcement layer between agent memory and
             agent money. A clean history expands authority; a risky request gets
             a signed refusal instead of a transaction.
           </p>
         </div>
-        <div className="proof-stack">
-          <div className="mini-proof">
-            <span>semantic verifier</span>
-            <strong>CREDIT_DESK_PORTFOLIO_VALID</strong>
+        <div className="authority-stack">
+          <div className="authority-card">
+            <span>history check</span>
+            <strong>{historyCount}/{historyCount} signed events</strong>
           </div>
-          <div className="mini-proof">
+          <div className="authority-card">
             <span>score spread</span>
             <strong>{proof.credit.score} vs {challenger.credit.score}</strong>
           </div>
-          <div className="mini-proof">
-            <span>refusal root</span>
-            <strong>{shortHash(proof.refusalRoot)}</strong>
+          <div className="authority-card denied">
+            <span>over-cap request</span>
+            <strong>${proof.refusal.attemptedUsd} denied</strong>
           </div>
-          <div className="mini-proof">
-            <span>allowed use root</span>
-            <strong>{shortHash(proof.allowedUseRoot)}</strong>
+          <div className="authority-card approved">
+            <span>within-cap request</span>
+            <strong>${proof.allowedUse.amountUsd} approved</strong>
           </div>
         </div>
       </section>

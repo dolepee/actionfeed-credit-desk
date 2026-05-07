@@ -1,10 +1,10 @@
 import { mkdir, writeFile } from "node:fs/promises";
-import { buildCreditDeskPortfolio } from "../src/credit/demo";
-import { verifyCreditDeskPortfolio } from "../src/credit/verifier";
+import { buildCreditGatePortfolio } from "../src/credit/demo";
+import { verifyCreditGatePortfolio } from "../src/credit/verifier";
 
 async function main() {
-  const proof = await buildCreditDeskPortfolio();
-  const verification = verifyCreditDeskPortfolio(proof);
+  const proof = await buildCreditGatePortfolio();
+  const verification = verifyCreditGatePortfolio(proof);
 
   await mkdir("proof", { recursive: true });
   await writeFile("proof/creditgate-portfolio-proof.json", `${JSON.stringify(proof, null, 2)}\n`, "utf8");

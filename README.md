@@ -1,6 +1,6 @@
 # CreditGate
 
-CreditGate is a 0G-native underwriting and authority gate for autonomous agents.
+CreditGate is a 0G-native credit gate for autonomous agents.
 
 It reads a signed public agent history, calculates a replayable credit score, grants a bounded spend cap, refuses over-cap actions, stores the canonical proof packet on 0G Storage, and anchors every decision root on 0G Chain.
 
@@ -9,9 +9,9 @@ It reads a signed public agent history, calculates a replayable credit score, gr
 - **Primary track:** Track 1, Agentic Infrastructure & OpenClaw Lab
 - **Secondary fit:** Track 3, Agentic Economy & Autonomous Applications
 - **Demo agents:** YieldScout and DriftBot, two OpenClaw-style yield agents with different histories
-- **Core claim:** signed 0G history becomes enforceable agent authority
+- **Core claim:** signed 0G history becomes enforceable spend authority
 
-This project is a standalone APAC submission. It uses ActionFeed's signed-history idea as a base, but packages it as a new product with its own repo, UI, verifier, contract, and 0G mainnet proof path.
+This project is a standalone APAC submission with its own repo, UI, verifier, contract, Storage proof object, and 0G mainnet proof path.
 
 ## Why This Matters
 
@@ -25,18 +25,20 @@ CreditGate gives operators a concrete answer:
 4. Refuse over-cap actions before spend.
 5. Anchor the score, mandate, refusal, and allowed use on 0G.
 
-The product is not a yield agent. YieldScout and DriftBot are sample actors. The product is history-gated authority for any 0G/OpenClaw-style agent.
+The product is not a yield agent. YieldScout and DriftBot are sample actors. The product is history-gated spend control for any 0G/OpenClaw-style agent.
 
 ## Demo Flow
 
 The APAC demo is intentionally short:
 
-1. Open `/credit`.
-2. Show `YieldScout` with a `73/100` credit score and `$500` cap.
-3. Show `DriftBot` with a `41/100` credit score and `$150` cap.
-4. Show both over-cap attempts being refused with `MANDATE_REFUSED`.
-5. Show both under-cap actions being allowed with `DELEGATION_USED`.
-6. Open `/proof`, run `npm run verify:credit`, then run `npm run verify:storage`.
+1. Open `/`.
+2. Start on the gate moment: `YieldScout` requests `$1,200`, cap is `$500`, payment is denied.
+3. Open `/credit`.
+4. Show `YieldScout` with a `73/100` credit score and `$500` cap.
+5. Show `DriftBot` with a `41/100` credit score and `$150` cap.
+6. Show both over-cap attempts being refused with `MANDATE_REFUSED`.
+7. Show both under-cap actions being allowed with `DELEGATION_USED`.
+8. Run `npm run verify:credit` and `npm run verify:storage`.
 
 The comparison is the V2 product moment. Most agent projects show agents acting. CreditGate shows cleaner history earning more authority and weaker history receiving a tighter cap.
 
@@ -48,8 +50,8 @@ Live submission state:
 - Replayable score, mandate, refusal, and allowed-use roots.
 - `AgentCreditRegistry` deployed on 0G mainnet.
 - Thirteen confirmed 0G mainnet transactions: deploy, two agent underwriting loops, one Storage upload, and one Storage-root anchor.
-- One canonical portfolio proof object uploaded to 0G Storage and anchored back into the mainnet registry.
-- `/proof` page with verifier output.
+- One canonical portfolio record uploaded to 0G Storage and anchored back into the mainnet registry.
+- Replayable verifier output in the repo and judge docs.
 
 0G integration:
 
@@ -61,7 +63,7 @@ Live submission state:
 Live links:
 
 - App: `https://creditgate.vercel.app`
-- GitHub: `https://github.com/dolepee/actionfeed-credit-desk`
+- GitHub: `https://github.com/dolepee/creditgate`
 - 0G contract: `0xd65BE781fF6e6b8Dd514Aa4A13EfD3860a509854`
 - 0G explorer: `https://chainscan.0g.ai/address/0xd65BE781fF6e6b8Dd514Aa4A13EfD3860a509854`
 
@@ -110,7 +112,6 @@ Open:
 
 - `http://localhost:3400`
 - `http://localhost:3400/credit`
-- `http://localhost:3400/proof`
 
 ## Verifier
 
@@ -123,7 +124,7 @@ npm run verify:credit
 Expected output:
 
 ```text
-CREDIT_DESK_PORTFOLIO_VALID
+CREDITGATE_PORTFOLIO_VALID
 agents: YieldScout, DriftBot
 comparison: 73/100 -> $500; 41/100 -> $150
 YieldScout refusal: 1200 > 500, no payment broadcast
@@ -150,7 +151,7 @@ The Storage verifier additionally checks:
 - the downloaded JSON is canonical
 - the local object hash matches the stored object hash
 - the 0G Chain registry points to the same Storage root
-- the downloaded portfolio still passes `CREDIT_DESK_PORTFOLIO_VALID`
+- the downloaded portfolio still passes `CREDITGATE_PORTFOLIO_VALID`
 
 ## Mainnet Proof
 
@@ -158,7 +159,7 @@ The 0G mainnet contract is deployed and seeded. Judges can verify the live ancho
 
 - `src/credit/mainnet-anchors.json`
 - `docs/0G_MAINNET_PROOF.json`
-- `https://creditgate.vercel.app/proof`
+- `docs/JUDGE_GUIDE.md`
 
 Storage proof:
 

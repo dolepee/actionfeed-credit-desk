@@ -1,6 +1,6 @@
 # 0G Mainnet Deploy Runbook
 
-This runbook is for the final no-surprises mainnet step. Do not use the old ActionFeed Galileo deployer unless it is intentionally funded on 0G mainnet.
+This runbook is for the final no-surprises mainnet step. Use only a wallet intentionally funded on 0G mainnet.
 
 ## Required Environment
 
@@ -34,7 +34,7 @@ forge test -vvv --root contracts
 
 Confirm:
 
-- verifier prints `CREDIT_DESK_PORTFOLIO_VALID`
+- verifier prints `CREDITGATE_PORTFOLIO_VALID`
 - build succeeds
 - Foundry tests pass
 - deployer is funded on 0G mainnet
@@ -96,7 +96,7 @@ Run:
 npm run storage:upload
 ```
 
-This uploads the canonical portfolio proof JSON to 0G Storage and registers the Storage root under proof-packet agent ID `3`.
+This uploads the canonical portfolio JSON to 0G Storage and registers the Storage root under verifier-packet agent ID `3`.
 
 ## Post-Deploy Checks
 
@@ -110,10 +110,10 @@ npm run build
 
 Then open:
 
+- `/`
 - `/credit`
-- `/proof`
 
-The proof page should no longer show `pending-mainnet-deploy`.
+The homepage should open on the live refusal gate moment, and `/credit` should show both agent scores and caps.
 
 ## Submission Evidence
 

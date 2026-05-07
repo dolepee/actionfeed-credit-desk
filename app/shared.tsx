@@ -7,13 +7,13 @@ export function Nav() {
       <Link className="brand" href="/">
         <CreditGateMark />
         <span className="brand-text">
-          CreditGate <span>by ActionFeed</span>
+          CreditGate <span>0G agent credit</span>
         </span>
       </Link>
       <div className="links">
-        <Link href="/">desk</Link>
+        <Link href="/">gate</Link>
         <Link href="/credit">credit</Link>
-        <a href="https://github.com/dolepee/actionfeed-credit-desk">source</a>
+        <a href="https://github.com/dolepee/creditgate">source</a>
         <ThemeToggle />
       </div>
     </nav>

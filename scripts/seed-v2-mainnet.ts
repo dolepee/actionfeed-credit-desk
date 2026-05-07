@@ -1,7 +1,7 @@
 import { readFile, writeFile } from "node:fs/promises";
 import { existsSync, readFileSync } from "node:fs";
 import { Contract, JsonRpcProvider, Wallet, formatEther, type InterfaceAbi } from "ethers";
-import { buildCreditDeskPortfolio } from "../src/credit/demo";
+import { buildCreditGatePortfolio } from "../src/credit/demo";
 import currentAnchors from "../src/credit/mainnet-anchors.json";
 
 type Deployment = {
@@ -26,7 +26,7 @@ const AGENT_ID = 2;
 
 async function main() {
   loadLocalEnv();
-  const portfolio = await buildCreditDeskPortfolio();
+  const portfolio = await buildCreditGatePortfolio();
   const proof = portfolio.challenger;
   const rpc = process.env.ZG_MAINNET_RPC ?? DEFAULT_RPC;
   const explorer = process.env.ZG_MAINNET_EXPLORER ?? DEFAULT_EXPLORER;

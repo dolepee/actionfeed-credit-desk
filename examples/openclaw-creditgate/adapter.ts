@@ -1,5 +1,5 @@
-import { buildCreditDeskProof } from "../../src/credit/demo";
-import { verifyCreditDeskProof } from "../../src/credit/verifier";
+import { buildCreditGateProof } from "../../src/credit/demo";
+import { verifyCreditGateProof } from "../../src/credit/verifier";
 
 export type OpenClawToolResult = {
   ok: boolean;
@@ -8,8 +8,8 @@ export type OpenClawToolResult = {
 };
 
 export async function inspectAgentCredit(): Promise<OpenClawToolResult> {
-  const proof = await buildCreditDeskProof();
-  const verification = verifyCreditDeskProof(proof);
+  const proof = await buildCreditGateProof();
+  const verification = verifyCreditGateProof(proof);
 
   return {
     ok: true,
@@ -25,7 +25,7 @@ export async function inspectAgentCredit(): Promise<OpenClawToolResult> {
 }
 
 export async function requestAuthority(amountUsd: number): Promise<OpenClawToolResult> {
-  const proof = await buildCreditDeskProof();
+  const proof = await buildCreditGateProof();
 
   if (amountUsd > proof.mandate.capUsd) {
     return {
@@ -47,4 +47,3 @@ export async function requestAuthority(amountUsd: number): Promise<OpenClawToolR
     },
   };
 }
-

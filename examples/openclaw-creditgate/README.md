@@ -1,8 +1,8 @@
-# OpenClaw Credit Desk Adapter
+# OpenClaw CreditGate Adapter
 
 This example shows the integration shape for an OpenClaw-style runtime.
 
-OpenClaw handles private planning and tool execution. Credit Desk handles the public authority boundary:
+OpenClaw handles private planning and tool execution. CreditGate handles the public authority boundary:
 
 1. summarize signed agent history
 2. calculate score and cap
@@ -15,4 +15,3 @@ Run:
 ```bash
 npm run openclaw:inspect
 ```
-

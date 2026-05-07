@@ -1,7 +1,7 @@
 import { readFile, writeFile } from "node:fs/promises";
 import { existsSync, readFileSync } from "node:fs";
 import { Contract, JsonRpcProvider, Wallet, formatEther, type InterfaceAbi } from "ethers";
-import { buildCreditDeskProof } from "../src/credit/demo";
+import { buildCreditGateProof } from "../src/credit/demo";
 
 type Deployment = {
   chainId: number;
@@ -25,7 +25,7 @@ const AGENT_ID = 1;
 
 async function main() {
   loadLocalEnv();
-  const proof = await buildCreditDeskProof();
+  const proof = await buildCreditGateProof();
   const rpc = process.env.ZG_MAINNET_RPC ?? DEFAULT_RPC;
   const explorer = process.env.ZG_MAINNET_EXPLORER ?? DEFAULT_EXPLORER;
   const privateKey = must("ZG_PRIVATE_KEY");
@@ -45,7 +45,7 @@ async function main() {
 
   const registry = new Contract(deployment.contracts.AgentCreditRegistry.address, artifact.abi, wallet);
 
-  const metadataUri = `actionfeed-credit-desk://yieldscout/${proof.evidenceRoot}`;
+  const metadataUri = `creditgate://yieldscout/${proof.evidenceRoot}`;
   const deployTx = deployment.contracts.AgentCreditRegistry.deployTx;
   const registerAgent = await send("registerAgent", registry.registerAgent(AGENT_ID, proof.evidenceRoot, metadataUri));
   const scoreCredit = await send("scoreCredit", registry.scoreCredit(AGENT_ID, proof.credit.score, proof.credit.capUsd, proof.evidenceRoot));

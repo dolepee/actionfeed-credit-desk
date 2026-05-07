@@ -1,12 +1,12 @@
-import { buildCreditDeskPortfolio } from "@/src/credit/demo";
+import { buildCreditGatePortfolio } from "@/src/credit/demo";
 import mainnetAnchors from "@/src/credit/mainnet-anchors.json";
-import { verifyCreditDeskPortfolio } from "@/src/credit/verifier";
-import type { CreditDeskProof } from "@/src/credit/types";
+import { verifyCreditGatePortfolio } from "@/src/credit/verifier";
+import type { CreditGateProof } from "@/src/credit/types";
 import { Nav, shortHash } from "../shared";
 
 export default async function CreditPage() {
-  const portfolio = await buildCreditDeskPortfolio();
-  const verification = verifyCreditDeskPortfolio(portfolio);
+  const portfolio = await buildCreditGatePortfolio();
+  const verification = verifyCreditGatePortfolio(portfolio);
   const { primary, challenger } = portfolio;
   const hasStorage = Boolean((mainnetAnchors as typeof mainnetAnchors & { storage?: unknown }).storage);
 
@@ -60,7 +60,7 @@ export default async function CreditPage() {
   );
 }
 
-function AgentColumn({ proof, tone }: { proof: CreditDeskProof; tone: "strong" | "weak" }) {
+function AgentColumn({ proof, tone }: { proof: CreditGateProof; tone: "strong" | "weak" }) {
   const signatureCount = proof.signedHistory.length;
   const breakdown = proof.credit.breakdown;
   const breakdownRows = [
@@ -150,7 +150,7 @@ function AgentColumn({ proof, tone }: { proof: CreditDeskProof; tone: "strong" |
   );
 }
 
-function EvidenceTimeline({ proof }: { proof: CreditDeskProof }) {
+function EvidenceTimeline({ proof }: { proof: CreditGateProof }) {
   return (
     <div className="timeline agent-timeline">
       <div>

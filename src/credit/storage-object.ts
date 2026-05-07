@@ -1,8 +1,8 @@
 import { canonicalJson, hashCanonical } from "./canonical";
-import { buildCreditDeskPortfolio } from "./demo";
+import { buildCreditGatePortfolio } from "./demo";
 
 export async function buildStorageObject() {
-  const portfolio = await buildCreditDeskPortfolio();
+  const portfolio = await buildCreditGatePortfolio();
   return {
     kind: "creditgate.portfolio-proof",
     schemaVersion: 1,

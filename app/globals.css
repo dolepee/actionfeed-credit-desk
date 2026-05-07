@@ -472,7 +472,8 @@ p {
 
 .board-grid div,
 .request,
-.mini-proof,
+.gate-verdict,
+.authority-card,
 .fact-list div {
   border: 1px solid var(--line);
   border-radius: 18px;
@@ -484,6 +485,8 @@ p {
 .board-grid strong,
 .request span,
 .request strong,
+.gate-verdict span,
+.gate-verdict strong,
 .mini-proof span,
 .mini-proof strong,
 .fact-list span,
@@ -493,7 +496,8 @@ p {
 
 .board-grid strong,
 .request strong,
-.mini-proof strong,
+.gate-verdict strong,
+.authority-card strong,
 .fact-list strong {
   color: var(--ink);
   font-size: 20px;
@@ -507,13 +511,29 @@ p {
   margin-top: 10px;
 }
 
+.gate-verdict {
+  margin-top: 18px;
+}
+
+.gate-verdict strong {
+  font-size: clamp(36px, 7vw, 82px);
+  letter-spacing: -0.08em;
+  line-height: 0.9;
+}
+
+.gate-verdict p {
+  margin: 8px 0 0;
+}
+
 .request.denied,
+.gate-verdict.denied,
 .request-ticket.denied {
   background: var(--red-soft);
   border-color: rgba(201, 64, 49, 0.42);
 }
 
 .request.denied strong,
+.gate-verdict.denied strong,
 .request-ticket.denied .ticket-status {
   color: var(--red);
 }
@@ -526,6 +546,24 @@ p {
 
 .request.approved strong,
 .request-ticket.approved .ticket-status {
+  color: var(--green);
+}
+
+.authority-card.denied {
+  background: var(--red-soft);
+  border-color: rgba(201, 64, 49, 0.42);
+}
+
+.authority-card.denied strong {
+  color: var(--red);
+}
+
+.authority-card.approved {
+  background: var(--green-soft);
+  border-color: rgba(47, 143, 91, 0.42);
+}
+
+.authority-card.approved strong {
   color: var(--green);
 }
 
@@ -579,7 +617,7 @@ p {
   border-color: rgba(201, 64, 49, 0.42);
 }
 
-.proof-stack {
+.authority-stack {
   display: grid;
   gap: 10px;
 }

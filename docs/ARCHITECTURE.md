@@ -50,11 +50,11 @@ Uploads the complete canonical portfolio proof JSON:
 - object hash: `0x1943358c4b9efe7e6582736079a4b61522facbf4fb37e4731d687a290c5d6929`
 - verifier: `npm run verify:storage`
 
-The Storage verifier downloads the object by root hash, checks canonical JSON, compares the object hash, replays `CREDIT_DESK_PORTFOLIO_VALID`, and confirms the registry's proof-packet anchor points to the same Storage root.
+The Storage verifier downloads the object by root hash, checks canonical JSON, compares the object hash, replays `CREDITGATE_PORTFOLIO_VALID`, and confirms the registry's proof-packet anchor points to the same Storage root.
 
 ### OpenClaw Compatibility
 
-The project is runtime-agnostic. An OpenClaw-style agent can call the Credit Desk as a public accountability layer after private planning:
+The project is runtime-agnostic. An OpenClaw-style agent can call CreditGate as a public authority boundary after private planning:
 
 ```ts
 await creditDesk.recordAction({
@@ -64,4 +64,4 @@ await creditDesk.recordAction({
 });
 ```
 
-The runtime decides what the agent wants to do. Credit Desk decides whether the agent has earned the authority to do it.
+The runtime decides what the agent wants to do. CreditGate decides whether the agent has earned the authority to do it.

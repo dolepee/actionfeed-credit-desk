@@ -73,7 +73,7 @@ export type DelegationUsedEvent = {
   mandateRoot: Hex;
 };
 
-export type CreditDeskProof = {
+export type CreditGateProof = {
   agent: {
     name: AgentName;
     owner: Hex;
@@ -98,8 +98,8 @@ export type CreditDeskProof = {
   };
 };
 
-export type CreditDeskPortfolio = {
-  primary: CreditDeskProof;
-  challenger: CreditDeskProof;
-  proofs: CreditDeskProof[];
+export type CreditGatePortfolio = {
+  primary: CreditGateProof;
+  challenger: CreditGateProof;
+  proofs: CreditGateProof[];
 };

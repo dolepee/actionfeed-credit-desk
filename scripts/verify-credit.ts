@@ -1,9 +1,9 @@
-import { buildCreditDeskPortfolio } from "../src/credit/demo";
-import { verifyCreditDeskPortfolio } from "../src/credit/verifier";
+import { buildCreditGatePortfolio } from "../src/credit/demo";
+import { verifyCreditGatePortfolio } from "../src/credit/verifier";
 
 async function main() {
-  const proof = await buildCreditDeskPortfolio();
-  const result = verifyCreditDeskPortfolio(proof);
+  const proof = await buildCreditGatePortfolio();
+  const result = verifyCreditGatePortfolio(proof);
   console.log(result.lines.join("\n"));
 }
 

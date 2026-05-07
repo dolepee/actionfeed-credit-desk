@@ -1,8 +1,8 @@
-CREDIT_DESK_PORTFOLIO_VALID
+CREDITGATE_PORTFOLIO_VALID
 agents: YieldScout, DriftBot
 comparison: 73/100 -> $500; 41/100 -> $150
-primary: CREDIT_DESK_VALID
-challenger: CREDIT_DESK_VALID
+primary: CREDITGATE_VALID
+challenger: CREDITGATE_VALID
 YieldScout refusal: 1200 > 500, no payment broadcast
 DriftBot refusal: 500 > 150, no payment broadcast
 YieldScout evidence root: 0xe357839888b8b5e124b3dfbeefdfc27428f68a3c37307dcd6ee74840188c702c

@@ -1,6 +1,6 @@
-import { buildCreditDeskPortfolio } from "@/src/credit/demo";
+import { buildCreditGatePortfolio } from "@/src/credit/demo";
 import mainnetAnchors from "@/src/credit/mainnet-anchors.json";
-import { verifyCreditDeskPortfolio } from "@/src/credit/verifier";
+import { verifyCreditGatePortfolio } from "@/src/credit/verifier";
 import { Nav, shortHash } from "../shared";
 
 type StorageAnchor = {
@@ -17,9 +17,9 @@ type StorageAnchor = {
 
 export default async function ProofPage() {
   const anchors = mainnetAnchors as typeof mainnetAnchors & { storage?: StorageAnchor };
-  const portfolio = await buildCreditDeskPortfolio();
+  const portfolio = await buildCreditGatePortfolio();
   const proof = portfolio.primary;
-  const verification = verifyCreditDeskPortfolio(portfolio);
+  const verification = verifyCreditGatePortfolio(portfolio);
   const isMainnetPending = proof.anchors.registryAddress === "pending-mainnet-deploy";
   const txGroups = [
     ["YieldScout anchors", mainnetAnchors.transactions],
