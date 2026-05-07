@@ -4,11 +4,11 @@
   "rpc": "https://evmrpc.0g.ai",
   "explorer": "https://chainscan.0g.ai",
   "deployer": "0xdb44a516E1CA0FD551f274fEDCbB6ace884B5C45",
-  "deployedAt": "2026-05-07T10:36:04.523Z",
+  "deployedAt": "2026-05-07T14:03:26.981Z",
   "contracts": {
     "AgentCreditRegistry": {
-      "address": "0xd65BE781fF6e6b8Dd514Aa4A13EfD3860a509854",
-      "deployTx": "0xe978a845dc543faa557d99502cb29cf69527e850667e1714e5c9ae1f4ef556b7"
+      "address": "0x4D98ee9f1dc2F9852A54aDfae81937520498E12a",
+      "deployTx": "0x3f5e74430c37dd945d0d2e47783dd1cc51e34caf39fb0840f66b550f8d269baf"
     }
   }
 }

@@ -28,36 +28,38 @@ CreditGate builds content-addressed roots for the heavy proof material:
 - refusal receipt
 - allowed-use receipt
 
-Those roots are replayable locally, uploaded as a canonical portfolio object to 0G Storage, and anchored on 0G Chain for the APAC mainnet proof.
+Those roots are replayable locally, uploaded as a canonical portfolio object to 0G Storage, and enforced/anchored on 0G Chain for the APAC mainnet proof.
 
 ### 0G Chain
 
-Anchors roots through `AgentCreditRegistry`:
+Stores and enforces roots through `AgentCreditRegistry`:
 
 - agent registration
 - credit score
-- mandate grant
+- active mandate grant with root, cap, and expiry
 - mandate refusal
 - delegation use
 
 The V2 mainnet proof emits the full loop twice: YieldScout earns a higher score and larger cap; DriftBot earns a lower score and tighter cap.
 
+`useDelegation` is not just an event anchor. It requires an active mandate, checks the provided mandate root, rejects expired mandates, rejects over-cap amounts, and rejects zero recipients.
+
 ### 0G Storage
 
 Uploads the complete canonical portfolio proof JSON:
 
-- Storage root: `0x89364a379ffb896ffcc4042b18faeeb35000548862ad214feb9f7c12d92fbe1f`
-- object hash: `0x1943358c4b9efe7e6582736079a4b61522facbf4fb37e4731d687a290c5d6929`
+- Storage root: `0x4df825e71e0ad2d873c1518ce18b0cec6cd495981db1ea93e20d192cd29a2d98`
+- object hash: `0x1d3638b09da7600c336b6f84791e6c81e25a12b1d514873970dde7f6e722e3ce`
 - verifier: `npm run verify:storage`
 
-The Storage verifier downloads the object by root hash, checks canonical JSON, compares the object hash, replays `CREDITGATE_PORTFOLIO_VALID`, and confirms the registry's proof-packet anchor points to the same Storage root.
+The Storage verifier downloads the object by root hash, checks canonical JSON, compares the object hash, replays `CREDITGATE_PORTFOLIO_VALID`, and confirms the registry's Storage-root anchor points to the same Storage root.
 
 ### OpenClaw Compatibility
 
 The project is runtime-agnostic. An OpenClaw-style agent can call CreditGate as a public authority boundary after private planning:
 
 ```ts
-await creditDesk.recordAction({
+await creditGate.recordAction({
   agent: "YieldScout",
   action: "yield.deposit",
   amountUsd: 250,

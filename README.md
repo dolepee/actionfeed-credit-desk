@@ -2,7 +2,7 @@
 
 CreditGate is a 0G-native credit gate for autonomous agents.
 
-It reads a signed public agent history, calculates a replayable credit score, grants a bounded spend cap, refuses over-cap actions, stores the canonical proof packet on 0G Storage, and anchors every decision root on 0G Chain.
+It reads a signed public agent history, calculates a replayable credit score, grants a bounded spend cap, refuses over-cap actions, stores the canonical proof packet on 0G Storage, and enforces active mandates on 0G Chain.
 
 ## 0G APAC Positioning
 
@@ -23,7 +23,7 @@ CreditGate gives operators a concrete answer:
 2. Calculate a deterministic credit score.
 3. Grant a bounded mandate.
 4. Refuse over-cap actions before spend.
-5. Anchor the score, mandate, refusal, and allowed use on 0G.
+5. Store the active mandate on 0G and reject invalid delegation use.
 
 The product is not a yield agent. YieldScout and DriftBot are sample actors. The product is history-gated spend control for any 0G/OpenClaw-style agent.
 
@@ -48,6 +48,7 @@ Live submission state:
 
 - Deterministic signed histories for two agents.
 - Replayable score, mandate, refusal, and allowed-use roots.
+- Active mandate state on 0G Chain: root, cap, expiry, and enforced delegation checks.
 - `AgentCreditRegistry` deployed on 0G mainnet.
 - Thirteen confirmed 0G mainnet transactions: deploy, two agent underwriting loops, one Storage upload, and one Storage-root anchor.
 - One canonical portfolio record uploaded to 0G Storage and anchored back into the mainnet registry.
@@ -55,7 +56,7 @@ Live submission state:
 
 0G integration:
 
-- **0G Chain:** contract events for `AgentRegistered`, `CreditScored`, `MandateGranted`, `MandateRefused`, and `DelegationUsed`.
+- **0G Chain:** contract state and events for `AgentRegistered`, `CreditScored`, `MandateGranted`, `MandateRefused`, and `DelegationUsed`. `useDelegation` rejects missing, mismatched, expired, or over-cap mandates.
 - **0G Storage:** canonical signed portfolio JSON retrievable by root hash and replayed by `npm run verify:storage`.
 - **0G Explorer:** public transaction links for judge verification.
 - **Proof roots:** content-addressed JSON roots for the signed history, score, mandate, refusal, and allowed-use receipt.
@@ -64,8 +65,8 @@ Live links:
 
 - App: `https://creditgate.vercel.app`
 - GitHub: `https://github.com/dolepee/creditgate`
-- 0G contract: `0xd65BE781fF6e6b8Dd514Aa4A13EfD3860a509854`
-- 0G explorer: `https://chainscan.0g.ai/address/0xd65BE781fF6e6b8Dd514Aa4A13EfD3860a509854`
+- 0G contract: `0x4D98ee9f1dc2F9852A54aDfae81937520498E12a`
+- 0G explorer: `https://chainscan.0g.ai/address/0x4D98ee9f1dc2F9852A54aDfae81937520498E12a`
 
 Network defaults:
 
@@ -88,7 +89,7 @@ content-addressed proof roots ----+----> canonical portfolio JSON on 0G Storage
 Credit score policy          AgentCreditRegistry on 0G Chain  storage root anchor
       |                            |
       v                            v
-spend cap + mandate         onchain score/mandate/refusal/use anchors
+spend cap + mandate         onchain active mandate + refusal/use anchors
       |
       v
 over-cap request -> MANDATE_REFUSED
@@ -101,6 +102,7 @@ under-cap request -> DELEGATION_USED
 npm install
 npm run verify:credit
 npm run verify:storage
+npm run demo:agent-loop
 npm run proof:export
 npm run openclaw:inspect
 npm run typecheck
@@ -142,8 +144,17 @@ The verifier checks:
 - score divergence between clean and weak histories
 - mandate root
 - over-cap refusal
+- active mandate binding
 - `noPaymentBroadcast=true`
 - allowed under-cap use
+
+For a fresh non-mutating runtime episode, run:
+
+```bash
+npm run demo:agent-loop
+```
+
+It creates a new wallet at runtime, signs a fresh YieldScout history, derives the score/cap, refuses an over-cap request, and prints `CREDITGATE_RUNTIME_LOOP_VALID`.
 
 The Storage verifier additionally checks:
 
@@ -163,9 +174,9 @@ The 0G mainnet contract is deployed and seeded. Judges can verify the live ancho
 
 Storage proof:
 
-- 0G Storage root: `0x89364a379ffb896ffcc4042b18faeeb35000548862ad214feb9f7c12d92fbe1f`
-- Storage upload tx: `0x937300da7fb5ca718ed4a7ba88bf3506e5e5a6a978bc3637a8e6e5e932a19492`
-- Storage root anchor tx: `0x498876ec3eae9ba3cbb3602c8ce6a9f9d8efbc7366d1e46c78a3b42d47a5d541`
+- 0G Storage root: `0x4df825e71e0ad2d873c1518ce18b0cec6cd495981db1ea93e20d192cd29a2d98`
+- Storage upload tx: `0xccf93435fb33743f0f55f943731545e55d98847f865bfd26dfa42beeae0d9cb9`
+- Storage root anchor tx: `0xafe228382b6fb0e90b324bdfe4044fcd4acf5369e326fe5f56f3d7375e9be604`
 - Verifier: `npm run verify:storage`
 
 Deployment commands are kept for reproducibility:

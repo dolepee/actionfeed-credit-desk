@@ -63,14 +63,20 @@ async function main() {
     registry.refuseMandate(
       AGENT_ID,
       proof.refusalRoot,
+      proof.mandateRoot,
       proof.refusal.attemptedUsd,
-      proof.refusal.capUsd,
       proof.refusal.reason,
     ),
   );
   const useDelegation = await send(
     "useDriftBotDelegation",
-    registry.useDelegation(AGENT_ID, proof.allowedUseRoot, proof.allowedUse.amountUsd, proof.allowedUse.recipient),
+    registry.useDelegation(
+      AGENT_ID,
+      proof.mandateRoot,
+      proof.allowedUseRoot,
+      proof.allowedUse.amountUsd,
+      proof.allowedUse.recipient,
+    ),
   );
 
   const anchors = {

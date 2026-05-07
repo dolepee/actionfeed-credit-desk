@@ -191,9 +191,9 @@
       "anchors": {
         "chainId": 16661,
         "chainName": "0G mainnet",
-        "registryAddress": "0xd65BE781fF6e6b8Dd514Aa4A13EfD3860a509854",
-        "explorerUrl": "https://chainscan.0g.ai/address/0xd65BE781fF6e6b8Dd514Aa4A13EfD3860a509854",
-        "storageNote": "CreditGate anchors the credit score, mandate, refusal, and allowed-use roots on 0G mainnet so judges can replay the authority decision from public receipts."
+        "registryAddress": "0x4D98ee9f1dc2F9852A54aDfae81937520498E12a",
+        "explorerUrl": "https://chainscan.0g.ai/address/0x4D98ee9f1dc2F9852A54aDfae81937520498E12a",
+        "storageNote": "CreditGate stores the active mandate root/cap/expiry on 0G mainnet, rejects invalid delegation use, and anchors score/refusal/use roots for replay."
       }
     },
     "challenger": {
@@ -342,9 +342,9 @@
       "anchors": {
         "chainId": 16661,
         "chainName": "0G mainnet",
-        "registryAddress": "0xd65BE781fF6e6b8Dd514Aa4A13EfD3860a509854",
-        "explorerUrl": "https://chainscan.0g.ai/address/0xd65BE781fF6e6b8Dd514Aa4A13EfD3860a509854",
-        "storageNote": "CreditGate anchors the credit score, mandate, refusal, and allowed-use roots on 0G mainnet so judges can replay the authority decision from public receipts."
+        "registryAddress": "0x4D98ee9f1dc2F9852A54aDfae81937520498E12a",
+        "explorerUrl": "https://chainscan.0g.ai/address/0x4D98ee9f1dc2F9852A54aDfae81937520498E12a",
+        "storageNote": "CreditGate stores the active mandate root/cap/expiry on 0G mainnet, rejects invalid delegation use, and anchors score/refusal/use roots for replay."
       }
     },
     "proofs": [
@@ -539,9 +539,9 @@
         "anchors": {
           "chainId": 16661,
           "chainName": "0G mainnet",
-          "registryAddress": "0xd65BE781fF6e6b8Dd514Aa4A13EfD3860a509854",
-          "explorerUrl": "https://chainscan.0g.ai/address/0xd65BE781fF6e6b8Dd514Aa4A13EfD3860a509854",
-          "storageNote": "CreditGate anchors the credit score, mandate, refusal, and allowed-use roots on 0G mainnet so judges can replay the authority decision from public receipts."
+          "registryAddress": "0x4D98ee9f1dc2F9852A54aDfae81937520498E12a",
+          "explorerUrl": "https://chainscan.0g.ai/address/0x4D98ee9f1dc2F9852A54aDfae81937520498E12a",
+          "storageNote": "CreditGate stores the active mandate root/cap/expiry on 0G mainnet, rejects invalid delegation use, and anchors score/refusal/use roots for replay."
         }
       },
       {
@@ -690,9 +690,9 @@
         "anchors": {
           "chainId": 16661,
           "chainName": "0G mainnet",
-          "registryAddress": "0xd65BE781fF6e6b8Dd514Aa4A13EfD3860a509854",
-          "explorerUrl": "https://chainscan.0g.ai/address/0xd65BE781fF6e6b8Dd514Aa4A13EfD3860a509854",
-          "storageNote": "CreditGate anchors the credit score, mandate, refusal, and allowed-use roots on 0G mainnet so judges can replay the authority decision from public receipts."
+          "registryAddress": "0x4D98ee9f1dc2F9852A54aDfae81937520498E12a",
+          "explorerUrl": "https://chainscan.0g.ai/address/0x4D98ee9f1dc2F9852A54aDfae81937520498E12a",
+          "storageNote": "CreditGate stores the active mandate root/cap/expiry on 0G mainnet, rejects invalid delegation use, and anchors score/refusal/use roots for replay."
         }
       }
     ]
@@ -700,34 +700,34 @@
   "anchors": {
     "chainId": 16661,
     "chainName": "0G mainnet",
-    "registryAddress": "0xd65BE781fF6e6b8Dd514Aa4A13EfD3860a509854",
-    "explorerUrl": "https://chainscan.0g.ai/address/0xd65BE781fF6e6b8Dd514Aa4A13EfD3860a509854",
-    "storageNote": "CreditGate anchors the credit score, mandate, refusal, and allowed-use roots on 0G mainnet so judges can replay the authority decision from public receipts.",
+    "registryAddress": "0x4D98ee9f1dc2F9852A54aDfae81937520498E12a",
+    "explorerUrl": "https://chainscan.0g.ai/address/0x4D98ee9f1dc2F9852A54aDfae81937520498E12a",
+    "storageNote": "CreditGate stores the active mandate root/cap/expiry on 0G mainnet, rejects invalid delegation use, and anchors score/refusal/use roots for replay.",
     "transactions": {
-      "deploy": "0xe978a845dc543faa557d99502cb29cf69527e850667e1714e5c9ae1f4ef556b7",
-      "registerAgent": "0x3933cde09c01baff7df2f53d2d035160e66c4eb2502761a7c1ca489bf9c560e2",
-      "scoreCredit": "0x858f97ba1cb86ae09859c5ded79c006d5c0ffca8f1a24d53df6bc2c0809134ba",
-      "grantMandate": "0x96f95f57236782a7219afcb999d2b76b5dd205aedff3399aa64cd518d0cb7f97",
-      "refuseMandate": "0xa5f5d373defbba782b6026b284ea45307925725237bf1864cce89b035a45f834",
-      "useDelegation": "0xb773bab8e2c74cb9010940ac4850845b71adc03e92ebc021bbf521abc157218f"
+      "deploy": "0x3f5e74430c37dd945d0d2e47783dd1cc51e34caf39fb0840f66b550f8d269baf",
+      "registerAgent": "0xc31568d2176c7d13ab455c43afcd6c2e7b0f5956787a9296d1b5cc07a63ed7f8",
+      "scoreCredit": "0xb3b2d142dc53703391008fc7c5fa1a8c27a6dc815583e17e995f08e060cd69b7",
+      "grantMandate": "0x230844f7af0d6954ac6f8acc0e10a14791618ab6bbeec83c9c88932974f481da",
+      "refuseMandate": "0x0bac8ed29fddae852894fce13a4b6312f142ff177caf5f3e8939b51b6cc532c3",
+      "useDelegation": "0xb46ce0ebfab8b93b76f115850ded69f3b948cd87c9509172274ba5b3f4c29dd0"
     },
     "v2Transactions": {
-      "registerDriftBot": "0xc69543500038bff4b1c449458906757cd778678f7a5786727c96cb1353746354",
-      "scoreDriftBot": "0x3e9b4a0f5fd3cc00ace1f92fe0c2ba3e14d05d7d671c331416fefb91ad6ce1d5",
-      "grantDriftBotMandate": "0x112539fac15836e04d7537e03908d2623268c13833d8337afd73be48c8f69b35",
-      "refuseDriftBotMandate": "0x084c74760e43ac885c1f82b6918e4dba8a558071dcd6e963f057d930b8826676",
-      "useDriftBotDelegation": "0x920556d8c4a306c5547ff05ef7ada8e4b9a90e8b012abea1dac29fddf43cb7f1"
+      "registerDriftBot": "0xd2f136d6e16a212e72818a4289b8e77824fdcd4c2f275cc2059f430ed09a1def",
+      "scoreDriftBot": "0xc68eb932da29d30062779f7fccb5d06790eb8a8cedd9b13d68fd2c5558cf0a7e",
+      "grantDriftBotMandate": "0x1d8bf3af107de21044cf7f78c2201b48becaf7c76ff177991449db24694680e0",
+      "refuseDriftBotMandate": "0x0411e44058ca8e38aa9020a22f1225fca6dd5bdf6bf07282090aed68da3e8dfd",
+      "useDriftBotDelegation": "0x768ae23e6d7c82628575e89f36a423311cbd4fbb4b4fd17539d370a18e3d26cf"
     },
     "storage": {
       "network": "0G mainnet",
       "indexerRpc": "https://indexer-storage-turbo.0g.ai",
       "agentId": 3,
-      "rootHash": "0x89364a379ffb896ffcc4042b18faeeb35000548862ad214feb9f7c12d92fbe1f",
-      "objectHash": "0x1943358c4b9efe7e6582736079a4b61522facbf4fb37e4731d687a290c5d6929",
-      "uploadTxHash": "0x937300da7fb5ca718ed4a7ba88bf3506e5e5a6a978bc3637a8e6e5e932a19492",
-      "anchorTxHash": "0x498876ec3eae9ba3cbb3602c8ce6a9f9d8efbc7366d1e46c78a3b42d47a5d541",
-      "objectBytes": 22317,
-      "metadataUri": "0g-storage://0x89364a379ffb896ffcc4042b18faeeb35000548862ad214feb9f7c12d92fbe1f#0x1943358c4b9efe7e6582736079a4b61522facbf4fb37e4731d687a290c5d6929",
+      "rootHash": "0x4df825e71e0ad2d873c1518ce18b0cec6cd495981db1ea93e20d192cd29a2d98",
+      "objectHash": "0x1d3638b09da7600c336b6f84791e6c81e25a12b1d514873970dde7f6e722e3ce",
+      "uploadTxHash": "0xccf93435fb33743f0f55f943731545e55d98847f865bfd26dfa42beeae0d9cb9",
+      "anchorTxHash": "0xafe228382b6fb0e90b324bdfe4044fcd4acf5369e326fe5f56f3d7375e9be604",
+      "objectBytes": 22281,
+      "metadataUri": "0g-storage://0x4df825e71e0ad2d873c1518ce18b0cec6cd495981db1ea93e20d192cd29a2d98#0x1d3638b09da7600c336b6f84791e6c81e25a12b1d514873970dde7f6e722e3ce",
       "verifier": "npm run verify:storage"
     }
   }

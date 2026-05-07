@@ -58,14 +58,20 @@ async function main() {
     registry.refuseMandate(
       AGENT_ID,
       proof.refusalRoot,
+      proof.mandateRoot,
       proof.refusal.attemptedUsd,
-      proof.refusal.capUsd,
       proof.refusal.reason,
     ),
   );
   const useDelegation = await send(
     "useDelegation",
-    registry.useDelegation(AGENT_ID, proof.allowedUseRoot, proof.allowedUse.amountUsd, proof.allowedUse.recipient),
+    registry.useDelegation(
+      AGENT_ID,
+      proof.mandateRoot,
+      proof.allowedUseRoot,
+      proof.allowedUse.amountUsd,
+      proof.allowedUse.recipient,
+    ),
   );
 
   const anchors = {
@@ -73,7 +79,7 @@ async function main() {
     chainName: "0G mainnet",
     registryAddress: deployment.contracts.AgentCreditRegistry.address,
     explorerUrl: `${explorer}/address/${deployment.contracts.AgentCreditRegistry.address}`,
-    storageNote: "CreditGate anchors the credit score, mandate, refusal, and allowed-use roots on 0G mainnet so judges can replay the authority decision from public receipts.",
+    storageNote: "CreditGate stores the active mandate root/cap/expiry on 0G mainnet, rejects invalid delegation use, and anchors score/refusal/use roots for replay.",
     transactions: {
       deploy: deployTx,
       registerAgent,

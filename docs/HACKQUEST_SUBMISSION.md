@@ -28,11 +28,11 @@ Supporting angle:
 
 - GitHub repo: `https://github.com/dolepee/creditgate`
 - Demo URL: `https://creditgate.vercel.app`
-- Demo video: `TODO after recording`
-- 0G mainnet contract: `0xd65BE781fF6e6b8Dd514Aa4A13EfD3860a509854`
-- 0G explorer link: `https://chainscan.0g.ai/address/0xd65BE781fF6e6b8Dd514Aa4A13EfD3860a509854`
-- 0G Storage root: `0x89364a379ffb896ffcc4042b18faeeb35000548862ad214feb9f7c12d92fbe1f`
-- X post: `TODO`
+- Demo video: `add final video URL after recording`
+- 0G mainnet contract: `0x4D98ee9f1dc2F9852A54aDfae81937520498E12a`
+- 0G explorer link: `https://chainscan.0g.ai/address/0x4D98ee9f1dc2F9852A54aDfae81937520498E12a`
+- 0G Storage root: `0x4df825e71e0ad2d873c1518ce18b0cec6cd495981db1ea93e20d192cd29a2d98`
+- X post: `add final public X post URL after posting`
 
 ## 0G Integration Proof
 
