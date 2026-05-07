@@ -1,5 +1,7 @@
 {
-  "proof": {
+  "kind": "creditgate.portfolio-proof",
+  "schemaVersion": 1,
+  "portfolio": {
     "primary": {
       "agent": {
         "name": "YieldScout",
@@ -696,39 +698,5 @@
         }
       }
     ]
-  },
-  "anchors": {
-    "chainId": 16661,
-    "chainName": "0G mainnet",
-    "registryAddress": "0xd65BE781fF6e6b8Dd514Aa4A13EfD3860a509854",
-    "explorerUrl": "https://chainscan.0g.ai/address/0xd65BE781fF6e6b8Dd514Aa4A13EfD3860a509854",
-    "storageNote": "CreditGate anchors the credit score, mandate, refusal, and allowed-use roots on 0G mainnet so judges can replay the authority decision from public receipts.",
-    "transactions": {
-      "deploy": "0xe978a845dc543faa557d99502cb29cf69527e850667e1714e5c9ae1f4ef556b7",
-      "registerAgent": "0x3933cde09c01baff7df2f53d2d035160e66c4eb2502761a7c1ca489bf9c560e2",
-      "scoreCredit": "0x858f97ba1cb86ae09859c5ded79c006d5c0ffca8f1a24d53df6bc2c0809134ba",
-      "grantMandate": "0x96f95f57236782a7219afcb999d2b76b5dd205aedff3399aa64cd518d0cb7f97",
-      "refuseMandate": "0xa5f5d373defbba782b6026b284ea45307925725237bf1864cce89b035a45f834",
-      "useDelegation": "0xb773bab8e2c74cb9010940ac4850845b71adc03e92ebc021bbf521abc157218f"
-    },
-    "v2Transactions": {
-      "registerDriftBot": "0xc69543500038bff4b1c449458906757cd778678f7a5786727c96cb1353746354",
-      "scoreDriftBot": "0x3e9b4a0f5fd3cc00ace1f92fe0c2ba3e14d05d7d671c331416fefb91ad6ce1d5",
-      "grantDriftBotMandate": "0x112539fac15836e04d7537e03908d2623268c13833d8337afd73be48c8f69b35",
-      "refuseDriftBotMandate": "0x084c74760e43ac885c1f82b6918e4dba8a558071dcd6e963f057d930b8826676",
-      "useDriftBotDelegation": "0x920556d8c4a306c5547ff05ef7ada8e4b9a90e8b012abea1dac29fddf43cb7f1"
-    },
-    "storage": {
-      "network": "0G mainnet",
-      "indexerRpc": "https://indexer-storage-turbo.0g.ai",
-      "agentId": 3,
-      "rootHash": "0x89364a379ffb896ffcc4042b18faeeb35000548862ad214feb9f7c12d92fbe1f",
-      "objectHash": "0x1943358c4b9efe7e6582736079a4b61522facbf4fb37e4731d687a290c5d6929",
-      "uploadTxHash": "0x937300da7fb5ca718ed4a7ba88bf3506e5e5a6a978bc3637a8e6e5e932a19492",
-      "anchorTxHash": "0x498876ec3eae9ba3cbb3602c8ce6a9f9d8efbc7366d1e46c78a3b42d47a5d541",
-      "objectBytes": 22317,
-      "metadataUri": "0g-storage://0x89364a379ffb896ffcc4042b18faeeb35000548862ad214feb9f7c12d92fbe1f#0x1943358c4b9efe7e6582736079a4b61522facbf4fb37e4731d687a290c5d6929",
-      "verifier": "npm run verify:storage"
-    }
   }
 }

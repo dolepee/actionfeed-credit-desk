@@ -18,5 +18,17 @@
     "grantDriftBotMandate": "0x112539fac15836e04d7537e03908d2623268c13833d8337afd73be48c8f69b35",
     "refuseDriftBotMandate": "0x084c74760e43ac885c1f82b6918e4dba8a558071dcd6e963f057d930b8826676",
     "useDriftBotDelegation": "0x920556d8c4a306c5547ff05ef7ada8e4b9a90e8b012abea1dac29fddf43cb7f1"
+  },
+  "storage": {
+    "network": "0G mainnet",
+    "indexerRpc": "https://indexer-storage-turbo.0g.ai",
+    "agentId": 3,
+    "rootHash": "0x89364a379ffb896ffcc4042b18faeeb35000548862ad214feb9f7c12d92fbe1f",
+    "objectHash": "0x1943358c4b9efe7e6582736079a4b61522facbf4fb37e4731d687a290c5d6929",
+    "uploadTxHash": "0x937300da7fb5ca718ed4a7ba88bf3506e5e5a6a978bc3637a8e6e5e932a19492",
+    "anchorTxHash": "0x498876ec3eae9ba3cbb3602c8ce6a9f9d8efbc7366d1e46c78a3b42d47a5d541",
+    "objectBytes": 22317,
+    "metadataUri": "0g-storage://0x89364a379ffb896ffcc4042b18faeeb35000548862ad214feb9f7c12d92fbe1f#0x1943358c4b9efe7e6582736079a4b61522facbf4fb37e4731d687a290c5d6929",
+    "verifier": "npm run verify:storage"
   }
 }

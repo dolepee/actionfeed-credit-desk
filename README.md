@@ -2,7 +2,7 @@
 
 CreditGate is a 0G-native underwriting and authority gate for autonomous agents.
 
-It reads a signed public agent history, calculates a replayable credit score, grants a bounded spend cap, refuses over-cap actions, and anchors every decision root on 0G Chain.
+It reads a signed public agent history, calculates a replayable credit score, grants a bounded spend cap, refuses over-cap actions, stores the canonical proof packet on 0G Storage, and anchors every decision root on 0G Chain.
 
 ## 0G APAC Positioning
 
@@ -36,7 +36,7 @@ The APAC demo is intentionally short:
 3. Show `DriftBot` with a `41/100` credit score and `$150` cap.
 4. Show both over-cap attempts being refused with `MANDATE_REFUSED`.
 5. Show both under-cap actions being allowed with `DELEGATION_USED`.
-6. Open `/proof` or run `npm run verify:credit`.
+6. Open `/proof`, run `npm run verify:credit`, then run `npm run verify:storage`.
 
 The comparison is the V2 product moment. Most agent projects show agents acting. CreditGate shows cleaner history earning more authority and weaker history receiving a tighter cap.
 
@@ -47,12 +47,14 @@ Live submission state:
 - Deterministic signed histories for two agents.
 - Replayable score, mandate, refusal, and allowed-use roots.
 - `AgentCreditRegistry` deployed on 0G mainnet.
-- Eleven confirmed 0G mainnet transactions: deploy plus register, score, grant, refuse, and allowed use for two agents.
+- Thirteen confirmed 0G mainnet transactions: deploy, two agent underwriting loops, one Storage upload, and one Storage-root anchor.
+- One canonical portfolio proof object uploaded to 0G Storage and anchored back into the mainnet registry.
 - `/proof` page with verifier output.
 
 0G integration:
 
 - **0G Chain:** contract events for `AgentRegistered`, `CreditScored`, `MandateGranted`, `MandateRefused`, and `DelegationUsed`.
+- **0G Storage:** canonical signed portfolio JSON retrievable by root hash and replayed by `npm run verify:storage`.
 - **0G Explorer:** public transaction links for judge verification.
 - **Proof roots:** content-addressed JSON roots for the signed history, score, mandate, refusal, and allowed-use receipt.
 
@@ -78,10 +80,10 @@ YieldScout + DriftBot
 signed action histories
       |
       v
-content-addressed proof roots ----+
-      |                            |
-      v                            v
-Credit score policy          AgentCreditRegistry on 0G Chain
+content-addressed proof roots ----+----> canonical portfolio JSON on 0G Storage
+      |                            |                         |
+      v                            v                         v
+Credit score policy          AgentCreditRegistry on 0G Chain  storage root anchor
       |                            |
       v                            v
 spend cap + mandate         onchain score/mandate/refusal/use anchors
@@ -96,6 +98,7 @@ under-cap request -> DELEGATION_USED
 ```bash
 npm install
 npm run verify:credit
+npm run verify:storage
 npm run proof:export
 npm run openclaw:inspect
 npm run typecheck
@@ -141,6 +144,14 @@ The verifier checks:
 - `noPaymentBroadcast=true`
 - allowed under-cap use
 
+The Storage verifier additionally checks:
+
+- the portfolio proof JSON downloads from 0G Storage
+- the downloaded JSON is canonical
+- the local object hash matches the stored object hash
+- the 0G Chain registry points to the same Storage root
+- the downloaded portfolio still passes `CREDIT_DESK_PORTFOLIO_VALID`
+
 ## Mainnet Proof
 
 The 0G mainnet contract is deployed and seeded. Judges can verify the live anchors in:
@@ -149,6 +160,13 @@ The 0G mainnet contract is deployed and seeded. Judges can verify the live ancho
 - `docs/0G_MAINNET_PROOF.json`
 - `https://creditgate.vercel.app/proof`
 
+Storage proof:
+
+- 0G Storage root: `0x89364a379ffb896ffcc4042b18faeeb35000548862ad214feb9f7c12d92fbe1f`
+- Storage upload tx: `0x937300da7fb5ca718ed4a7ba88bf3506e5e5a6a978bc3637a8e6e5e932a19492`
+- Storage root anchor tx: `0x498876ec3eae9ba3cbb3602c8ce6a9f9d8efbc7366d1e46c78a3b42d47a5d541`
+- Verifier: `npm run verify:storage`
+
 Deployment commands are kept for reproducibility:
 
 ```bash
@@ -156,6 +174,7 @@ forge build --root contracts
 ZG_PRIVATE_KEY=0x... npm run deploy:mainnet
 ZG_PRIVATE_KEY=0x... npm run seed:mainnet
 ZG_PRIVATE_KEY=0x... npm run seed:v2-mainnet
+ZG_PRIVATE_KEY=0x... npm run storage:upload
 ```
 
 

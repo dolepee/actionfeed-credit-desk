@@ -3,7 +3,20 @@ import mainnetAnchors from "@/src/credit/mainnet-anchors.json";
 import { verifyCreditDeskPortfolio } from "@/src/credit/verifier";
 import { Nav, shortHash } from "../shared";
 
+type StorageAnchor = {
+  indexerRpc: string;
+  agentId: number;
+  rootHash: string;
+  objectHash: string;
+  uploadTxHash: string;
+  anchorTxHash: string;
+  objectBytes: number;
+  metadataUri: string;
+  verifier: string;
+};
+
 export default async function ProofPage() {
+  const anchors = mainnetAnchors as typeof mainnetAnchors & { storage?: StorageAnchor };
   const portfolio = await buildCreditDeskPortfolio();
   const proof = portfolio.primary;
   const verification = verifyCreditDeskPortfolio(portfolio);
@@ -11,6 +24,10 @@ export default async function ProofPage() {
   const txGroups = [
     ["YieldScout anchors", mainnetAnchors.transactions],
     ["DriftBot V2 anchors", mainnetAnchors.v2Transactions ?? {}],
+    ["0G Storage proof", anchors.storage ? {
+      uploadPortfolioObject: anchors.storage.uploadTxHash,
+      anchorStorageRoot: anchors.storage.anchorTxHash,
+    } : {}],
   ] as const;
 
   return (
@@ -45,12 +62,14 @@ export default async function ProofPage() {
           <p>
             {isMainnetPending
               ? "Deploy and seed scripts are ready. Funding the 0G mainnet key replaces this pending state with live explorer evidence."
-              : "The registry is deployed and seeded on 0G mainnet. The transactions below anchor two agent scores, mandates, refusals, and allowed-use receipts."}
+              : anchors.storage
+                ? "The registry is deployed on 0G mainnet and the canonical portfolio proof is retrievable from 0G Storage."
+                : "The registry is deployed and seeded on 0G mainnet. The transactions below anchor two agent scores, mandates, refusals, and allowed-use receipts."}
           </p>
         </div>
         <div className="grid cols-2">
           <div className="card">
-            <h3>0G anchors</h3>
+            <h3>0G Chain anchors</h3>
             <div className="row">
               <span>chain</span>
               <span>{proof.anchors.chainName}</span>
@@ -84,6 +103,31 @@ export default async function ProofPage() {
               <span className="mono">{shortHash(portfolio.challenger.evidenceRoot)}</span>
             </div>
           </div>
+          {anchors.storage ? (
+            <div className="card storage-card">
+              <h3>0G Storage object</h3>
+              <div className="row">
+                <span>root hash</span>
+                <span className="mono">{anchors.storage.rootHash}</span>
+              </div>
+              <div className="row">
+                <span>object hash</span>
+                <span className="mono">{anchors.storage.objectHash}</span>
+              </div>
+              <div className="row">
+                <span>bytes</span>
+                <span>{anchors.storage.objectBytes}</span>
+              </div>
+              <div className="row">
+                <span>verifier</span>
+                <span className="mono">{anchors.storage.verifier}</span>
+              </div>
+              <p>
+                Judges can pull this JSON back from 0G Storage, hash it, compare it to
+                the onchain root, then replay the credit verifier.
+              </p>
+            </div>
+          ) : null}
         </div>
       </section>
 
@@ -121,7 +165,10 @@ export default async function ProofPage() {
         <div className="section-heading">
           <div className="eyebrow">semantic verifier</div>
           <h2>The verifier checks meaning, not just signatures.</h2>
-          <p>Run: <span className="mono">npm run verify:credit</span></p>
+          <p>
+            Run: <span className="mono">npm run verify:credit</span>
+            {anchors.storage ? <> and <span className="mono">npm run verify:storage</span></> : null}
+          </p>
         </div>
         <pre>{verification.lines.join("\n")}</pre>
       </section>

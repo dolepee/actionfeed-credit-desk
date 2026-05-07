@@ -12,13 +12,16 @@
     "test": "npm run verify:credit && npm run typecheck",
     "typecheck": "tsc --noEmit",
     "verify:credit": "node --import tsx scripts/verify-credit.ts",
+    "verify:storage": "node --import tsx scripts/verify-storage.ts",
     "proof:export": "node --import tsx scripts/export-proof.ts",
     "openclaw:inspect": "node --import tsx examples/openclaw-credit-desk/inspect.ts",
     "deploy:mainnet": "node --import tsx scripts/deploy-mainnet.ts",
     "seed:mainnet": "node --import tsx scripts/seed-mainnet.ts",
-    "seed:v2-mainnet": "node --import tsx scripts/seed-v2-mainnet.ts"
+    "seed:v2-mainnet": "node --import tsx scripts/seed-v2-mainnet.ts",
+    "storage:upload": "node --import tsx scripts/storage-upload.ts"
   },
   "dependencies": {
+    "@0gfoundation/0g-ts-sdk": "^1.2.7",
     "ethers": "^6.13.0",
     "next": "^16.2.4",
     "react": "^19.2.5",

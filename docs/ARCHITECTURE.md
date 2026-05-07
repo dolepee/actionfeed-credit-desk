@@ -28,7 +28,7 @@ CreditGate builds content-addressed roots for the heavy proof material:
 - refusal receipt
 - allowed-use receipt
 
-Those roots are replayable locally and anchored on 0G Chain for the APAC mainnet proof.
+Those roots are replayable locally, uploaded as a canonical portfolio object to 0G Storage, and anchored on 0G Chain for the APAC mainnet proof.
 
 ### 0G Chain
 
@@ -41,6 +41,16 @@ Anchors roots through `AgentCreditRegistry`:
 - delegation use
 
 The V2 mainnet proof emits the full loop twice: YieldScout earns a higher score and larger cap; DriftBot earns a lower score and tighter cap.
+
+### 0G Storage
+
+Uploads the complete canonical portfolio proof JSON:
+
+- Storage root: `0x89364a379ffb896ffcc4042b18faeeb35000548862ad214feb9f7c12d92fbe1f`
+- object hash: `0x1943358c4b9efe7e6582736079a4b61522facbf4fb37e4731d687a290c5d6929`
+- verifier: `npm run verify:storage`
+
+The Storage verifier downloads the object by root hash, checks canonical JSON, compares the object hash, replays `CREDIT_DESK_PORTFOLIO_VALID`, and confirms the registry's proof-packet anchor points to the same Storage root.
 
 ### OpenClaw Compatibility
 

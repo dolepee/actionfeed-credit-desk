@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { buildCreditDeskPortfolio } from "@/src/credit/demo";
+import mainnetAnchors from "@/src/credit/mainnet-anchors.json";
 import { Nav, shortHash } from "./shared";
 
 export default async function HomePage() {
@@ -7,6 +8,7 @@ export default async function HomePage() {
   const proof = portfolio.primary;
   const challenger = portfolio.challenger;
   const historyCount = proof.signedHistory.length;
+  const hasStorage = Boolean((mainnetAnchors as typeof mainnetAnchors & { storage?: unknown }).storage);
 
   return (
     <main className="shell">
@@ -59,10 +61,11 @@ export default async function HomePage() {
 
       <section className="section thesis-strip">
         <span>2 agents scored.</span>
-        <strong>11 mainnet txs anchored.</strong>
+        <strong>{hasStorage ? "0G Chain + Storage live." : "11 mainnet txs anchored."}</strong>
         <p>
           YieldScout earns ${proof.credit.capUsd}. DriftBot earns ${challenger.credit.capUsd}.
           Same verifier, different history, different authority.
+          {hasStorage ? " The canonical proof JSON is retrievable from 0G Storage." : ""}
         </p>
       </section>
 

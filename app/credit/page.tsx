@@ -1,4 +1,5 @@
 import { buildCreditDeskPortfolio } from "@/src/credit/demo";
+import mainnetAnchors from "@/src/credit/mainnet-anchors.json";
 import { verifyCreditDeskPortfolio } from "@/src/credit/verifier";
 import type { CreditDeskProof } from "@/src/credit/types";
 import { Nav, shortHash } from "../shared";
@@ -7,6 +8,7 @@ export default async function CreditPage() {
   const portfolio = await buildCreditDeskPortfolio();
   const verification = verifyCreditDeskPortfolio(portfolio);
   const { primary, challenger } = portfolio;
+  const hasStorage = Boolean((mainnetAnchors as typeof mainnetAnchors & { storage?: unknown }).storage);
 
   return (
     <main className="shell">
@@ -22,8 +24,12 @@ export default async function CreditPage() {
         </div>
         <div className="operator-card">
           <span>mainnet anchors</span>
-          <strong>11</strong>
-          <p>1 deploy + 10 underwriting events on 0G</p>
+          <strong>{hasStorage ? "13" : "11"}</strong>
+          <p>
+            {hasStorage
+              ? "1 deploy + 10 underwriting txs + 2 Storage txs"
+              : "1 deploy + 10 underwriting events on 0G"}
+          </p>
         </div>
       </section>
 

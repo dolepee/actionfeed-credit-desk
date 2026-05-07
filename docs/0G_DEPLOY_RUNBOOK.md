@@ -10,13 +10,16 @@ Create `.env.local`:
 ZG_MAINNET_RPC=https://evmrpc.0g.ai
 ZG_MAINNET_CHAIN_ID=16661
 ZG_MAINNET_EXPLORER=https://chainscan.0g.ai
+ZG_INDEXER_RPC=https://indexer-storage-turbo.0g.ai
 ZG_PRIVATE_KEY=0x...
 ```
 
 The deployer needs enough 0G for:
 
 - one `AgentCreditRegistry` contract deploy
-- five anchor transactions
+- eleven underwriting anchor transactions
+- one 0G Storage upload transaction
+- one Storage-root anchor transaction
 
 ## Preflight
 
@@ -85,12 +88,23 @@ npm run seed:v2-mainnet
 
 This emits the same underwriting loop for `DriftBot`, the lower-scoring comparison agent.
 
+## Upload Storage Proof
+
+Run:
+
+```bash
+npm run storage:upload
+```
+
+This uploads the canonical portfolio proof JSON to 0G Storage and registers the Storage root under proof-packet agent ID `3`.
+
 ## Post-Deploy Checks
 
 Run:
 
 ```bash
 npm run verify:credit
+npm run verify:storage
 npm run build
 ```
 
@@ -107,6 +121,7 @@ Copy into HackQuest:
 
 - 0G mainnet contract address
 - 0G Explorer address link
+- 0G Storage root and Storage verifier output
 - demo URL
 - GitHub repo
 - demo video link
