@@ -2,8 +2,8 @@
 pragma solidity ^0.8.24;
 
 /// @title AgentCreditRegistry
-/// @notice Minimal 0G Chain anchor contract for ActionFeed Credit Desk.
-/// @dev The heavy data lives in 0G Storage. This contract emits roots so judges
+/// @notice Minimal 0G Chain anchor contract for CreditGate.
+/// @dev The heavy data is represented by replayable proof roots. This contract emits roots so judges
 /// can verify score, mandate, refusal, and allowed-use activity onchain.
 contract AgentCreditRegistry {
     struct Agent {

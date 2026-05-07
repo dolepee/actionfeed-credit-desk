@@ -1,7 +1,7 @@
 import { verifyMessage } from "ethers";
 import { canonicalJson, hashCanonical } from "./canonical";
 import { capForScore, scoreYieldScout } from "./policy";
-import type { CreditDeskProof, Hex } from "./types";
+import type { CreditDeskPortfolio, CreditDeskProof, Hex } from "./types";
 
 export type CreditVerificationResult = {
   valid: true;
@@ -11,8 +11,7 @@ export type CreditVerificationResult = {
 export function verifyCreditDeskProof(proof: CreditDeskProof): CreditVerificationResult {
   const lines: string[] = [];
 
-  assert(proof.agent.name === "YieldScout", "unexpected agent");
-  assert(proof.signedHistory.length >= 9, "history too short");
+  assert(proof.signedHistory.length >= 6, "history too short");
 
   let validSignatures = 0;
   for (const signed of proof.signedHistory) {
@@ -29,9 +28,7 @@ export function verifyCreditDeskProof(proof: CreditDeskProof): CreditVerificatio
 
   const expectedCredit = scoreYieldScout(proof.signedHistory.map((event) => event.payload));
   assert(proof.credit.score === expectedCredit.score, "score mismatch");
-  assert(proof.credit.score === 73, "demo score must be 73");
   assert(proof.credit.capUsd === capForScore(proof.credit.score), "cap policy mismatch");
-  assert(proof.credit.capUsd === 500, "demo cap must be 500");
   assert(proof.credit.evidenceRoot === proof.evidenceRoot, "credit evidence root mismatch");
   assert(proof.creditRoot === hashCanonical(proof.credit), "credit root mismatch");
 
@@ -67,9 +64,38 @@ export function verifyCreditDeskProof(proof: CreditDeskProof): CreditVerificatio
   return { valid: true, lines };
 }
 
+export function verifyCreditDeskPortfolio(portfolio: CreditDeskPortfolio): CreditVerificationResult {
+  const primary = verifyCreditDeskProof(portfolio.primary);
+  const challenger = verifyCreditDeskProof(portfolio.challenger);
+
+  assert(portfolio.proofs.length === 2, "portfolio must contain two agents");
+  assert(portfolio.primary.agent.name === "YieldScout", "primary agent mismatch");
+  assert(portfolio.challenger.agent.name === "DriftBot", "challenger agent mismatch");
+  assert(portfolio.primary.credit.score === 73, "YieldScout score must be 73");
+  assert(portfolio.primary.credit.capUsd === 500, "YieldScout cap must be 500");
+  assert(portfolio.challenger.credit.score === 41, "DriftBot score must be 41");
+  assert(portfolio.challenger.credit.capUsd === 150, "DriftBot cap must be 150");
+  assert(portfolio.primary.credit.score > portfolio.challenger.credit.score, "score comparison failed");
+  assert(portfolio.primary.credit.capUsd > portfolio.challenger.credit.capUsd, "cap comparison failed");
+
+  return {
+    valid: true,
+    lines: [
+      "CREDIT_DESK_PORTFOLIO_VALID",
+      `agents: ${portfolio.primary.agent.name}, ${portfolio.challenger.agent.name}`,
+      `comparison: ${portfolio.primary.credit.score}/100 -> $${portfolio.primary.credit.capUsd}; ${portfolio.challenger.credit.score}/100 -> $${portfolio.challenger.credit.capUsd}`,
+      `primary: ${primary.lines[0]}`,
+      `challenger: ${challenger.lines[0]}`,
+      `YieldScout refusal: ${portfolio.primary.refusal.attemptedUsd} > ${portfolio.primary.refusal.capUsd}, no payment broadcast`,
+      `DriftBot refusal: ${portfolio.challenger.refusal.attemptedUsd} > ${portfolio.challenger.refusal.capUsd}, no payment broadcast`,
+      `YieldScout evidence root: ${portfolio.primary.evidenceRoot}`,
+      `DriftBot evidence root: ${portfolio.challenger.evidenceRoot}`,
+    ],
+  };
+}
+
 function assert(condition: boolean, message: string): asserts condition {
   if (!condition) {
     throw new Error(message);
   }
 }
-

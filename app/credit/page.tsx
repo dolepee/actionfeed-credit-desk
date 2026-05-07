@@ -1,101 +1,35 @@
-import { buildCreditDeskProof } from "@/src/credit/demo";
-import { verifyCreditDeskProof } from "@/src/credit/verifier";
+import { buildCreditDeskPortfolio } from "@/src/credit/demo";
+import { verifyCreditDeskPortfolio } from "@/src/credit/verifier";
+import type { CreditDeskProof } from "@/src/credit/types";
 import { Nav, shortHash } from "../shared";
 
 export default async function CreditPage() {
-  const proof = await buildCreditDeskProof();
-  const verification = verifyCreditDeskProof(proof);
-  const signatureCount = proof.signedHistory.length;
+  const portfolio = await buildCreditDeskPortfolio();
+  const verification = verifyCreditDeskPortfolio(portfolio);
+  const { primary, challenger } = portfolio;
 
   return (
     <main className="shell">
       <Nav />
       <section className="hero credit-hero">
         <div>
-          <div className="eyebrow">operator console - YieldScout</div>
-          <h1>One agent. Two spend requests. One hard cap.</h1>
+          <div className="eyebrow">operator console - comparative underwriting</div>
+          <h1>Two agents. Two histories. Two different spend caps.</h1>
           <p className="lede">
-            The desk approves useful autonomy without handing the agent an open
-            wallet. The refusal is the headline: no payment was broadcast.
+            CreditGate proves the score is a function, not a label: cleaner history
+            earns more authority, weaker history gets a tighter cap.
           </p>
         </div>
         <div className="operator-card">
-          <span>current mandate</span>
-          <strong>${proof.credit.capUsd}</strong>
-          <p>Expires {proof.mandate.expiresAt.slice(0, 10)}</p>
+          <span>mainnet anchors</span>
+          <strong>11</strong>
+          <p>1 deploy + 10 underwriting events on 0G</p>
         </div>
       </section>
 
-      <section className="section desk-grid">
-        <aside className="score-panel">
-          <div className="eyebrow">agent file</div>
-          <h2>{proof.agent.name}</h2>
-          <p>{proof.agent.description}</p>
-          <div className="score-meter">
-            <strong>{proof.credit.score}</strong>
-            <span>credit score</span>
-          </div>
-          <div className="fact-list">
-            <div>
-              <span>owner</span>
-              <strong className="mono">{shortHash(proof.agent.owner)}</strong>
-            </div>
-            <div>
-              <span>signature coverage</span>
-              <strong>{signatureCount}/{signatureCount}</strong>
-            </div>
-            <div>
-              <span>receipt evidence</span>
-              <strong>{proof.credit.breakdown.receiptEvidence}</strong>
-            </div>
-            <div>
-              <span>latest review</span>
-              <strong>OK</strong>
-            </div>
-          </div>
-        </aside>
-
-        <div className="queue-panel">
-          <div className="queue-header">
-            <div>
-              <div className="eyebrow">request queue</div>
-              <h2>Authority is enforced at runtime.</h2>
-            </div>
-            <span className="pill">cap ${proof.credit.capUsd}</span>
-          </div>
-
-          <div className="request-ticket denied">
-            <div>
-              <span>over-cap deposit</span>
-              <strong>${proof.refusal.attemptedUsd}</strong>
-            </div>
-            <div className="ticket-status">REFUSED</div>
-            <p>
-              Attempt exceeds the earned cap. CreditGate writes a refusal receipt
-              and no payment broadcast is allowed.
-            </p>
-            <div className="ticket-meta">
-              <span>reason: {proof.refusal.reason}</span>
-              <span>root: {shortHash(proof.refusalRoot)}</span>
-            </div>
-          </div>
-
-          <div className="request-ticket approved">
-            <div>
-              <span>approved deposit</span>
-              <strong>${proof.allowedUse.amountUsd}</strong>
-            </div>
-            <div className="ticket-status">USED</div>
-            <p>
-              Same mandate, different outcome. The request is inside the cap and
-              matches an allowed action.
-            </p>
-            <div className="ticket-meta">
-              <span>action: {proof.allowedUse.action}</span>
-              <span>root: {shortHash(proof.allowedUseRoot)}</span>
-            </div>
-          </div>
-        </div>
+      <section className="section compare-grid">
+        <AgentColumn proof={primary} tone="strong" />
+        <AgentColumn proof={challenger} tone="weak" />
       </section>
 
       <section className="section">
@@ -104,31 +38,12 @@ export default async function CreditPage() {
           <h2>From signed history to spend control.</h2>
           <p>
             The operator gets the proof signal in the same screen: the verifier
-            checks signatures, roots, cap math, refusal semantics, and allowed-use policy.
+            checks both agents, score divergence, roots, cap math, refusal semantics,
+            and allowed-use policy.
           </p>
         </div>
-        <div className="timeline">
-          <div>
-            <span>history</span>
-            <strong>{shortHash(proof.evidenceRoot)}</strong>
-          </div>
-          <div>
-            <span>score</span>
-            <strong>{proof.credit.score}/100</strong>
-          </div>
-          <div>
-            <span>mandate</span>
-            <strong>{shortHash(proof.mandateRoot)}</strong>
-          </div>
-          <div>
-            <span>refusal</span>
-            <strong>{shortHash(proof.refusalRoot)}</strong>
-          </div>
-          <div>
-            <span>allowed use</span>
-            <strong>{shortHash(proof.allowedUseRoot)}</strong>
-          </div>
-        </div>
+        <EvidenceTimeline proof={primary} />
+        <EvidenceTimeline proof={challenger} />
         <div className="inline-proof">
           <span>verifier</span>
           <strong>{verification.lines[0]}</strong>
@@ -136,5 +51,122 @@ export default async function CreditPage() {
         </div>
       </section>
     </main>
+  );
+}
+
+function AgentColumn({ proof, tone }: { proof: CreditDeskProof; tone: "strong" | "weak" }) {
+  const signatureCount = proof.signedHistory.length;
+  const breakdown = proof.credit.breakdown;
+  const breakdownRows = [
+    ["valid signatures", breakdown.validSignatures],
+    ["completed history", breakdown.completedHistory],
+    ["receipt evidence", breakdown.receiptEvidence],
+    ["latest review", breakdown.latestReview],
+    ["limited history", breakdown.limitedHistoryPenalty],
+    ["violations", breakdown.policyViolations],
+  ] as const;
+
+  return (
+    <article className={`agent-underwrite ${tone}`}>
+      <div className="score-panel">
+        <div className="eyebrow">agent file</div>
+        <h2>{proof.agent.name}</h2>
+        <p>{proof.agent.description}</p>
+        <div className="score-meter">
+          <strong>{proof.credit.score}</strong>
+          <span>credit score</span>
+        </div>
+        <div className="fact-list">
+          <div>
+            <span>owner</span>
+            <strong className="mono">{shortHash(proof.agent.owner)}</strong>
+          </div>
+          <div>
+            <span>signature coverage</span>
+            <strong>{signatureCount}/{signatureCount}</strong>
+          </div>
+          <div>
+            <span>earned cap</span>
+            <strong>${proof.credit.capUsd}</strong>
+          </div>
+          <div>
+            <span>policy result</span>
+            <strong>{tone === "strong" ? "expanded" : "tightened"}</strong>
+          </div>
+        </div>
+      </div>
+
+      <div className="queue-panel">
+        <div className="queue-header">
+          <div>
+            <div className="eyebrow">score breakdown</div>
+            <h2>Why {proof.agent.name} gets ${proof.credit.capUsd}.</h2>
+          </div>
+          <span className="pill">score {proof.credit.score}/100</span>
+        </div>
+        <div className="breakdown-list">
+          {breakdownRows.map(([label, value]) => (
+            <div key={label}>
+              <span>{label}</span>
+              <strong>{value > 0 ? `+${value}` : value}</strong>
+            </div>
+          ))}
+        </div>
+        <div className="request-ticket denied">
+          <div>
+            <span>over-cap deposit</span>
+            <strong>${proof.refusal.attemptedUsd}</strong>
+          </div>
+          <div className="ticket-status">REFUSED</div>
+          <p>
+            Attempt exceeds the earned cap. CreditGate writes a refusal receipt
+            and no payment broadcast is allowed.
+          </p>
+          <div className="ticket-meta">
+            <span>cap: ${proof.refusal.capUsd}</span>
+            <span>root: {shortHash(proof.refusalRoot)}</span>
+          </div>
+        </div>
+        <div className="request-ticket approved">
+          <div>
+            <span>approved deposit</span>
+            <strong>${proof.allowedUse.amountUsd}</strong>
+          </div>
+          <div className="ticket-status">USED</div>
+          <p>Inside the cap, same mandate, signed as an allowed use.</p>
+          <div className="ticket-meta">
+            <span>action: {proof.allowedUse.action}</span>
+            <span>root: {shortHash(proof.allowedUseRoot)}</span>
+          </div>
+        </div>
+      </div>
+    </article>
+  );
+}
+
+function EvidenceTimeline({ proof }: { proof: CreditDeskProof }) {
+  return (
+    <div className="timeline agent-timeline">
+      <div>
+        <span>agent</span>
+        <strong>{proof.agent.name}</strong>
+      </div>
+      <div>
+        <span>history</span>
+        <strong>{shortHash(proof.evidenceRoot)}</strong>
+      </div>
+      <div>
+        <span>score</span>
+        <strong>{proof.credit.score}/100</strong>
+      </div>
+      <div>
+        <span>refusal</span>
+        <strong>{shortHash(proof.refusalRoot)}</strong>
+      </div>
+      <div>
+        <span>allowed use</span>
+        <strong>{shortHash(proof.allowedUseRoot)}</strong>
+      </div>
+    </div>
   );
 }

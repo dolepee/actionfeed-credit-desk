@@ -22,7 +22,7 @@ bounded mandate
 
 CreditGate builds content-addressed roots for the heavy proof material:
 
-- signed YieldScout action history
+- signed YieldScout and DriftBot action histories
 - credit score event
 - mandate event
 - refusal receipt
@@ -39,6 +39,8 @@ Anchors roots through `AgentCreditRegistry`:
 - mandate grant
 - mandate refusal
 - delegation use
+
+The V2 mainnet proof emits the full loop twice: YieldScout earns a higher score and larger cap; DriftBot earns a lower score and tighter cap.
 
 ### OpenClaw Compatibility
 

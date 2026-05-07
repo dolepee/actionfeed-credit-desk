@@ -6,13 +6,15 @@ export type AgentActionType =
   | "yield.rebalance"
   | "risk.review";
 
+export type AgentName = "YieldScout" | "DriftBot";
+
 export type AgentActionEvent = {
   type: "agent.action";
-  agent: "YieldScout";
+  agent: AgentName;
   seq: number;
   action: AgentActionType;
   amountUsd: number;
-  result: "ok" | "review_ok";
+  result: "ok" | "review_ok" | "refused" | "violation";
   timestamp: string;
   receiptHash?: Hex;
 };
@@ -30,11 +32,12 @@ export type ScoreBreakdown = {
   receiptEvidence: number;
   latestReview: number;
   limitedHistoryPenalty: number;
+  policyViolations: number;
 };
 
 export type CreditScoredEvent = {
   type: "credit.scored";
-  agent: "YieldScout";
+  agent: AgentName;
   score: number;
   capUsd: number;
   evidenceRoot: Hex;
@@ -43,7 +46,7 @@ export type CreditScoredEvent = {
 
 export type MandateGrantedEvent = {
   type: "mandate.granted";
-  agent: "YieldScout";
+  agent: AgentName;
   capUsd: number;
   allowedActions: AgentActionType[];
   expiresAt: string;
@@ -52,7 +55,7 @@ export type MandateGrantedEvent = {
 
 export type MandateRefusedEvent = {
   type: "mandate.refused";
-  agent: "YieldScout";
+  agent: AgentName;
   attemptedAction: AgentActionType;
   attemptedUsd: number;
   capUsd: number;
@@ -63,7 +66,7 @@ export type MandateRefusedEvent = {
 
 export type DelegationUsedEvent = {
   type: "delegation.used";
-  agent: "YieldScout";
+  agent: AgentName;
   action: AgentActionType;
   amountUsd: number;
   recipient: Hex;
@@ -72,7 +75,7 @@ export type DelegationUsedEvent = {
 
 export type CreditDeskProof = {
   agent: {
-    name: "YieldScout";
+    name: AgentName;
     owner: Hex;
     description: string;
   };
@@ -95,3 +98,8 @@ export type CreditDeskProof = {
   };
 };
 
+export type CreditDeskPortfolio = {
+  primary: CreditDeskProof;
+  challenger: CreditDeskProof;
+  proofs: CreditDeskProof[];
+};

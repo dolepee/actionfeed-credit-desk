@@ -295,6 +295,17 @@ p {
   grid-template-columns: repeat(2, minmax(0, 1fr));
 }
 
+.compare-grid {
+  display: grid;
+  gap: 16px;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.agent-underwrite {
+  display: grid;
+  gap: 14px;
+}
+
 .card,
 .score-panel,
 .queue-panel,
@@ -540,13 +551,46 @@ p {
   gap: 8px;
 }
 
-.fact-list div {
+.breakdown-list {
+  display: grid;
+  gap: 8px;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.fact-list div,
+.breakdown-list div {
   border-color: var(--inverse-line);
+}
+
+.breakdown-list div {
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  padding: 14px;
 }
 
 .fact-list strong {
   color: var(--inverse-ink);
   font-size: 15px;
+}
+
+.breakdown-list span,
+.breakdown-list strong {
+  display: block;
+}
+
+.breakdown-list span {
+  color: var(--muted);
+  font-family: "Aptos Mono", "Cascadia Code", Consolas, monospace;
+  font-size: 11px;
+  font-weight: 850;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.breakdown-list strong {
+  color: var(--ink);
+  font-size: 22px;
+  margin-top: 6px;
 }
 
 .queue-panel {
@@ -624,6 +668,10 @@ p {
   margin-top: 8px;
 }
 
+.agent-timeline {
+  margin-top: 10px;
+}
+
 .proof-status {
   align-items: center;
   background: var(--surface);
@@ -672,6 +720,52 @@ p {
 .row span:last-child {
   color: var(--ink);
   text-align: right;
+}
+
+.tx-grid {
+  display: grid;
+  gap: 14px;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.tx-list {
+  display: grid;
+  gap: 8px;
+}
+
+.tx-row {
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  color: inherit;
+  display: block;
+  padding: 12px;
+  text-decoration: none;
+}
+
+.tx-row:hover {
+  border-color: var(--button-bg);
+}
+
+.tx-row span,
+.tx-row strong {
+  display: block;
+}
+
+.tx-row span {
+  color: var(--muted);
+  font-family: "Aptos Mono", "Cascadia Code", Consolas, monospace;
+  font-size: 11px;
+  font-weight: 850;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.tx-row strong {
+  color: var(--ink);
+  font-family: "Aptos Mono", "Cascadia Code", Consolas, monospace;
+  font-size: 12px;
+  margin-top: 8px;
+  word-break: break-all;
 }
 
 .pending-box {
@@ -757,9 +851,11 @@ pre {
   .proof-hero,
   .split-section,
   .desk-grid,
+  .compare-grid,
   .thesis-strip,
   .pipeline,
   .cols-2,
+  .tx-grid,
   .timeline,
   .proof-status {
     grid-template-columns: 1fr;

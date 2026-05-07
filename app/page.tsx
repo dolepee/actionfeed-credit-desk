@@ -1,9 +1,11 @@
 import Link from "next/link";
-import { buildCreditDeskProof } from "@/src/credit/demo";
+import { buildCreditDeskPortfolio } from "@/src/credit/demo";
 import { Nav, shortHash } from "./shared";
 
 export default async function HomePage() {
-  const proof = await buildCreditDeskProof();
+  const portfolio = await buildCreditDeskPortfolio();
+  const proof = portfolio.primary;
+  const challenger = portfolio.challenger;
   const historyCount = proof.signedHistory.length;
 
   return (
@@ -16,14 +18,14 @@ export default async function HomePage() {
           <p className="lede">
             CreditGate turns signed 0G action history into a spend cap, then
             enforces the cap with public allow and refusal receipts.
-            </p>
-            <div className="actions">
-              <Link className="button" href="/credit">Open live desk</Link>
-              <a className="button secondary" href="https://github.com/dolepee/actionfeed-credit-desk">
-                Read source
-              </a>
-            </div>
+          </p>
+          <div className="actions">
+            <Link className="button" href="/credit">Open live desk</Link>
+            <a className="button secondary" href="https://github.com/dolepee/actionfeed-credit-desk">
+              Read source
+            </a>
           </div>
+        </div>
 
         <div className="decision-board" aria-label="YieldScout underwriting summary">
           <div className="board-header">
@@ -56,11 +58,11 @@ export default async function HomePage() {
       </section>
 
       <section className="section thesis-strip">
-        <span>History is not decoration.</span>
-        <strong>It becomes a runtime control.</strong>
+        <span>2 agents scored.</span>
+        <strong>11 mainnet txs anchored.</strong>
         <p>
-          The visible product is an underwriting console for operators. The primitive is
-          portable authority: public records decide what an agent may do next.
+          YieldScout earns ${proof.credit.capUsd}. DriftBot earns ${challenger.credit.capUsd}.
+          Same verifier, different history, different authority.
         </p>
       </section>
 
@@ -73,22 +75,22 @@ export default async function HomePage() {
           <div className="pipe-card">
             <span>01</span>
             <h3>Record</h3>
-            <p>YieldScout publishes signed 0G-ready actions, receipts, and a risk review.</p>
+            <p>Two agents publish signed histories: one clean, one thin with policy violations.</p>
           </div>
           <div className="pipe-card">
             <span>02</span>
             <h3>Score</h3>
-            <p>The verifier replays history and derives a deterministic 73/100 credit score.</p>
+            <p>The verifier derives {proof.credit.score}/100 and {challenger.credit.score}/100 from the histories.</p>
           </div>
           <div className="pipe-card">
             <span>03</span>
             <h3>Cap</h3>
-            <p>The operator grants a bounded ${proof.credit.capUsd} mandate, not wallet trust.</p>
+            <p>Different scores become different mandates: ${proof.credit.capUsd} vs ${challenger.credit.capUsd}.</p>
           </div>
           <div className="pipe-card alert">
             <span>04</span>
             <h3>Enforce</h3>
-            <p>A ${proof.refusal.attemptedUsd} attempt is refused before payment broadcast.</p>
+            <p>Both over-cap attempts are refused before payment broadcast.</p>
           </div>
         </div>
       </section>
@@ -106,7 +108,11 @@ export default async function HomePage() {
         <div className="proof-stack">
           <div className="mini-proof">
             <span>semantic verifier</span>
-            <strong>CREDIT_DESK_VALID</strong>
+            <strong>CREDIT_DESK_PORTFOLIO_VALID</strong>
+          </div>
+          <div className="mini-proof">
+            <span>score spread</span>
+            <strong>{proof.credit.score} vs {challenger.credit.score}</strong>
           </div>
           <div className="mini-proof">
             <span>refusal root</span>

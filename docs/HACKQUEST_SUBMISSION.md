@@ -12,7 +12,7 @@ One-sentence description, under 30 words:
 
 Short summary:
 
-> CreditGate gives autonomous agents a replayable public credit history. It reads signed action records, calculates an agent credit score, grants a bounded spend cap, refuses over-cap actions, and anchors both refusals and allowed uses on 0G Chain.
+> CreditGate gives autonomous agents a replayable public credit history. It compares two signed agent histories, calculates different credit scores and spend caps, refuses over-cap actions, and anchors both refusals and allowed uses on 0G Chain.
 
 ## Track
 
@@ -39,18 +39,17 @@ Final proof packet:
 
 - `AgentCreditRegistry` address on 0G mainnet
 - explorer link showing deployment
-- explorer links for score, mandate, refusal, and allowed-use txs
+- explorer links for two agents' score, mandate, refusal, and allowed-use txs
 - proof JSON roots in `docs/0G_MAINNET_PROOF.json`
 - verifier output from `npm run verify:credit`
 
 ## Demo Video Must Show
 
 - `/credit` page
-- YieldScout score `73/100`
-- cap `$500`
-- over-cap attempt `$1,200`
-- `MANDATE_REFUSED`
-- under-cap allowed use `$250`
+- YieldScout score `73/100` and cap `$500`
+- DriftBot score `41/100` and cap `$150`
+- over-cap attempts refused with `MANDATE_REFUSED`
+- under-cap uses allowed with `DELEGATION_USED`
 - `/proof` page or verifier output
 - 0G explorer link for the deployed registry
 
@@ -61,7 +60,7 @@ Introducing CreditGate for the 0G APAC Hackathon.
 
 Autonomous agents need more than wallets. They need earned authority.
 
-YieldScout gets a 73/100 credit score from signed 0G history, receives a $500 mandate, then gets refused when it attempts a $1,200 over-cap action. The refusal is anchored on 0G.
+YieldScout earns 73/100 and a $500 cap. DriftBot earns 41/100 and a $150 cap. Both over-cap attempts are refused before spend and anchored on 0G mainnet.
 
 Live app: https://creditgate.vercel.app
 Repo: https://github.com/dolepee/actionfeed-credit-desk

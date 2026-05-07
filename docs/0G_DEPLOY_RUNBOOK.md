@@ -31,7 +31,7 @@ forge test -vvv --root contracts
 
 Confirm:
 
-- verifier prints `CREDIT_DESK_VALID`
+- verifier prints `CREDIT_DESK_PORTFOLIO_VALID`
 - build succeeds
 - Foundry tests pass
 - deployer is funded on 0G mainnet
@@ -75,6 +75,16 @@ It updates:
 - `src/credit/mainnet-anchors.json`
 - `docs/0G_MAINNET_PROOF.json`
 
+## Seed V2 Comparison Agent
+
+Run:
+
+```bash
+npm run seed:v2-mainnet
+```
+
+This emits the same underwriting loop for `DriftBot`, the lower-scoring comparison agent.
+
 ## Post-Deploy Checks
 
 Run:
@@ -101,4 +111,3 @@ Copy into HackQuest:
 - GitHub repo
 - demo video link
 - public X post link
-

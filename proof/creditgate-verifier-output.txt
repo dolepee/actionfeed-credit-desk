@@ -1,0 +1,9 @@
+CREDIT_DESK_PORTFOLIO_VALID
+agents: YieldScout, DriftBot
+comparison: 73/100 -> $500; 41/100 -> $150
+primary: CREDIT_DESK_VALID
+challenger: CREDIT_DESK_VALID
+YieldScout refusal: 1200 > 500, no payment broadcast
+DriftBot refusal: 500 > 150, no payment broadcast
+YieldScout evidence root: 0xe357839888b8b5e124b3dfbeefdfc27428f68a3c37307dcd6ee74840188c702c
+DriftBot evidence root: 0xd3c14001436f4831f3b65eb23887b20a12c00f7c60e761deecf77ce27d3efc23

@@ -8,7 +8,7 @@ It reads a signed public agent history, calculates a replayable credit score, gr
 
 - **Primary track:** Track 1, Agentic Infrastructure & OpenClaw Lab
 - **Secondary fit:** Track 3, Agentic Economy & Autonomous Applications
-- **Demo agent:** YieldScout, an OpenClaw-style autonomous yield agent
+- **Demo agents:** YieldScout and DriftBot, two OpenClaw-style yield agents with different histories
 - **Core claim:** signed 0G history becomes enforceable agent authority
 
 This project is a standalone APAC submission. It uses ActionFeed's signed-history idea as a base, but packages it as a new product with its own repo, UI, verifier, contract, and 0G mainnet proof path.
@@ -25,30 +25,29 @@ CreditGate gives operators a concrete answer:
 4. Refuse over-cap actions before spend.
 5. Anchor the score, mandate, refusal, and allowed use on 0G.
 
-The product is not a yield agent. YieldScout is only the sample actor. The product is history-gated authority for any 0G/OpenClaw-style agent.
+The product is not a yield agent. YieldScout and DriftBot are sample actors. The product is history-gated authority for any 0G/OpenClaw-style agent.
 
 ## Demo Flow
 
 The APAC demo is intentionally short:
 
 1. Open `/credit`.
-2. Show `YieldScout` with a `73/100` credit score.
-3. Show the authorized cap: `$500`.
-4. Show an attempted `$1,200` action.
-5. CreditGate refuses the action with `MANDATE_REFUSED`.
-6. Show an allowed `$250` action under the same mandate.
-7. Open `/proof` or run `npm run verify:credit`.
+2. Show `YieldScout` with a `73/100` credit score and `$500` cap.
+3. Show `DriftBot` with a `41/100` credit score and `$150` cap.
+4. Show both over-cap attempts being refused with `MANDATE_REFUSED`.
+5. Show both under-cap actions being allowed with `DELEGATION_USED`.
+6. Open `/proof` or run `npm run verify:credit`.
 
-The refusal is the core product moment. Most agent projects show agents acting. CreditGate shows an agent being denied when its public history does not justify the requested authority.
+The comparison is the V2 product moment. Most agent projects show agents acting. CreditGate shows cleaner history earning more authority and weaker history receiving a tighter cap.
 
 ## 0G Components
 
 Live submission state:
 
-- Deterministic signed agent history.
+- Deterministic signed histories for two agents.
 - Replayable score, mandate, refusal, and allowed-use roots.
 - `AgentCreditRegistry` deployed on 0G mainnet.
-- Six confirmed 0G mainnet transactions: deploy, register, score, grant, refuse, and allowed use.
+- Eleven confirmed 0G mainnet transactions: deploy plus register, score, grant, refuse, and allowed use for two agents.
 - `/proof` page with verifier output.
 
 0G integration:
@@ -73,10 +72,10 @@ Network defaults:
 ## Architecture
 
 ```text
-YieldScout agent
+YieldScout + DriftBot
       |
       v
-signed action history
+signed action histories
       |
       v
 content-addressed proof roots ----+
@@ -121,12 +120,11 @@ npm run verify:credit
 Expected output:
 
 ```text
-CREDIT_DESK_VALID
-agent: YieldScout
-score: 73/100
-cap: 500 USD
-refusal: 1200 > 500, no payment broadcast
-allowed use: 250 <= 500
+CREDIT_DESK_PORTFOLIO_VALID
+agents: YieldScout, DriftBot
+comparison: 73/100 -> $500; 41/100 -> $150
+YieldScout refusal: 1200 > 500, no payment broadcast
+DriftBot refusal: 500 > 150, no payment broadcast
 ```
 
 The verifier checks:
@@ -137,6 +135,7 @@ The verifier checks:
 - evidence root
 - score policy
 - cap policy
+- score divergence between clean and weak histories
 - mandate root
 - over-cap refusal
 - `noPaymentBroadcast=true`
@@ -156,6 +155,7 @@ Deployment commands are kept for reproducibility:
 forge build --root contracts
 ZG_PRIVATE_KEY=0x... npm run deploy:mainnet
 ZG_PRIVATE_KEY=0x... npm run seed:mainnet
+ZG_PRIVATE_KEY=0x... npm run seed:v2-mainnet
 ```
 
 

@@ -1,11 +1,17 @@
-import { buildCreditDeskProof } from "@/src/credit/demo";
-import { verifyCreditDeskProof } from "@/src/credit/verifier";
+import { buildCreditDeskPortfolio } from "@/src/credit/demo";
+import mainnetAnchors from "@/src/credit/mainnet-anchors.json";
+import { verifyCreditDeskPortfolio } from "@/src/credit/verifier";
 import { Nav, shortHash } from "../shared";
 
 export default async function ProofPage() {
-  const proof = await buildCreditDeskProof();
-  const verification = verifyCreditDeskProof(proof);
+  const portfolio = await buildCreditDeskPortfolio();
+  const proof = portfolio.primary;
+  const verification = verifyCreditDeskPortfolio(portfolio);
   const isMainnetPending = proof.anchors.registryAddress === "pending-mainnet-deploy";
+  const txGroups = [
+    ["YieldScout anchors", mainnetAnchors.transactions],
+    ["DriftBot V2 anchors", mainnetAnchors.v2Transactions ?? {}],
+  ] as const;
 
   return (
     <main className="shell">
@@ -39,7 +45,7 @@ export default async function ProofPage() {
           <p>
             {isMainnetPending
               ? "Deploy and seed scripts are ready. Funding the 0G mainnet key replaces this pending state with live explorer evidence."
-              : "The registry is deployed and seeded on 0G mainnet. The transactions below anchor the agent score, mandate, refusal, and allowed-use receipt."}
+              : "The registry is deployed and seeded on 0G mainnet. The transactions below anchor two agent scores, mandates, refusals, and allowed-use receipts."}
           </p>
         </div>
         <div className="grid cols-2">
@@ -60,28 +66,54 @@ export default async function ProofPage() {
             <p>{proof.anchors.storageNote}</p>
           </div>
           <div className="card">
-            <h3>Roots</h3>
+            <h3>Score comparison</h3>
             <div className="row">
-              <span>evidence</span>
-              <span className="mono">{shortHash(proof.evidenceRoot)}</span>
+              <span>{portfolio.primary.agent.name}</span>
+              <span className="mono">{portfolio.primary.credit.score}/100 - ${portfolio.primary.credit.capUsd}</span>
             </div>
             <div className="row">
-              <span>credit</span>
-              <span className="mono">{shortHash(proof.creditRoot)}</span>
+              <span>{portfolio.challenger.agent.name}</span>
+              <span className="mono">{portfolio.challenger.credit.score}/100 - ${portfolio.challenger.credit.capUsd}</span>
             </div>
             <div className="row">
-              <span>mandate</span>
-              <span className="mono">{shortHash(proof.mandateRoot)}</span>
+              <span>YieldScout evidence</span>
+              <span className="mono">{shortHash(portfolio.primary.evidenceRoot)}</span>
             </div>
             <div className="row">
-              <span>refusal</span>
-              <span className="mono">{shortHash(proof.refusalRoot)}</span>
-            </div>
-            <div className="row">
-              <span>allowed use</span>
-              <span className="mono">{shortHash(proof.allowedUseRoot)}</span>
+              <span>DriftBot evidence</span>
+              <span className="mono">{shortHash(portfolio.challenger.evidenceRoot)}</span>
             </div>
           </div>
+        </div>
+      </section>
+
+      <section className="section">
+        <div className="section-heading">
+          <div className="eyebrow">full mainnet receipts</div>
+          <h2>Every anchor hash is clickable.</h2>
+          <p>
+            These are full transaction hashes, not screenshots or truncated badges.
+            Open them directly on 0G Chainscan.
+          </p>
+        </div>
+        <div className="tx-grid">
+          {txGroups.map(([title, transactions]) => (
+            <div className="card" key={title}>
+              <h3>{title}</h3>
+              <div className="tx-list">
+                {Object.entries(transactions).map(([label, tx]) => (
+                  <a
+                    className="tx-row"
+                    href={`https://chainscan.0g.ai/tx/${tx}`}
+                    key={label}
+                  >
+                    <span>{label}</span>
+                    <strong>{tx}</strong>
+                  </a>
+                ))}
+              </div>
+            </div>
+          ))}
         </div>
       </section>
 
