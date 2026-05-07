@@ -1,16 +1,15 @@
 {
   "chainId": 16661,
   "chainName": "0G mainnet",
-  "registryAddress": "pending-mainnet-deploy",
-  "explorerUrl": "pending-mainnet-deploy",
-  "storageNote": "Local deterministic fixture now; replace with 0G Storage roots after mainnet seed.",
+  "registryAddress": "0xd65BE781fF6e6b8Dd514Aa4A13EfD3860a509854",
+  "explorerUrl": "https://chainscan.0g.ai/address/0xd65BE781fF6e6b8Dd514Aa4A13EfD3860a509854",
+  "storageNote": "Proof roots are deterministic local objects in this milestone; next step uploads full JSON objects to 0G Storage and replaces this note with storage object links.",
   "transactions": {
-    "deploy": "",
-    "registerAgent": "",
-    "scoreCredit": "",
-    "grantMandate": "",
-    "refuseMandate": "",
-    "useDelegation": ""
+    "deploy": "0xe978a845dc543faa557d99502cb29cf69527e850667e1714e5c9ae1f4ef556b7",
+    "registerAgent": "0x3933cde09c01baff7df2f53d2d035160e66c4eb2502761a7c1ca489bf9c560e2",
+    "scoreCredit": "0x858f97ba1cb86ae09859c5ded79c006d5c0ffca8f1a24d53df6bc2c0809134ba",
+    "grantMandate": "0x96f95f57236782a7219afcb999d2b76b5dd205aedff3399aa64cd518d0cb7f97",
+    "refuseMandate": "0xa5f5d373defbba782b6026b284ea45307925725237bf1864cce89b035a45f834",
+    "useDelegation": "0xb773bab8e2c74cb9010940ac4850845b71adc03e92ebc021bbf521abc157218f"
   }
 }
-

@@ -33,7 +33,10 @@ async function main() {
   console.log(`balance: ${formatEther(balance)} 0G`);
 
   const artifact = await readArtifact();
-  const factory = new ContractFactory(artifact.abi, `0x${artifact.bytecode.object}`, wallet);
+  const bytecode = artifact.bytecode.object.startsWith("0x")
+    ? artifact.bytecode.object
+    : `0x${artifact.bytecode.object}`;
+  const factory = new ContractFactory(artifact.abi, bytecode, wallet);
   const contract = await factory.deploy();
   const deployTx = contract.deploymentTransaction();
   if (!deployTx) throw new Error("deployment transaction missing");
