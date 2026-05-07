@@ -2,6 +2,7 @@ import { readFile, writeFile } from "node:fs/promises";
 import { existsSync, readFileSync } from "node:fs";
 import { Contract, JsonRpcProvider, Wallet, formatEther, type InterfaceAbi } from "ethers";
 import { buildCreditGatePortfolio } from "../src/credit/demo";
+import { scoreMetricsForHistory } from "../src/credit/policy";
 import currentAnchors from "../src/credit/mainnet-anchors.json";
 
 type Deployment = {
@@ -53,7 +54,18 @@ async function main() {
 
   const metadataUri = `creditgate://driftbot/${proof.evidenceRoot}`;
   const registerAgent = await send("registerDriftBot", registry.registerAgent(AGENT_ID, proof.evidenceRoot, metadataUri));
-  const scoreCredit = await send("scoreDriftBot", registry.scoreCredit(AGENT_ID, proof.credit.score, proof.credit.capUsd, proof.evidenceRoot));
+  const metrics = scoreMetricsForHistory(proof.signedHistory.map((event) => event.payload));
+  const scoreCredit = await send(
+    "scoreDriftBotFromMetrics",
+    registry.scoreCreditFromMetrics(
+      AGENT_ID,
+      proof.evidenceRoot,
+      metrics.completedActions,
+      metrics.receiptCount,
+      metrics.hasLatestReview,
+      metrics.violationCount,
+    ),
+  );
   const grantMandate = await send(
     "grantDriftBotMandate",
     registry.grantMandate(AGENT_ID, proof.mandateRoot, proof.mandate.capUsd, Math.floor(new Date(proof.mandate.expiresAt).getTime() / 1000)),

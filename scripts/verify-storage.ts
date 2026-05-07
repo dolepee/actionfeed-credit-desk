@@ -1,5 +1,5 @@
-import { readFile } from "node:fs/promises";
-import { Contract, JsonRpcProvider, type InterfaceAbi } from "ethers";
+import { Contract, JsonRpcProvider } from "ethers";
+import { AGENT_CREDIT_REGISTRY_ABI } from "../src/credit/agent-credit-registry-abi";
 import { canonicalJson, hashCanonical } from "../src/credit/canonical";
 import { buildStoragePayload } from "../src/credit/storage-object";
 import type { CreditGatePortfolio, Hex } from "../src/credit/types";
@@ -7,10 +7,6 @@ import { verifyCreditGatePortfolio } from "../src/credit/verifier";
 import { CreditGateStorage } from "../src/credit/zg-storage";
 import mainnetAnchors from "../src/credit/mainnet-anchors.json";
 import { loadLocalEnv } from "./lib/env";
-
-type Artifact = {
-  abi: InterfaceAbi;
-};
 
 type StorageAnchor = {
   network: string;
@@ -61,7 +57,7 @@ async function main() {
   const portfolioCheck = verifyCreditGatePortfolio(object.portfolio);
   const registry = new Contract(
     anchors.registryAddress,
-    (await readArtifact()).abi,
+    AGENT_CREDIT_REGISTRY_ABI,
     provider,
   );
   const agent = await registry.agents(anchors.storage.agentId);
@@ -81,12 +77,6 @@ async function main() {
   ];
 
   console.log(lines.join("\n"));
-}
-
-async function readArtifact(): Promise<Artifact> {
-  return JSON.parse(
-    await readFile("contracts/out/AgentCreditRegistry.sol/AgentCreditRegistry.json", "utf8"),
-  ) as Artifact;
 }
 
 function assert(condition: boolean, message: string): asserts condition {

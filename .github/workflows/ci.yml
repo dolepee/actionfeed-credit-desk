@@ -1,0 +1,57 @@
+name: ci
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Setup Foundry
+        uses: foundry-rs/foundry-toolchain@v1
+        with:
+          version: stable
+
+      - name: Typecheck
+        run: npm run typecheck
+
+      - name: Verify credit proof
+        run: npm run verify:credit
+
+      - name: Verify 0G Storage proof
+        run: npm run verify:storage
+
+      - name: Verify 0G mainnet anchors
+        run: npm run verify:mainnet
+
+      - name: Runtime agent loop
+        run: npm run demo:agent-loop
+
+      - name: Runtime ingest check
+        run: |
+          npm run demo:agent-loop -- --json > /tmp/creditgate-runtime.json
+          npm run credit:ingest -- --file /tmp/creditgate-runtime.json
+
+      - name: OpenClaw module smoke test
+        run: npm run openclaw:demo
+
+      - name: Contract tests
+        run: forge test --root contracts -vvv
+
+      - name: Build app
+        run: npm run build

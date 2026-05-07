@@ -24,10 +24,42 @@ contract AgentCreditRegistryTest {
         require(keccak256(bytes(metadataURI)) == keccak256(bytes("0g://yieldscout/metadata")), "metadata mismatch");
         require(exists, "agent missing");
 
-        registry.scoreCredit(1, 73, 500, evidenceRoot);
+        registry.scoreCreditFromMetrics(1, evidenceRoot, 8, 4, true, 0);
         registry.grantMandate(1, mandateRoot, 500, uint64(block.timestamp + 1 days));
         registry.refuseMandate(1, refusalRoot, mandateRoot, 1200, "over_budget");
         registry.useDelegation(1, mandateRoot, useRoot, 250, address(0xBEEF));
+    }
+
+    function testScoreCreditRejectsCapMismatch() public {
+        registry = new AgentCreditRegistry();
+        registry.registerAgent(6, keccak256("feed"), "0g://yieldscout/metadata");
+
+        (bool ok,) = address(registry).call(
+            abi.encodeWithSelector(
+                AgentCreditRegistry.scoreCredit.selector,
+                6,
+                73,
+                150,
+                keccak256("evidence")
+            )
+        );
+
+        require(!ok, "cap mismatch should revert");
+    }
+
+    function testScoreCreditFromMetricsComputesScoreAndCap() public {
+        registry = new AgentCreditRegistry();
+        registry.registerAgent(7, keccak256("feed"), "0g://yieldscout/metadata");
+
+        uint16 cleanScore = registry.scoreFromMetrics(8, 4, true, 0);
+        uint16 weakScore = registry.scoreFromMetrics(4, 1, false, 2);
+
+        require(cleanScore == 73, "clean score mismatch");
+        require(registry.capForScore(cleanScore) == 500, "clean cap mismatch");
+        require(weakScore == 41, "weak score mismatch");
+        require(registry.capForScore(weakScore) == 150, "weak cap mismatch");
+
+        registry.scoreCreditFromMetrics(7, keccak256("evidence"), 8, 4, true, 0);
     }
 
     function testRefusalRequiresOverCapAttempt() public {

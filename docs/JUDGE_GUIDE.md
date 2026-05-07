@@ -6,8 +6,11 @@
 2. `/credit` - product demo screen
 3. `npm run verify:credit` - local semantic replay
 4. `npm run verify:storage` - 0G Storage download + onchain root replay
-5. `npm run demo:agent-loop` - fresh runtime-generated signed episode
-6. `src/credit/mainnet-anchors.json` - full 0G mainnet tx packet
+5. `npm run verify:mainnet` - live 0G event/state replay
+6. `npm run demo:agent-loop -- --json` - fresh runtime-generated signed episode
+7. `npm run credit:ingest -- --file <json>` - score a pasted/uploaded signed history
+8. `npm run openclaw:demo` - OpenClaw-compatible module loop
+9. `src/credit/mainnet-anchors.json` - full 0G mainnet tx packet
 
 ## What This Proves
 
@@ -25,11 +28,15 @@ The refusal is the point: autonomous agents need public accountability before th
 
 The 0G mainnet registry is deployed and seeded:
 
-- Contract: `0x4D98ee9f1dc2F9852A54aDfae81937520498E12a`
-- Explorer: `https://chainscan.0g.ai/address/0x4D98ee9f1dc2F9852A54aDfae81937520498E12a`
+- Contract: `0x3A4f5a2F65119b7C1d13914fC3875348392eDa7d`
+- Explorer: `https://chainscan.0g.ai/address/0x3A4f5a2F65119b7C1d13914fC3875348392eDa7d`
 - Live app: `https://creditgate.vercel.app`
 - Mainnet evidence: 13 confirmed transactions, including deploy, two full underwriting loops, one Storage upload, and one Storage-root anchor
 
 The local verifier should print `CREDITGATE_PORTFOLIO_VALID`.
 
 The Storage verifier should print `CREDITGATE_STORAGE_VALID`.
+
+The mainnet verifier should print `CREDITGATE_MAINNET_VALID`.
+
+The runtime loop should print `CREDITGATE_RUNTIME_LOOP_VALID`, and the OpenClaw-compatible module should print `OPENCLAW_CREDITGATE_RUNTIME_VALID`.

@@ -39,7 +39,7 @@ export default async function ProofPage() {
           <h1>Verify the decision, not the pitch.</h1>
           <p className="lede">
             CreditGate ships a semantic verifier: signatures, roots, cap math,
-            refusal ordering, allowed action policy, and no-payment-broadcast checks.
+            refusal ordering, allowed action policy, and authorized-path refusal checks.
           </p>
         </div>
         {isMainnetPending ? (

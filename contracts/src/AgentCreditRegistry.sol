@@ -68,7 +68,22 @@ contract AgentCreditRegistry {
         onlyAgentOwner(agentId)
     {
         require(score <= 100, "score too high");
+        require(evidenceRoot != bytes32(0), "zero evidence root");
+        require(capUsd == capForScore(score), "cap policy mismatch");
         emit CreditScored(agentId, score, capUsd, evidenceRoot);
+    }
+
+    function scoreCreditFromMetrics(
+        uint256 agentId,
+        bytes32 evidenceRoot,
+        uint16 completedActions,
+        uint16 receiptCount,
+        bool hasLatestReview,
+        uint16 violationCount
+    ) external onlyAgentOwner(agentId) {
+        require(evidenceRoot != bytes32(0), "zero evidence root");
+        uint16 score = scoreFromMetrics(completedActions, receiptCount, hasLatestReview, violationCount);
+        emit CreditScored(agentId, score, capForScore(score), evidenceRoot);
     }
 
     function grantMandate(uint256 agentId, bytes32 mandateRoot, uint256 capUsd, uint64 expiresAt)
@@ -122,5 +137,30 @@ contract AgentCreditRegistry {
         require(mandate.exists, "mandate missing");
         require(mandate.mandateRoot == mandateRoot, "mandate mismatch");
         require(block.timestamp <= mandate.expiresAt, "mandate expired");
+    }
+
+    function scoreFromMetrics(
+        uint16 completedActions,
+        uint16 receiptCount,
+        bool hasLatestReview,
+        uint16 violationCount
+    ) public pure returns (uint16) {
+        int16 score = 30;
+        score += completedActions >= 8 ? int16(20) : int16(10);
+        score += receiptCount >= 3 ? int16(15) : int16(5);
+        score += hasLatestReview ? int16(10) : int16(0);
+        score -= 2;
+        if (violationCount > 0) {
+            score -= int16(uint16(violationCount > 12 ? 12 : violationCount));
+        }
+        if (score < 0) return 0;
+        return uint16(score);
+    }
+
+    function capForScore(uint16 score) public pure returns (uint256) {
+        if (score >= 85) return 2000;
+        if (score >= 70) return 500;
+        if (score >= 40) return 150;
+        return 0;
     }
 }

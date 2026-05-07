@@ -57,6 +57,30 @@ async function main() {
   assert(allowedUse.amountUsd <= mandate.capUsd, "allowed use exceeds cap");
   assert(refusal.noPaymentBroadcast === true, "refusal must avoid payment broadcast");
 
+  if (process.argv.includes("--json")) {
+    console.log(
+      JSON.stringify(
+        {
+          status: "CREDITGATE_RUNTIME_LOOP_VALID",
+          runId,
+          owner: wallet.address,
+          signedHistory,
+          evidenceRoot,
+          credit,
+          mandate,
+          mandateRoot,
+          refusal,
+          refusalRoot: hashCanonical(refusal),
+          allowedUse,
+          allowedUseRoot: hashCanonical(allowedUse),
+        },
+        null,
+        2,
+      ),
+    );
+    return;
+  }
+
   console.log("CREDITGATE_RUNTIME_LOOP_VALID");
   console.log(`run: ${runId}`);
   console.log(`owner: ${wallet.address}`);
@@ -65,7 +89,7 @@ async function main() {
   console.log(`cap: ${credit.capUsd} USD`);
   console.log(`evidence root: ${evidenceRoot}`);
   console.log(`mandate root: ${mandateRoot}`);
-  console.log(`refusal: ${refusal.attemptedUsd} > ${refusal.capUsd}, no payment broadcast`);
+  console.log(`refusal: ${refusal.attemptedUsd} > ${refusal.capUsd}, no authorized payment-use receipt`);
   console.log(`refusal root: ${hashCanonical(refusal)}`);
   console.log(`allowed use: ${allowedUse.amountUsd} <= ${mandate.capUsd}`);
   console.log(`allowed use root: ${hashCanonical(allowedUse)}`);

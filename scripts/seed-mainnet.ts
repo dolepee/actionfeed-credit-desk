@@ -2,6 +2,7 @@ import { readFile, writeFile } from "node:fs/promises";
 import { existsSync, readFileSync } from "node:fs";
 import { Contract, JsonRpcProvider, Wallet, formatEther, type InterfaceAbi } from "ethers";
 import { buildCreditGateProof } from "../src/credit/demo";
+import { scoreMetricsForHistory } from "../src/credit/policy";
 
 type Deployment = {
   chainId: number;
@@ -47,8 +48,22 @@ async function main() {
 
   const metadataUri = `creditgate://yieldscout/${proof.evidenceRoot}`;
   const deployTx = deployment.contracts.AgentCreditRegistry.deployTx;
-  const registerAgent = await send("registerAgent", registry.registerAgent(AGENT_ID, proof.evidenceRoot, metadataUri));
-  const scoreCredit = await send("scoreCredit", registry.scoreCredit(AGENT_ID, proof.credit.score, proof.credit.capUsd, proof.evidenceRoot));
+  const existing = await registry.agents(AGENT_ID);
+  const registerAgent = existing.exists
+    ? "already-registered"
+    : await send("registerAgent", registry.registerAgent(AGENT_ID, proof.evidenceRoot, metadataUri));
+  const metrics = scoreMetricsForHistory(proof.signedHistory.map((event) => event.payload));
+  const scoreCredit = await send(
+    "scoreCreditFromMetrics",
+    registry.scoreCreditFromMetrics(
+      AGENT_ID,
+      proof.evidenceRoot,
+      metrics.completedActions,
+      metrics.receiptCount,
+      metrics.hasLatestReview,
+      metrics.violationCount,
+    ),
+  );
   const grantMandate = await send(
     "grantMandate",
     registry.grantMandate(AGENT_ID, proof.mandateRoot, proof.mandate.capUsd, Math.floor(new Date(proof.mandate.expiresAt).getTime() / 1000)),

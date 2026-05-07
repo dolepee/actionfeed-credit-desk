@@ -40,7 +40,7 @@ export function verifyCreditGateProof(proof: CreditGateProof): CreditVerificatio
   assert(proof.refusal.attemptedUsd > proof.refusal.capUsd, "refusal must be over cap");
   assert(proof.refusal.capUsd === proof.mandate.capUsd, "refusal cap mismatch");
   assert(proof.refusal.reason === "over_budget", "refusal reason mismatch");
-  assert(proof.refusal.noPaymentBroadcast === true, "refusal must prove no payment broadcast");
+  assert(proof.refusal.noPaymentBroadcast === true, "refusal must stay inside the no-authorized-payment path");
   assert(proof.refusalRoot === hashCanonical(proof.refusal), "refusal root mismatch");
 
   assert(proof.allowedUse.mandateRoot === proof.mandateRoot, "allowed use mandate root mismatch");
@@ -54,7 +54,7 @@ export function verifyCreditGateProof(proof: CreditGateProof): CreditVerificatio
   lines.push(`signatures: ${validSignatures}/${proof.signedHistory.length}`);
   lines.push(`score: ${proof.credit.score}/100`);
   lines.push(`cap: ${proof.credit.capUsd} USD`);
-  lines.push(`refusal: ${proof.refusal.attemptedUsd} > ${proof.refusal.capUsd}, no payment broadcast`);
+  lines.push(`refusal: ${proof.refusal.attemptedUsd} > ${proof.refusal.capUsd}, no authorized payment-use receipt`);
   lines.push(`allowed use: ${proof.allowedUse.amountUsd} <= ${proof.mandate.capUsd}`);
   lines.push(`evidence root: ${proof.evidenceRoot}`);
   lines.push(`mandate root: ${proof.mandateRoot}`);
@@ -86,8 +86,8 @@ export function verifyCreditGatePortfolio(portfolio: CreditGatePortfolio): Credi
       `comparison: ${portfolio.primary.credit.score}/100 -> $${portfolio.primary.credit.capUsd}; ${portfolio.challenger.credit.score}/100 -> $${portfolio.challenger.credit.capUsd}`,
       `primary: ${primary.lines[0]}`,
       `challenger: ${challenger.lines[0]}`,
-      `YieldScout refusal: ${portfolio.primary.refusal.attemptedUsd} > ${portfolio.primary.refusal.capUsd}, no payment broadcast`,
-      `DriftBot refusal: ${portfolio.challenger.refusal.attemptedUsd} > ${portfolio.challenger.refusal.capUsd}, no payment broadcast`,
+      `YieldScout refusal: ${portfolio.primary.refusal.attemptedUsd} > ${portfolio.primary.refusal.capUsd}, no authorized payment-use receipt`,
+      `DriftBot refusal: ${portfolio.challenger.refusal.attemptedUsd} > ${portfolio.challenger.refusal.capUsd}, no authorized payment-use receipt`,
       `YieldScout evidence root: ${portfolio.primary.evidenceRoot}`,
       `DriftBot evidence root: ${portfolio.challenger.evidenceRoot}`,
     ],

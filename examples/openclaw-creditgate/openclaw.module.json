@@ -1,0 +1,23 @@
+{
+  "name": "creditgate-authority",
+  "version": "0.1.0",
+  "description": "OpenClaw-compatible authority module that scores signed 0G agent history before allowing spend.",
+  "tools": [
+    {
+      "name": "inspect_agent_credit",
+      "description": "Verify an agent's signed history and return its score, cap, and evidence root."
+    },
+    {
+      "name": "request_authority",
+      "description": "Ask the gate to approve or refuse a spend request against the active mandate cap."
+    },
+    {
+      "name": "record_gate_receipt",
+      "description": "Return the refusal or allowed-use root that should be anchored on 0G Chain."
+    }
+  ],
+  "runtime": {
+    "privatePlanning": true,
+    "publicBoundary": "CreditGate only receives signed public side effects and mandate requests."
+  }
+}

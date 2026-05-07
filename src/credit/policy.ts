@@ -1,4 +1,4 @@
-import type { AgentActionEvent, CreditScoredEvent, ScoreBreakdown } from "./types";
+import type { AgentActionEvent, CreditScoredEvent, ScoreBreakdown, ScoreMetrics } from "./types";
 
 export function scoreYieldScout(events: AgentActionEvent[]): CreditScoredEvent {
   return scoreAgentHistory(events);
@@ -8,27 +8,17 @@ export function scoreAgentHistory(events: AgentActionEvent[]): CreditScoredEvent
   const agent = events[0]?.agent;
   if (!agent) throw new Error("cannot score empty history");
 
-  const completedActions = events.filter((event) => event.result === "ok").length;
-  const receiptCount = events.filter((event) => event.receiptHash).length;
-  const hasLatestReview = events.at(-1)?.action === "risk.review";
-  const violationCount = events.filter((event) => event.result === "violation").length;
+  const metrics = scoreMetricsForHistory(events);
+  const score = scoreFromMetrics(metrics);
 
   const breakdown: ScoreBreakdown = {
     validSignatures: 30,
-    completedHistory: completedActions >= 8 ? 20 : 10,
-    receiptEvidence: receiptCount >= 3 ? 15 : 5,
-    latestReview: hasLatestReview ? 10 : 0,
+    completedHistory: metrics.completedActions >= 8 ? 20 : 10,
+    receiptEvidence: metrics.receiptCount >= 3 ? 15 : 5,
+    latestReview: metrics.hasLatestReview ? 10 : 0,
     limitedHistoryPenalty: -2,
-    policyViolations: violationCount > 0 ? -Math.min(12, violationCount) : 0,
+    policyViolations: metrics.violationCount > 0 ? -Math.min(12, metrics.violationCount) : 0,
   };
-
-  const score =
-    breakdown.validSignatures +
-    breakdown.completedHistory +
-    breakdown.receiptEvidence +
-    breakdown.latestReview +
-    breakdown.limitedHistoryPenalty +
-    breakdown.policyViolations;
 
   return {
     type: "credit.scored",
@@ -38,6 +28,26 @@ export function scoreAgentHistory(events: AgentActionEvent[]): CreditScoredEvent
     evidenceRoot: "0x0000000000000000000000000000000000000000000000000000000000000000",
     breakdown,
   };
+}
+
+export function scoreMetricsForHistory(events: AgentActionEvent[]): ScoreMetrics {
+  return {
+    completedActions: events.filter((event) => event.result === "ok").length,
+    receiptCount: events.filter((event) => event.receiptHash).length,
+    hasLatestReview: events.at(-1)?.action === "risk.review",
+    violationCount: events.filter((event) => event.result === "violation").length,
+  };
+}
+
+export function scoreFromMetrics(metrics: ScoreMetrics): number {
+  return (
+    30 +
+    (metrics.completedActions >= 8 ? 20 : 10) +
+    (metrics.receiptCount >= 3 ? 15 : 5) +
+    (metrics.hasLatestReview ? 10 : 0) -
+    2 -
+    (metrics.violationCount > 0 ? Math.min(12, metrics.violationCount) : 0)
+  );
 }
 
 export function capForScore(score: number): number {

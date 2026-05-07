@@ -95,7 +95,7 @@ export default async function HomePage() {
           <div className="pipe-card alert">
             <span>04</span>
             <h3>Enforce</h3>
-            <p>Both over-cap attempts are refused before payment broadcast.</p>
+            <p>Both over-cap attempts are refused inside the CreditGate-authorized path.</p>
           </div>
         </div>
       </section>
@@ -105,7 +105,7 @@ export default async function HomePage() {
           <div className="eyebrow">why operators should care</div>
           <h2>History becomes spending authority.</h2>
           <p>
-            CreditGate is the missing enforcement layer between agent memory and
+            CreditGate is the missing authority layer between agent memory and
             agent money. A clean history expands authority; a risky request gets
             a signed refusal instead of a transaction.
           </p>

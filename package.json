@@ -13,9 +13,12 @@
     "typecheck": "tsc --noEmit",
     "verify:credit": "node --import tsx scripts/verify-credit.ts",
     "verify:storage": "node --import tsx scripts/verify-storage.ts",
+    "verify:mainnet": "node --import tsx scripts/verify-mainnet.ts",
     "demo:agent-loop": "node --import tsx scripts/demo-agent-loop.ts",
+    "credit:ingest": "node --import tsx scripts/ingest-history.ts",
     "proof:export": "node --import tsx scripts/export-proof.ts",
     "openclaw:inspect": "node --import tsx examples/openclaw-creditgate/inspect.ts",
+    "openclaw:demo": "node --import tsx examples/openclaw-creditgate/runtime-loop.ts",
     "deploy:mainnet": "node --import tsx scripts/deploy-mainnet.ts",
     "seed:mainnet": "node --import tsx scripts/seed-mainnet.ts",
     "seed:v2-mainnet": "node --import tsx scripts/seed-v2-mainnet.ts",
@@ -36,6 +39,7 @@
     "typescript": "^5.6.0"
   },
   "overrides": {
-    "axios": "^1.13.2"
+    "axios": "^1.13.2",
+    "postcss": "^8.5.10"
   }
 }

@@ -191,8 +191,8 @@
       "anchors": {
         "chainId": 16661,
         "chainName": "0G mainnet",
-        "registryAddress": "0x4D98ee9f1dc2F9852A54aDfae81937520498E12a",
-        "explorerUrl": "https://chainscan.0g.ai/address/0x4D98ee9f1dc2F9852A54aDfae81937520498E12a",
+        "registryAddress": "0x3A4f5a2F65119b7C1d13914fC3875348392eDa7d",
+        "explorerUrl": "https://chainscan.0g.ai/address/0x3A4f5a2F65119b7C1d13914fC3875348392eDa7d",
         "storageNote": "CreditGate stores the active mandate root/cap/expiry on 0G mainnet, rejects invalid delegation use, and anchors score/refusal/use roots for replay."
       }
     },
@@ -342,8 +342,8 @@
       "anchors": {
         "chainId": 16661,
         "chainName": "0G mainnet",
-        "registryAddress": "0x4D98ee9f1dc2F9852A54aDfae81937520498E12a",
-        "explorerUrl": "https://chainscan.0g.ai/address/0x4D98ee9f1dc2F9852A54aDfae81937520498E12a",
+        "registryAddress": "0x3A4f5a2F65119b7C1d13914fC3875348392eDa7d",
+        "explorerUrl": "https://chainscan.0g.ai/address/0x3A4f5a2F65119b7C1d13914fC3875348392eDa7d",
         "storageNote": "CreditGate stores the active mandate root/cap/expiry on 0G mainnet, rejects invalid delegation use, and anchors score/refusal/use roots for replay."
       }
     },
@@ -539,8 +539,8 @@
         "anchors": {
           "chainId": 16661,
           "chainName": "0G mainnet",
-          "registryAddress": "0x4D98ee9f1dc2F9852A54aDfae81937520498E12a",
-          "explorerUrl": "https://chainscan.0g.ai/address/0x4D98ee9f1dc2F9852A54aDfae81937520498E12a",
+          "registryAddress": "0x3A4f5a2F65119b7C1d13914fC3875348392eDa7d",
+          "explorerUrl": "https://chainscan.0g.ai/address/0x3A4f5a2F65119b7C1d13914fC3875348392eDa7d",
           "storageNote": "CreditGate stores the active mandate root/cap/expiry on 0G mainnet, rejects invalid delegation use, and anchors score/refusal/use roots for replay."
         }
       },
@@ -690,8 +690,8 @@
         "anchors": {
           "chainId": 16661,
           "chainName": "0G mainnet",
-          "registryAddress": "0x4D98ee9f1dc2F9852A54aDfae81937520498E12a",
-          "explorerUrl": "https://chainscan.0g.ai/address/0x4D98ee9f1dc2F9852A54aDfae81937520498E12a",
+          "registryAddress": "0x3A4f5a2F65119b7C1d13914fC3875348392eDa7d",
+          "explorerUrl": "https://chainscan.0g.ai/address/0x3A4f5a2F65119b7C1d13914fC3875348392eDa7d",
           "storageNote": "CreditGate stores the active mandate root/cap/expiry on 0G mainnet, rejects invalid delegation use, and anchors score/refusal/use roots for replay."
         }
       }
@@ -700,34 +700,34 @@
   "anchors": {
     "chainId": 16661,
     "chainName": "0G mainnet",
-    "registryAddress": "0x4D98ee9f1dc2F9852A54aDfae81937520498E12a",
-    "explorerUrl": "https://chainscan.0g.ai/address/0x4D98ee9f1dc2F9852A54aDfae81937520498E12a",
+    "registryAddress": "0x3A4f5a2F65119b7C1d13914fC3875348392eDa7d",
+    "explorerUrl": "https://chainscan.0g.ai/address/0x3A4f5a2F65119b7C1d13914fC3875348392eDa7d",
     "storageNote": "CreditGate stores the active mandate root/cap/expiry on 0G mainnet, rejects invalid delegation use, and anchors score/refusal/use roots for replay.",
     "transactions": {
-      "deploy": "0x3f5e74430c37dd945d0d2e47783dd1cc51e34caf39fb0840f66b550f8d269baf",
-      "registerAgent": "0xc31568d2176c7d13ab455c43afcd6c2e7b0f5956787a9296d1b5cc07a63ed7f8",
-      "scoreCredit": "0xb3b2d142dc53703391008fc7c5fa1a8c27a6dc815583e17e995f08e060cd69b7",
-      "grantMandate": "0x230844f7af0d6954ac6f8acc0e10a14791618ab6bbeec83c9c88932974f481da",
-      "refuseMandate": "0x0bac8ed29fddae852894fce13a4b6312f142ff177caf5f3e8939b51b6cc532c3",
-      "useDelegation": "0xb46ce0ebfab8b93b76f115850ded69f3b948cd87c9509172274ba5b3f4c29dd0"
+      "deploy": "0xbb840f1a2fadc293076edee8cae14723fafa2d4857910349ad555d1c12c72acd",
+      "registerAgent": "0x7580d1ed89e06022c90164270951938006ac75108caf6c0e44bb94662c51a5f4",
+      "scoreCredit": "0x1639ae0ad8a3d0757b592c807ff68cface680b2043672578d13e5ab3c91210c9",
+      "grantMandate": "0xb719ccbc7a60d0ab647b52469749ed9c0eed8b794e898d2ee85e94395268ee93",
+      "refuseMandate": "0x5dcefef8cf1df8e80725755905722a6e2ecacafe601c085011f02f684905d5f8",
+      "useDelegation": "0xb26d11592487607a7f5d3adb30ceb08bec47bfbdca016edae356e7af72423061"
     },
     "v2Transactions": {
-      "registerDriftBot": "0xd2f136d6e16a212e72818a4289b8e77824fdcd4c2f275cc2059f430ed09a1def",
-      "scoreDriftBot": "0xc68eb932da29d30062779f7fccb5d06790eb8a8cedd9b13d68fd2c5558cf0a7e",
-      "grantDriftBotMandate": "0x1d8bf3af107de21044cf7f78c2201b48becaf7c76ff177991449db24694680e0",
-      "refuseDriftBotMandate": "0x0411e44058ca8e38aa9020a22f1225fca6dd5bdf6bf07282090aed68da3e8dfd",
-      "useDriftBotDelegation": "0x768ae23e6d7c82628575e89f36a423311cbd4fbb4b4fd17539d370a18e3d26cf"
+      "registerDriftBot": "0x90f7ca9fabb9ae389988a80d7b1c30dc061484fe1a08423478c98bbbc95b5102",
+      "scoreDriftBot": "0x4fef88dae06048e587dc0fea3af01f7de4add103e587cb0778a1b7713e90b143",
+      "grantDriftBotMandate": "0x3caa78087aec9fc839499230b03ddb84bbc81696ce86535872cfee5f2cfa1d02",
+      "refuseDriftBotMandate": "0xf3e6975deeb6166074e01c1476a928bd43aebf0b492ef8ee7885fdf7546739fa",
+      "useDriftBotDelegation": "0xd0af3bdbcf49d976075478b51a814ebab2ba244ef9a84fc78a5da3ab396f1866"
     },
     "storage": {
       "network": "0G mainnet",
       "indexerRpc": "https://indexer-storage-turbo.0g.ai",
       "agentId": 3,
-      "rootHash": "0x4df825e71e0ad2d873c1518ce18b0cec6cd495981db1ea93e20d192cd29a2d98",
-      "objectHash": "0x1d3638b09da7600c336b6f84791e6c81e25a12b1d514873970dde7f6e722e3ce",
-      "uploadTxHash": "0xccf93435fb33743f0f55f943731545e55d98847f865bfd26dfa42beeae0d9cb9",
-      "anchorTxHash": "0xafe228382b6fb0e90b324bdfe4044fcd4acf5369e326fe5f56f3d7375e9be604",
+      "rootHash": "0x37414d25ef5962398687339d851d28aee5abad81893166e2189ac7ae4d8912a0",
+      "objectHash": "0x650e77fc2a35a002025727d5392034435570e6fb07c72b358490f8eb6a881ca8",
+      "uploadTxHash": "0x2514decc1c6ef7d212fc154d06aeaa1dd2639298aae5a413d29c2f76f9cdd3bf",
+      "anchorTxHash": "0xbda5b60205bd5566212178e1300e9e51bf806d0d1f0014bb803581eb19c430e6",
       "objectBytes": 22281,
-      "metadataUri": "0g-storage://0x4df825e71e0ad2d873c1518ce18b0cec6cd495981db1ea93e20d192cd29a2d98#0x1d3638b09da7600c336b6f84791e6c81e25a12b1d514873970dde7f6e722e3ce",
+      "metadataUri": "0g-storage://0x37414d25ef5962398687339d851d28aee5abad81893166e2189ac7ae4d8912a0#0x650e77fc2a35a002025727d5392034435570e6fb07c72b358490f8eb6a881ca8",
       "verifier": "npm run verify:storage"
     }
   }

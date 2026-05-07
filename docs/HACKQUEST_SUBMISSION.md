@@ -18,21 +18,21 @@ Short summary:
 
 Primary:
 
-> Track 1: Agentic Infrastructure & OpenClaw Lab
+> Track 3: Agentic Economy & Autonomous Applications
 
 Supporting angle:
 
-> Track 3: Agentic Economy & Autonomous Applications
+> Track 1: Agentic Infrastructure & OpenClaw Lab
 
 ## Required Links
 
 - GitHub repo: `https://github.com/dolepee/creditgate`
 - Demo URL: `https://creditgate.vercel.app`
-- Demo video: `add final video URL after recording`
-- 0G mainnet contract: `0x4D98ee9f1dc2F9852A54aDfae81937520498E12a`
-- 0G explorer link: `https://chainscan.0g.ai/address/0x4D98ee9f1dc2F9852A54aDfae81937520498E12a`
-- 0G Storage root: `0x4df825e71e0ad2d873c1518ce18b0cec6cd495981db1ea93e20d192cd29a2d98`
-- X post: `add final public X post URL after posting`
+- Demo video: `SUBMISSION BLOCKER - add final video URL after recording`
+- 0G mainnet contract: `0x3A4f5a2F65119b7C1d13914fC3875348392eDa7d`
+- 0G explorer link: `https://chainscan.0g.ai/address/0x3A4f5a2F65119b7C1d13914fC3875348392eDa7d`
+- 0G Storage root: `0x37414d25ef5962398687339d851d28aee5abad81893166e2189ac7ae4d8912a0`
+- X post: `SUBMISSION BLOCKER - add final public X post URL after posting`
 
 ## 0G Integration Proof
 
@@ -46,6 +46,7 @@ Final verification packet:
 - proof JSON roots in `docs/0G_MAINNET_PROOF.json`
 - verifier output from `npm run verify:credit`
 - Storage verifier output from `npm run verify:storage`
+- Mainnet verifier output from `npm run verify:mainnet`
 
 ## Demo Video Must Show
 
@@ -54,8 +55,11 @@ Final verification packet:
 - DriftBot score `41/100` and cap `$150`
 - over-cap attempts refused with `MANDATE_REFUSED`
 - under-cap uses allowed with `DELEGATION_USED`
+- paste/load a signed history on `/credit` and show the score recalculating
 - verifier output
 - 0G Storage proof root and `CREDITGATE_STORAGE_VALID`
+- 0G mainnet verifier output and `CREDITGATE_MAINNET_VALID`
+- OpenClaw-compatible loop output: `OPENCLAW_CREDITGATE_RUNTIME_VALID`
 - 0G explorer link for the deployed registry
 
 ## Public X Post Draft

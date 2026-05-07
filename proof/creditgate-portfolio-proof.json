@@ -190,8 +190,8 @@
     "anchors": {
       "chainId": 16661,
       "chainName": "0G mainnet",
-      "registryAddress": "0x4D98ee9f1dc2F9852A54aDfae81937520498E12a",
-      "explorerUrl": "https://chainscan.0g.ai/address/0x4D98ee9f1dc2F9852A54aDfae81937520498E12a",
+      "registryAddress": "0x3A4f5a2F65119b7C1d13914fC3875348392eDa7d",
+      "explorerUrl": "https://chainscan.0g.ai/address/0x3A4f5a2F65119b7C1d13914fC3875348392eDa7d",
       "storageNote": "CreditGate stores the active mandate root/cap/expiry on 0G mainnet, rejects invalid delegation use, and anchors score/refusal/use roots for replay."
     }
   },
@@ -341,8 +341,8 @@
     "anchors": {
       "chainId": 16661,
       "chainName": "0G mainnet",
-      "registryAddress": "0x4D98ee9f1dc2F9852A54aDfae81937520498E12a",
-      "explorerUrl": "https://chainscan.0g.ai/address/0x4D98ee9f1dc2F9852A54aDfae81937520498E12a",
+      "registryAddress": "0x3A4f5a2F65119b7C1d13914fC3875348392eDa7d",
+      "explorerUrl": "https://chainscan.0g.ai/address/0x3A4f5a2F65119b7C1d13914fC3875348392eDa7d",
       "storageNote": "CreditGate stores the active mandate root/cap/expiry on 0G mainnet, rejects invalid delegation use, and anchors score/refusal/use roots for replay."
     }
   },
@@ -538,8 +538,8 @@
       "anchors": {
         "chainId": 16661,
         "chainName": "0G mainnet",
-        "registryAddress": "0x4D98ee9f1dc2F9852A54aDfae81937520498E12a",
-        "explorerUrl": "https://chainscan.0g.ai/address/0x4D98ee9f1dc2F9852A54aDfae81937520498E12a",
+        "registryAddress": "0x3A4f5a2F65119b7C1d13914fC3875348392eDa7d",
+        "explorerUrl": "https://chainscan.0g.ai/address/0x3A4f5a2F65119b7C1d13914fC3875348392eDa7d",
         "storageNote": "CreditGate stores the active mandate root/cap/expiry on 0G mainnet, rejects invalid delegation use, and anchors score/refusal/use roots for replay."
       }
     },
@@ -689,8 +689,8 @@
       "anchors": {
         "chainId": 16661,
         "chainName": "0G mainnet",
-        "registryAddress": "0x4D98ee9f1dc2F9852A54aDfae81937520498E12a",
-        "explorerUrl": "https://chainscan.0g.ai/address/0x4D98ee9f1dc2F9852A54aDfae81937520498E12a",
+        "registryAddress": "0x3A4f5a2F65119b7C1d13914fC3875348392eDa7d",
+        "explorerUrl": "https://chainscan.0g.ai/address/0x3A4f5a2F65119b7C1d13914fC3875348392eDa7d",
         "storageNote": "CreditGate stores the active mandate root/cap/expiry on 0G mainnet, rejects invalid delegation use, and anchors score/refusal/use roots for replay."
       }
     }

@@ -35,6 +35,13 @@ export type ScoreBreakdown = {
   policyViolations: number;
 };
 
+export type ScoreMetrics = {
+  completedActions: number;
+  receiptCount: number;
+  hasLatestReview: boolean;
+  violationCount: number;
+};
+
 export type CreditScoredEvent = {
   type: "credit.scored";
   agent: AgentName;

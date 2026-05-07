@@ -13,6 +13,7 @@ export function Nav() {
       <div className="links">
         <Link href="/">gate</Link>
         <Link href="/credit">credit</Link>
+        <Link href="/proof">proof</Link>
         <a href="https://github.com/dolepee/creditgate">source</a>
         <ThemeToggle />
       </div>

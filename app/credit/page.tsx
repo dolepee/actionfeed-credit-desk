@@ -3,6 +3,7 @@ import mainnetAnchors from "@/src/credit/mainnet-anchors.json";
 import { verifyCreditGatePortfolio } from "@/src/credit/verifier";
 import type { CreditGateProof } from "@/src/credit/types";
 import { Nav, shortHash } from "../shared";
+import { IngestPanel } from "./ingest-panel";
 
 export default async function CreditPage() {
   const portfolio = await buildCreditGatePortfolio();
@@ -55,6 +56,10 @@ export default async function CreditPage() {
           <strong>{verification.lines[0]}</strong>
           <code>npm run verify:credit</code>
         </div>
+      </section>
+
+      <section className="section">
+        <IngestPanel sample={primary.signedHistory} />
       </section>
     </main>
   );
@@ -126,7 +131,7 @@ function AgentColumn({ proof, tone }: { proof: CreditGateProof; tone: "strong" |
           <div className="ticket-status">REFUSED</div>
           <p>
             Attempt exceeds the earned cap. CreditGate writes a refusal receipt
-            and no payment broadcast is allowed.
+            and does not emit an authorized payment-use receipt.
           </p>
           <div className="ticket-meta">
             <span>cap: ${proof.refusal.capUsd}</span>

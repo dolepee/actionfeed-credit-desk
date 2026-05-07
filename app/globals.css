@@ -990,6 +990,63 @@ pre {
   font-family: "Aptos Mono", "Cascadia Code", Consolas, monospace;
 }
 
+.ingest-console {
+  display: grid;
+  gap: 18px;
+  grid-template-columns: 0.85fr 1.15fr;
+}
+
+.ingest-workbench {
+  display: grid;
+  gap: 12px;
+}
+
+.ingest-workbench textarea {
+  background: var(--pre-bg);
+  border: 1px solid var(--pre-line);
+  border-radius: 22px;
+  color: var(--pre-ink);
+  font-family: "Aptos Mono", "Cascadia Code", Consolas, monospace;
+  min-height: 280px;
+  outline: none;
+  padding: 16px;
+  resize: vertical;
+  width: 100%;
+}
+
+.ingest-result {
+  border: 1px solid var(--line);
+  border-radius: 20px;
+  display: grid;
+  gap: 8px;
+  padding: 14px;
+}
+
+.ingest-result span,
+.ingest-result code {
+  color: var(--muted);
+  font-family: "Aptos Mono", "Cascadia Code", Consolas, monospace;
+  font-size: 12px;
+  font-weight: 850;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  word-break: break-all;
+}
+
+.ingest-result strong {
+  color: var(--ink);
+}
+
+.ingest-result.approved {
+  background: var(--green-soft);
+  border-color: rgba(47, 143, 91, 0.42);
+}
+
+.ingest-result.denied {
+  background: var(--red-soft);
+  border-color: rgba(201, 64, 49, 0.42);
+}
+
 @media (max-width: 880px) {
   .product-hero,
   .credit-hero,
@@ -1002,7 +1059,8 @@ pre {
   .cols-2,
   .tx-grid,
   .timeline,
-  .proof-status {
+  .proof-status,
+  .ingest-console {
     grid-template-columns: 1fr;
   }
 
