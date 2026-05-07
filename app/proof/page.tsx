@@ -37,8 +37,9 @@ export default async function ProofPage() {
             <strong>{isMainnetPending ? "Mainnet deploy pending" : "0G mainnet live"}</strong>
           </div>
           <p>
-            Contract and seed scripts are ready. Once funded, the deploy step turns
-            this packet from deterministic proof into live 0G explorer evidence.
+            {isMainnetPending
+              ? "Deploy and seed scripts are ready. Funding the 0G mainnet key replaces this pending state with live explorer evidence."
+              : "The registry is deployed and seeded on 0G mainnet. The transactions below anchor the agent score, mandate, refusal, and allowed-use receipt."}
           </p>
         </div>
         <div className="grid cols-2">

@@ -73,7 +73,7 @@ async function main() {
     chainName: "0G mainnet",
     registryAddress: deployment.contracts.AgentCreditRegistry.address,
     explorerUrl: `${explorer}/address/${deployment.contracts.AgentCreditRegistry.address}`,
-    storageNote: "Proof roots are deterministic local objects in this milestone; next step uploads full JSON objects to 0G Storage and replaces this note with storage object links.",
+    storageNote: "CreditGate anchors the credit score, mandate, refusal, and allowed-use roots on 0G mainnet so judges can replay the authority decision from public receipts.",
     transactions: {
       deploy: deployTx,
       registerAgent,
