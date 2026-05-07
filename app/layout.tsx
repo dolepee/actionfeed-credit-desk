@@ -2,8 +2,18 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://creditgate.vercel.app"),
   title: "CreditGate",
   description: "0G-native underwriting and authority gate for autonomous agents.",
+  icons: {
+    icon: "/icon.svg",
+  },
+  openGraph: {
+    title: "CreditGate",
+    description: "0G-native underwriting and authority gate for autonomous agents.",
+    siteName: "CreditGate",
+    type: "website",
+  },
 };
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
