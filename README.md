@@ -158,10 +158,6 @@ ZG_PRIVATE_KEY=0x... npm run deploy:mainnet
 ZG_PRIVATE_KEY=0x... npm run seed:mainnet
 ```
 
-Remaining submission tasks:
-
-- Record a sub-3-minute demo video.
-- Publish the required X post with `#0GHackathon`, `#BuildOn0G`, `@0G_labs`, `@0g_CN`, `@0g_Eco`, and `@HackQuest_`.
 
 ## One-Liner
 
