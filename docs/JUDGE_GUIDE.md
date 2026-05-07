@@ -8,7 +8,7 @@
 
 ## What This Proves
 
-ActionFeed Credit Desk proves that an autonomous agent's public 0G history can control future authority.
+CreditGate proves that an autonomous agent's public signed history can control future authority.
 
 The demo agent, YieldScout, receives a `73/100` credit score and a `$500` spend cap. A `$1,200` attempt is refused before spend and recorded as `MANDATE_REFUSED`. A `$250` action is allowed under the same mandate.
 
@@ -20,5 +20,12 @@ The refusal is the point: autonomous agents need public accountability before th
 
 ## Current State
 
-This repo currently contains the local deterministic proof and contract scaffold. The next milestone is 0G mainnet deployment and Storage upload.
+## Current State
 
+The 0G mainnet registry is deployed and seeded:
+
+- Contract: `0xd65BE781fF6e6b8Dd514Aa4A13EfD3860a509854`
+- Explorer: `https://chainscan.0g.ai/address/0xd65BE781fF6e6b8Dd514Aa4A13EfD3860a509854`
+- Live app: `https://creditgate.vercel.app`
+
+The local verifier should print `CREDIT_DESK_VALID`.

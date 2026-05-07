@@ -2,7 +2,7 @@
 
 CreditGate is a 0G-native underwriting and authority gate for autonomous agents.
 
-It reads a signed public agent history from 0G Storage, calculates a replayable credit score, grants a bounded spend cap, refuses over-cap actions, and anchors every decision on 0G Chain.
+It reads a signed public agent history, calculates a replayable credit score, grants a bounded spend cap, refuses over-cap actions, and anchors every decision root on 0G Chain.
 
 ## 0G APAC Positioning
 
@@ -43,18 +43,26 @@ The refusal is the core product moment. Most agent projects show agents acting. 
 
 ## 0G Components
 
-Current scaffold:
+Live submission state:
 
 - Deterministic signed agent history.
 - Replayable score, mandate, refusal, and allowed-use roots.
-- Minimal `AgentCreditRegistry` contract for 0G Chain anchoring.
+- `AgentCreditRegistry` deployed on 0G mainnet.
+- Six confirmed 0G mainnet transactions: deploy, register, score, grant, refuse, and allowed use.
 - `/proof` page with verifier output.
 
-Mainnet deployment target:
+0G integration:
 
-- **0G Storage:** signed history, score event, mandate event, refusal receipt, allowed-use receipt.
 - **0G Chain:** contract events for `AgentRegistered`, `CreditScored`, `MandateGranted`, `MandateRefused`, and `DelegationUsed`.
 - **0G Explorer:** public transaction links for judge verification.
+- **Proof roots:** content-addressed JSON roots for the signed history, score, mandate, refusal, and allowed-use receipt.
+
+Live links:
+
+- App: `https://creditgate.vercel.app`
+- GitHub: `https://github.com/dolepee/actionfeed-credit-desk`
+- 0G contract: `0xd65BE781fF6e6b8Dd514Aa4A13EfD3860a509854`
+- 0G explorer: `https://chainscan.0g.ai/address/0xd65BE781fF6e6b8Dd514Aa4A13EfD3860a509854`
 
 Network defaults:
 
@@ -71,13 +79,13 @@ YieldScout agent
 signed action history
       |
       v
-0G Storage roots --------------+
-      |                         |
-      v                         v
-Credit score policy       AgentCreditRegistry on 0G Chain
-      |                         |
-      v                         v
-spend cap + mandate      onchain score/mandate/refusal/use anchors
+content-addressed proof roots ----+
+      |                            |
+      v                            v
+Credit score policy          AgentCreditRegistry on 0G Chain
+      |                            |
+      v                            v
+spend cap + mandate         onchain score/mandate/refusal/use anchors
       |
       v
 over-cap request -> MANDATE_REFUSED
@@ -134,24 +142,26 @@ The verifier checks:
 - `noPaymentBroadcast=true`
 - allowed under-cap use
 
-## Mainnet TODO
+## Mainnet Proof
 
-Before submission:
+The 0G mainnet contract is deployed and seeded. Judges can verify the live anchors in:
 
-- Deploy `AgentCreditRegistry` to 0G mainnet.
-- Upload proof objects to 0G Storage.
-- Emit the five required contract events.
-- Replace `pending-mainnet-deploy` in the proof packet with the live contract and explorer link.
-- Record a sub-3-minute demo video.
-- Publish the required X post with `#0GHackathon`, `#BuildOn0G`, `@0G_labs`, `@0g_CN`, `@0g_Eco`, and `@HackQuest_`.
+- `src/credit/mainnet-anchors.json`
+- `docs/0G_MAINNET_PROOF.json`
+- `https://creditgate.vercel.app/proof`
 
-Deployment commands:
+Deployment commands are kept for reproducibility:
 
 ```bash
 forge build --root contracts
 ZG_PRIVATE_KEY=0x... npm run deploy:mainnet
 ZG_PRIVATE_KEY=0x... npm run seed:mainnet
 ```
+
+Remaining submission tasks:
+
+- Record a sub-3-minute demo video.
+- Publish the required X post with `#0GHackathon`, `#BuildOn0G`, `@0G_labs`, `@0g_CN`, `@0g_Eco`, and `@HackQuest_`.
 
 ## One-Liner
 

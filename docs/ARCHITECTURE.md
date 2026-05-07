@@ -18,15 +18,17 @@ bounded mandate
 
 ## 0G Usage
 
-### 0G Storage
+### Proof Roots
 
-Stores the heavy proof material:
+CreditGate builds content-addressed roots for the heavy proof material:
 
 - signed YieldScout action history
 - credit score event
 - mandate event
 - refusal receipt
 - allowed-use receipt
+
+Those roots are replayable locally and anchored on 0G Chain for the APAC mainnet proof.
 
 ### 0G Chain
 
@@ -51,4 +53,3 @@ await creditDesk.recordAction({
 ```
 
 The runtime decides what the agent wants to do. Credit Desk decides whether the agent has earned the authority to do it.
-

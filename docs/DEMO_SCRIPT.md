@@ -6,13 +6,13 @@ Target length: under 3 minutes.
 
 Autonomous agents are getting wallets and execution power, but operators still need to know how much authority an agent has earned.
 
-This is ActionFeed Credit Desk.
+This is CreditGate.
 
 ## 0:20 - 0:50
 
 Here is YieldScout, an autonomous yield agent.
 
-Credit Desk reads its signed public history and gives it a 73 out of 100 credit score.
+CreditGate reads its signed public history and gives it a 73 out of 100 credit score.
 
 The score is not a UI number. It is replayable from signed events and roots.
 
@@ -26,7 +26,7 @@ The mandate allows small yield actions, but only within scope.
 
 Now YieldScout attempts a 1,200 dollar action.
 
-That is over the 500 dollar cap, so Credit Desk refuses it before spend.
+That is over the 500 dollar cap, so CreditGate refuses it before spend.
 
 The refusal is recorded as `MANDATE_REFUSED`, with no payment broadcast.
 
@@ -38,7 +38,6 @@ So the system does not block everything. It enforces bounded authority.
 
 ## 2:30 - 3:00
 
-The proof page and verifier replay the score, cap, refusal, and allowed use.
+The proof page and verifier replay the score, cap, refusal, and allowed use. The registry is live on 0G mainnet, so judges can open the explorer link and see the anchors.
 
 This is history-gated authority for autonomous agents on 0G.
-
