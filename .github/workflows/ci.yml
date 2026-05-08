@@ -33,6 +33,9 @@ jobs:
       - name: Verify credit proof
         run: npm run verify:credit
 
+      - name: Verify Compute review artifact
+        run: npm run verify:compute
+
       - name: Verify 0G Storage proof
         run: npm run verify:storage
 

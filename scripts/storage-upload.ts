@@ -29,7 +29,7 @@ const EXPECTED_CHAIN_ID = Number(process.env.ZG_MAINNET_CHAIN_ID ?? "16661");
 const DEFAULT_RPC = "https://evmrpc.0g.ai";
 const DEFAULT_INDEXER_RPC = "https://indexer-storage-turbo.0g.ai";
 const DEFAULT_EXPLORER = "https://chainscan.0g.ai";
-const STORAGE_AGENT_ID = 3;
+const STORAGE_AGENT_ID = Number(process.env.CREDITGATE_STORAGE_AGENT_ID ?? "4");
 
 async function main() {
   loadLocalEnv();

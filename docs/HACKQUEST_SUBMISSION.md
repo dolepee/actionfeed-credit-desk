@@ -12,7 +12,7 @@ One-sentence description, under 30 words:
 
 Short summary:
 
-> CreditGate gives autonomous agents a replayable public credit history. It compares two signed agent histories, calculates different credit scores and spend caps, refuses over-cap actions, stores the canonical portfolio record on 0G Storage, and anchors refusals, allowed uses, and the Storage root on 0G Chain.
+> CreditGate gives autonomous agents a replayable public credit history. It compares two signed agent histories, adds 0G Compute risk review when funded, calculates different credit scores and spend caps, refuses over-cap actions, stores the canonical portfolio record on 0G Storage, and anchors refusals, allowed uses, and the Storage root on 0G Chain.
 
 ## Track
 
@@ -45,6 +45,7 @@ Final verification packet:
 - explorer links for Storage upload and Storage-root anchor txs
 - proof JSON roots in `docs/0G_MAINNET_PROOF.json`
 - verifier output from `npm run verify:credit`
+- Compute verifier output from `npm run verify:compute`
 - Storage verifier output from `npm run verify:storage`
 - Mainnet verifier output from `npm run verify:mainnet`
 
@@ -55,8 +56,10 @@ Final verification packet:
 - DriftBot score `41/100` and cap `$150`
 - over-cap attempts refused with `MANDATE_REFUSED`
 - under-cap uses allowed with `DELEGATION_USED`
+- 0G Compute risk review card, or fixture card if the Compute wallet has not been funded yet
 - paste/load a signed history on `/credit` and show the score recalculating
 - verifier output
+- Compute verifier output and `CREDITGATE_COMPUTE_VALID`
 - 0G Storage proof root and `CREDITGATE_STORAGE_VALID`
 - 0G mainnet verifier output and `CREDITGATE_MAINNET_VALID`
 - OpenClaw-compatible loop output: `OPENCLAW_CREDITGATE_RUNTIME_VALID`
@@ -69,7 +72,7 @@ Introducing CreditGate for the 0G APAC Hackathon.
 
 Autonomous agents need more than wallets. They need earned authority.
 
-YieldScout earns 73/100 and a $500 cap. DriftBot earns 41/100 and a $150 cap. Both over-cap attempts are refused before spend. The full proof packet is stored on 0G Storage and anchored on 0G mainnet.
+YieldScout earns 73/100 and a $500 cap. DriftBot earns 41/100 and a $150 cap. Both over-cap attempts are refused before spend. The proof packet is stored on 0G Storage, and the Compute review path is ready to run live once the 0G Compute wallet is funded.
 
 Live app: https://creditgate.vercel.app
 Repo: https://github.com/dolepee/creditgate

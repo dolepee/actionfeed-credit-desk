@@ -42,6 +42,59 @@ export type ScoreMetrics = {
   violationCount: number;
 };
 
+export type ComputeRiskTier = "low" | "medium" | "high";
+
+export type ComputeCapClass = "none" | "limited" | "standard" | "expanded";
+
+export type ComputeReviewInput = {
+  kind: "creditgate.compute-review-input";
+  schemaVersion: 1;
+  agent: AgentName;
+  evidenceRoot: Hex;
+  score: number;
+  capUsd: number;
+  metrics: ScoreMetrics;
+  refusalAttemptUsd: number;
+  allowedUseUsd: number;
+};
+
+export type ComputeReview = {
+  kind: "creditgate.compute-risk-review";
+  schemaVersion: 1;
+  agent: AgentName;
+  riskTier: ComputeRiskTier;
+  redFlags: string[];
+  recommendedCapClass: ComputeCapClass;
+  rationale: string;
+  provider: {
+    network: "0G Compute" | "local-fixture";
+    provider: Hex | "fixture";
+    model: string;
+    teeSignerAddress?: Hex;
+    chatId?: string;
+    completionId?: string;
+  };
+  inputHash: Hex;
+  outputHash: Hex;
+  verified: boolean;
+  verification: "0g-compute-process-response" | "fixture-hash-inclusion";
+};
+
+export type ComputeReviewRecord = {
+  input: ComputeReviewInput;
+  review: ComputeReview;
+  reviewRoot: Hex;
+};
+
+export type ComputeReviewSet = {
+  kind: "creditgate.compute-review-set";
+  schemaVersion: 1;
+  generatedAt: string;
+  mode: "0g-compute" | "fixture";
+  records: ComputeReviewRecord[];
+  reviewSetRoot: Hex;
+};
+
 export type CreditScoredEvent = {
   type: "credit.scored";
   agent: AgentName;

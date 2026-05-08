@@ -2,7 +2,7 @@
 
 CreditGate is a 0G-native credit gate for autonomous agents.
 
-It reads a signed public agent history, calculates a replayable credit score, grants a bounded spend cap, refuses over-cap actions, stores the canonical proof packet on 0G Storage, and enforces active mandates on 0G Chain.
+It reads a signed public agent history, adds a 0G Compute underwriting review when funded, calculates a replayable credit score, grants a bounded spend cap, refuses over-cap actions, stores the canonical proof packet on 0G Storage, and enforces active mandates on 0G Chain.
 
 ## 0G APAC Positioning
 
@@ -38,7 +38,7 @@ The APAC demo is intentionally short:
 5. Show `DriftBot` with a `41/100` credit score and `$150` cap.
 6. Show both over-cap attempts being refused with `MANDATE_REFUSED`.
 7. Show both under-cap actions being allowed with `DELEGATION_USED`.
-8. Run `npm run verify:credit` and `npm run verify:storage`.
+8. Run `npm run verify:credit`, `npm run verify:compute`, and `npm run verify:storage`.
 
 The comparison is the V2 product moment. Most agent projects show agents acting. CreditGate shows cleaner history earning more authority and weaker history receiving a tighter cap.
 
@@ -52,12 +52,14 @@ Live submission state:
 - `AgentCreditRegistry` deployed on 0G mainnet.
 - Thirteen confirmed 0G mainnet transactions: deploy, two agent underwriting loops, one Storage upload, and one Storage-root anchor.
 - One canonical portfolio record uploaded to 0G Storage and anchored back into the mainnet registry.
+- Compute reviewer path: `npm run compute:review` produces live 0G Compute underwriting reviews once the 0G ledger wallet has enough funds; `-- --fixture` keeps local verification reproducible.
 - Replayable verifier output in the repo and judge docs.
 
 0G integration:
 
 - **0G Chain:** contract state and events for `AgentRegistered`, `CreditScored`, `MandateGranted`, `MandateRefused`, and `DelegationUsed`. `useDelegation` rejects missing, mismatched, expired, or over-cap mandates.
 - **0G Storage:** canonical signed portfolio JSON retrievable by root hash and replayed by `npm run verify:storage`.
+- **0G Compute:** risk-review adapter for YieldScout and DriftBot histories. Live reviews use the 0G Compute broker and `processResponse`; fixture reviews are clearly labeled and only support local reproducibility before funding.
 - **0G Explorer:** public transaction links for judge verification.
 - **Proof roots:** content-addressed JSON roots for the signed history, score, mandate, refusal, and allowed-use receipt.
 
@@ -83,6 +85,9 @@ YieldScout + DriftBot
 signed action histories
       |
       v
+0G Compute risk review
+      |
+      v
 content-addressed proof roots ----+----> canonical portfolio JSON on 0G Storage
       |                            |                         |
       v                            v                         v
@@ -101,6 +106,7 @@ under-cap request -> DELEGATION_USED
 ```bash
 npm install
 npm run verify:credit
+npm run verify:compute
 npm run verify:storage
 npm run demo:agent-loop
 npm run proof:export
@@ -173,6 +179,26 @@ The Storage verifier additionally checks:
 - the local object hash matches the stored object hash
 - the 0G Chain registry points to the same Storage root
 - the downloaded portfolio still passes `CREDITGATE_PORTFOLIO_VALID`
+
+The Compute verifier checks:
+
+- review inputs hash back to the signed histories
+- review outputs hash back to the stored review JSON
+- YieldScout and DriftBot receive different risk tiers and cap classes
+- live 0G Compute reviews are marked `0g-compute-process-response`; fixture reviews are marked `fixture-hash-inclusion`
+
+```bash
+npm run compute:review -- --fixture
+npm run verify:compute
+```
+
+For the live 0G Compute path, fund the `ZG_PRIVATE_KEY` wallet with at least `3 OG` plus gas, then run:
+
+```bash
+npm run compute:review
+npm run proof:export
+npm run storage:upload
+```
 
 The mainnet verifier checks live 0G registry state, transaction receipts, active mandates, score metrics, and the Storage-root anchor:
 

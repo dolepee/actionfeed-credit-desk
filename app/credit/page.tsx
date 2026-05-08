@@ -1,12 +1,14 @@
 import { buildCreditGatePortfolio } from "@/src/credit/demo";
+import { loadOrBuildComputeReviewSet } from "@/src/credit/compute-review";
 import mainnetAnchors from "@/src/credit/mainnet-anchors.json";
 import { verifyCreditGatePortfolio } from "@/src/credit/verifier";
-import type { CreditGateProof } from "@/src/credit/types";
+import type { ComputeReviewRecord, CreditGateProof } from "@/src/credit/types";
 import { Nav, shortHash } from "../shared";
 import { IngestPanel } from "./ingest-panel";
 
 export default async function CreditPage() {
   const portfolio = await buildCreditGatePortfolio();
+  const computeReviews = await loadOrBuildComputeReviewSet(portfolio);
   const verification = verifyCreditGatePortfolio(portfolio);
   const { primary, challenger } = portfolio;
   const hasStorage = Boolean((mainnetAnchors as typeof mainnetAnchors & { storage?: unknown }).storage);
@@ -35,8 +37,8 @@ export default async function CreditPage() {
       </section>
 
       <section className="section compare-grid">
-        <AgentColumn proof={primary} tone="strong" />
-        <AgentColumn proof={challenger} tone="weak" />
+        <AgentColumn proof={primary} tone="strong" review={computeReviews.records.find((record) => record.input.agent === primary.agent.name)} />
+        <AgentColumn proof={challenger} tone="weak" review={computeReviews.records.find((record) => record.input.agent === challenger.agent.name)} />
       </section>
 
       <section className="section">
@@ -65,7 +67,15 @@ export default async function CreditPage() {
   );
 }
 
-function AgentColumn({ proof, tone }: { proof: CreditGateProof; tone: "strong" | "weak" }) {
+function AgentColumn({
+  proof,
+  tone,
+  review,
+}: {
+  proof: CreditGateProof;
+  tone: "strong" | "weak";
+  review?: ComputeReviewRecord;
+}) {
   const signatureCount = proof.signedHistory.length;
   const breakdown = proof.credit.breakdown;
   const breakdownRows = [
@@ -123,6 +133,23 @@ function AgentColumn({ proof, tone }: { proof: CreditGateProof; tone: "strong" |
             </div>
           ))}
         </div>
+        {review ? (
+          <div className={`compute-card ${review.review.riskTier}`}>
+            <div>
+              <span>
+                {review.review.provider.network === "0G Compute"
+                  ? "0G Compute review"
+                  : "compute review fixture"}
+              </span>
+              <strong>{review.review.riskTier} risk</strong>
+            </div>
+            <p>{review.review.rationale}</p>
+            <div className="ticket-meta">
+              <span>{review.review.provider.network}</span>
+              <span>root: {shortHash(review.reviewRoot)}</span>
+            </div>
+          </div>
+        ) : null}
         <div className="request-ticket denied">
           <div>
             <span>over-cap deposit</span>

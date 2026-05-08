@@ -1,4 +1,5 @@
 import { buildCreditGatePortfolio } from "@/src/credit/demo";
+import { computeVerifierLines, loadOrBuildComputeReviewSet } from "@/src/credit/compute-review";
 import mainnetAnchors from "@/src/credit/mainnet-anchors.json";
 import { verifyCreditGatePortfolio } from "@/src/credit/verifier";
 import { Nav, shortHash } from "../shared";
@@ -18,8 +19,10 @@ type StorageAnchor = {
 export default async function ProofPage() {
   const anchors = mainnetAnchors as typeof mainnetAnchors & { storage?: StorageAnchor };
   const portfolio = await buildCreditGatePortfolio();
+  const computeReviews = await loadOrBuildComputeReviewSet(portfolio);
   const proof = portfolio.primary;
   const verification = verifyCreditGatePortfolio(portfolio);
+  const computeVerification = computeVerifierLines(computeReviews, portfolio);
   const isMainnetPending = proof.anchors.registryAddress === "pending-mainnet-deploy";
   const txGroups = [
     ["YieldScout anchors", mainnetAnchors.transactions],
@@ -63,7 +66,7 @@ export default async function ProofPage() {
             {isMainnetPending
               ? "Deploy and seed scripts are ready. Funding the 0G mainnet key replaces this pending state with live explorer evidence."
               : anchors.storage
-                ? "The registry is deployed on 0G mainnet and the canonical portfolio proof is retrievable from 0G Storage."
+                ? "The registry is deployed on 0G mainnet and the canonical portfolio plus Compute review proof is retrievable from 0G Storage."
                 : "The registry is deployed and seeded on 0G mainnet. The transactions below anchor two agent scores, mandates, refusals, and allowed-use receipts."}
           </p>
         </div>
@@ -102,6 +105,23 @@ export default async function ProofPage() {
               <span>DriftBot evidence</span>
               <span className="mono">{shortHash(portfolio.challenger.evidenceRoot)}</span>
             </div>
+          </div>
+          <div className="card">
+            <h3>{computeReviews.mode === "0g-compute" ? "0G Compute reviews" : "Compute review fixture"}</h3>
+            <div className="row">
+              <span>mode</span>
+              <span>{computeReviews.mode}</span>
+            </div>
+            <div className="row">
+              <span>review set root</span>
+              <span className="mono">{shortHash(computeReviews.reviewSetRoot)}</span>
+            </div>
+            {computeReviews.records.map((record) => (
+              <div className="row" key={record.input.agent}>
+                <span>{record.input.agent}</span>
+                <span className="mono">{record.review.riskTier} risk - {record.review.recommendedCapClass}</span>
+              </div>
+            ))}
           </div>
           {anchors.storage ? (
             <div className="card storage-card">
@@ -167,10 +187,12 @@ export default async function ProofPage() {
           <h2>The verifier checks meaning, not just signatures.</h2>
           <p>
             Run: <span className="mono">npm run verify:credit</span>
+            {" "}<span className="mono">npm run verify:compute</span>
             {anchors.storage ? <> and <span className="mono">npm run verify:storage</span></> : null}
           </p>
         </div>
         <pre>{verification.lines.join("\n")}</pre>
+        <pre>{computeVerification.join("\n")}</pre>
       </section>
     </main>
   );

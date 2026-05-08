@@ -1,0 +1,5 @@
+CREDITGATE_COMPUTE_VALID
+mode: 0g-compute
+review set root: 0xf3049fdc0c523ecc93834dcc608b71e6f92c39a5e0e4f5085e45807a59b1e9c5
+YieldScout: low risk, standard cap class, deepseek/deepseek-chat-v3-0324 @ 0x1B3AAef3ae5050EEE04ea38cD4B087472BD85EB0
+DriftBot: high risk, limited cap class, deepseek/deepseek-chat-v3-0324 @ 0x1B3AAef3ae5050EEE04ea38cD4B087472BD85EB0

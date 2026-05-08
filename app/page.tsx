@@ -1,12 +1,15 @@
 import Link from "next/link";
+import { loadOrBuildComputeReviewSet } from "@/src/credit/compute-review";
 import { buildCreditGatePortfolio } from "@/src/credit/demo";
 import mainnetAnchors from "@/src/credit/mainnet-anchors.json";
 import { Nav } from "./shared";
 
 export default async function HomePage() {
   const portfolio = await buildCreditGatePortfolio();
+  const computeReviews = await loadOrBuildComputeReviewSet(portfolio);
   const proof = portfolio.primary;
   const challenger = portfolio.challenger;
+  const proofReview = computeReviews.records.find((record) => record.input.agent === proof.agent.name);
   const historyCount = proof.signedHistory.length;
   const hasStorage = Boolean((mainnetAnchors as typeof mainnetAnchors & { storage?: unknown }).storage);
 
@@ -38,7 +41,7 @@ export default async function HomePage() {
           <div className="gate-verdict denied">
             <span>request ${proof.refusal.attemptedUsd}</span>
             <strong>DENIED</strong>
-            <p>Cap is ${proof.credit.capUsd}. No payment broadcast.</p>
+            <p>Cap is ${proof.credit.capUsd}. No authorized payment-use receipt.</p>
           </div>
           <div className="grade-ring">
             <span>{proof.credit.score}</span>
@@ -68,6 +71,9 @@ export default async function HomePage() {
           YieldScout earns ${proof.credit.capUsd}. DriftBot earns ${challenger.credit.capUsd}.
           Same verifier, different history, different authority.
           {hasStorage ? " The canonical record is retrievable from 0G Storage." : ""}
+          {proofReview?.review.provider.network === "0G Compute"
+            ? ` 0G Compute review: ${proofReview.review.riskTier} risk.`
+            : " Compute review path is ready for live 0G funding."}
         </p>
       </section>
 
@@ -84,8 +90,8 @@ export default async function HomePage() {
           </div>
           <div className="pipe-card">
             <span>02</span>
-            <h3>Score</h3>
-            <p>The verifier derives {proof.credit.score}/100 and {challenger.credit.score}/100 from the histories.</p>
+            <h3>Review</h3>
+            <p>0G Compute adds risk context before deterministic score and cap enforcement.</p>
           </div>
           <div className="pipe-card">
             <span>03</span>

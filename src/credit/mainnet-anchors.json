@@ -22,13 +22,13 @@
   "storage": {
     "network": "0G mainnet",
     "indexerRpc": "https://indexer-storage-turbo.0g.ai",
-    "agentId": 3,
-    "rootHash": "0x37414d25ef5962398687339d851d28aee5abad81893166e2189ac7ae4d8912a0",
-    "objectHash": "0x650e77fc2a35a002025727d5392034435570e6fb07c72b358490f8eb6a881ca8",
-    "uploadTxHash": "0x2514decc1c6ef7d212fc154d06aeaa1dd2639298aae5a413d29c2f76f9cdd3bf",
-    "anchorTxHash": "0xbda5b60205bd5566212178e1300e9e51bf806d0d1f0014bb803581eb19c430e6",
-    "objectBytes": 22281,
-    "metadataUri": "0g-storage://0x37414d25ef5962398687339d851d28aee5abad81893166e2189ac7ae4d8912a0#0x650e77fc2a35a002025727d5392034435570e6fb07c72b358490f8eb6a881ca8",
+    "agentId": 4,
+    "rootHash": "0x9ab0a8d04beba5fa8dbcd7b465b0929cdda9a07e99ed2c4c33fd47e13a291500",
+    "objectHash": "0xac1797a8a0f63a396bd323c1b43be7e3ba1164162c5dfb7e3ce41e29c23a4855",
+    "uploadTxHash": "0x53248020d2212f9214b61ee12a77d34bfd557212c4c326d8a0a5a7ecbab2818c",
+    "anchorTxHash": "0x083b3732a484907120e621286386d6ebdb92b262b02d756a871fd7ff893163fd",
+    "objectBytes": 24942,
+    "metadataUri": "0g-storage://0x9ab0a8d04beba5fa8dbcd7b465b0929cdda9a07e99ed2c4c33fd47e13a291500#0xac1797a8a0f63a396bd323c1b43be7e3ba1164162c5dfb7e3ce41e29c23a4855",
     "verifier": "npm run verify:storage"
   }
 }

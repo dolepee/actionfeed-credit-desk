@@ -1,12 +1,23 @@
 import { canonicalJson, hashCanonical } from "./canonical";
+import { loadOrBuildComputeReviewSet } from "./compute-review";
 import { buildCreditGatePortfolio } from "./demo";
 
 export async function buildStorageObject() {
   const portfolio = await buildCreditGatePortfolio();
+  const computeReviews = await loadOrBuildComputeReviewSet(portfolio);
+  if (computeReviews.mode !== "0g-compute") {
+    return {
+      kind: "creditgate.portfolio-proof",
+      schemaVersion: 1,
+      portfolio,
+    };
+  }
+
   return {
     kind: "creditgate.portfolio-proof",
-    schemaVersion: 1,
+    schemaVersion: 2,
     portfolio,
+    computeReviews,
   };
 }
 
