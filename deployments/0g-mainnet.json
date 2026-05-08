@@ -9,6 +9,10 @@
     "AgentCreditRegistry": {
       "address": "0x3A4f5a2F65119b7C1d13914fC3875348392eDa7d",
       "deployTx": "0xbb840f1a2fadc293076edee8cae14723fafa2d4857910349ad555d1c12c72acd"
+    },
+    "CreditGateRouter": {
+      "address": "0x7e2FD82AeE9Caa2eB72aBBefa797d9E3298f578b",
+      "deployTx": "0x76885d18496df6ed94fa3fa9a017f3584e7826ac8ed53b92de5f7482455f0901"
     }
   }
 }

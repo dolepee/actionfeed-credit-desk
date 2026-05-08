@@ -16,8 +16,21 @@ type StorageAnchor = {
   verifier: string;
 };
 
+type RouterAnchor = {
+  address: string;
+  deployTxHash: string;
+  agentId: number;
+  attemptedUsd: number;
+  amountUsd: number;
+  nativeValueOg: string;
+  recipient: string;
+  refusalTxHash: string;
+  paymentTxHash: string;
+  verifier: string;
+};
+
 export default async function ProofPage() {
-  const anchors = mainnetAnchors as typeof mainnetAnchors & { storage?: StorageAnchor };
+  const anchors = mainnetAnchors as typeof mainnetAnchors & { storage?: StorageAnchor; router?: RouterAnchor };
   const portfolio = await buildCreditGatePortfolio();
   const computeReviews = await loadOrBuildComputeReviewSet(portfolio);
   const proof = portfolio.primary;
@@ -30,6 +43,11 @@ export default async function ProofPage() {
     ["0G Storage proof", anchors.storage ? {
       uploadPortfolioObject: anchors.storage.uploadTxHash,
       anchorStorageRoot: anchors.storage.anchorTxHash,
+    } : {}],
+    ["Router payment proof", anchors.router ? {
+      deployRouter: anchors.router.deployTxHash,
+      refuseOverCap: anchors.router.refusalTxHash,
+      payUnderCap: anchors.router.paymentTxHash,
     } : {}],
   ] as const;
 
@@ -68,6 +86,7 @@ export default async function ProofPage() {
               : anchors.storage
                 ? "The registry is deployed on 0G mainnet and the canonical portfolio plus Compute review proof is retrievable from 0G Storage."
                 : "The registry is deployed and seeded on 0G mainnet. The transactions below anchor two agent scores, mandates, refusals, and allowed-use receipts."}
+            {anchors.router ? " The router adds live fund movement: over-cap refusal sends no native value, under-cap use sends native 0G." : ""}
           </p>
         </div>
         <div className="grid cols-2">
@@ -148,6 +167,35 @@ export default async function ProofPage() {
               </p>
             </div>
           ) : null}
+          {anchors.router ? (
+            <div className="card storage-card">
+              <h3>CreditGateRouter</h3>
+              <div className="row">
+                <span>router</span>
+                <span className="mono">{anchors.router.address}</span>
+              </div>
+              <div className="row">
+                <span>refusal</span>
+                <span className="mono">${anchors.router.attemptedUsd} refused</span>
+              </div>
+              <div className="row">
+                <span>payment</span>
+                <span className="mono">${anchors.router.amountUsd} allowed - {anchors.router.nativeValueOg} OG moved</span>
+              </div>
+              <div className="row">
+                <span>recipient</span>
+                <span className="mono">{anchors.router.recipient}</span>
+              </div>
+              <div className="row">
+                <span>verifier</span>
+                <span className="mono">{anchors.router.verifier}</span>
+              </div>
+              <p>
+                The router reads the active mandate from the registry, refuses
+                over-cap spend, and transfers native 0G only for an under-cap use.
+              </p>
+            </div>
+          ) : null}
         </div>
       </section>
 
@@ -189,10 +237,14 @@ export default async function ProofPage() {
             Run: <span className="mono">npm run verify:credit</span>
             {" "}<span className="mono">npm run verify:compute</span>
             {anchors.storage ? <> and <span className="mono">npm run verify:storage</span></> : null}
+            {anchors.router ? <> plus <span className="mono">npm run verify:router</span></> : null}
           </p>
         </div>
         <pre>{verification.lines.join("\n")}</pre>
         <pre>{computeVerification.join("\n")}</pre>
+        {anchors.router ? (
+          <pre>{`CREDITGATE_ROUTER_VALID\nrouter: ${anchors.router.address}\nrefusal: ${anchors.router.attemptedUsd} > ${proof.mandate.capUsd}, no native value sent\npayment: ${anchors.router.amountUsd} <= ${proof.mandate.capUsd}, sent ${anchors.router.nativeValueOg} OG`}</pre>
+        ) : null}
       </section>
     </main>
   );

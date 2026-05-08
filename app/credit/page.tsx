@@ -12,6 +12,7 @@ export default async function CreditPage() {
   const verification = verifyCreditGatePortfolio(portfolio);
   const { primary, challenger } = portfolio;
   const hasStorage = Boolean((mainnetAnchors as typeof mainnetAnchors & { storage?: unknown }).storage);
+  const hasRouter = Boolean((mainnetAnchors as typeof mainnetAnchors & { router?: unknown }).router);
 
   return (
     <main className="shell">
@@ -27,9 +28,11 @@ export default async function CreditPage() {
         </div>
         <div className="operator-card">
           <span>mainnet anchors</span>
-          <strong>{hasStorage ? "13" : "11"}</strong>
+          <strong>{hasRouter ? "16" : hasStorage ? "13" : "11"}</strong>
           <p>
-            {hasStorage
+            {hasRouter
+              ? "registry + underwriting + Storage + router payment"
+              : hasStorage
               ? "1 deploy + 10 underwriting txs + 2 Storage txs"
               : "1 deploy + 10 underwriting events on 0G"}
           </p>
@@ -158,7 +161,7 @@ function AgentColumn({
           <div className="ticket-status">REFUSED</div>
           <p>
             Attempt exceeds the earned cap. CreditGate writes a refusal receipt
-            and does not emit an authorized payment-use receipt.
+            and the router refuses before moving funds.
           </p>
           <div className="ticket-meta">
             <span>cap: ${proof.refusal.capUsd}</span>

@@ -2,7 +2,7 @@
 
 CreditGate is a 0G-native credit gate for autonomous agents.
 
-It reads a signed public agent history, adds a 0G Compute underwriting review when funded, calculates a replayable credit score, grants a bounded spend cap, refuses over-cap actions, stores the canonical proof packet on 0G Storage, and enforces active mandates on 0G Chain.
+It reads a signed public agent history, adds a 0G Compute underwriting review, calculates a replayable credit score, grants a bounded spend cap, refuses over-cap actions, stores the canonical proof packet on 0G Storage, and moves native 0G only through an under-cap router call.
 
 ## 0G APAC Positioning
 
@@ -24,6 +24,7 @@ CreditGate gives operators a concrete answer:
 3. Grant a bounded mandate.
 4. Refuse over-cap actions before spend.
 5. Store the active mandate on 0G and reject invalid delegation use.
+6. Move native 0G through `CreditGateRouter` only when the use is inside the cap.
 
 The product is not a yield agent. YieldScout and DriftBot are sample actors. The product is history-gated spend control for any 0G/OpenClaw-compatible agent.
 
@@ -38,7 +39,8 @@ The APAC demo is intentionally short:
 5. Show `DriftBot` with a `41/100` credit score and `$150` cap.
 6. Show both over-cap attempts being refused with `MANDATE_REFUSED`.
 7. Show both under-cap actions being allowed with `DELEGATION_USED`.
-8. Run `npm run verify:credit`, `npm run verify:compute`, and `npm run verify:storage`.
+8. Show the router refusing an over-cap transfer and moving `0.0001 OG` for the under-cap use.
+9. Run `npm run verify:credit`, `npm run verify:compute`, `npm run verify:storage`, and `npm run verify:router`.
 
 The comparison is the V2 product moment. Most agent projects show agents acting. CreditGate shows cleaner history earning more authority and weaker history receiving a tighter cap.
 
@@ -50,14 +52,15 @@ Live submission state:
 - Replayable score, mandate, refusal, and allowed-use roots.
 - Active mandate state on 0G Chain: root, cap, expiry, and enforced delegation checks.
 - `AgentCreditRegistry` deployed on 0G mainnet.
-- Thirteen confirmed 0G mainnet transactions: deploy, two agent underwriting loops, one Storage upload, and one Storage-root anchor.
+- Sixteen confirmed 0G mainnet transactions: registry deploy, two agent underwriting loops, one Storage upload, one Storage-root anchor, router deploy, router refusal, and router payment.
 - One canonical portfolio record uploaded to 0G Storage and anchored back into the mainnet registry.
-- Compute reviewer path: `npm run compute:review` produces live 0G Compute underwriting reviews once the 0G ledger wallet has enough funds; `-- --fixture` keeps local verification reproducible.
+- One `CreditGateRouter` deployed on 0G mainnet. It refuses the over-cap request before transfer and moves native 0G for the under-cap mandate use.
+- Compute reviewer path: `npm run compute:review` produced live 0G Compute underwriting reviews; `-- --fixture` keeps local verification reproducible without another broker call.
 - Replayable verifier output in the repo and judge docs.
 
 0G integration:
 
-- **0G Chain:** contract state and events for `AgentRegistered`, `CreditScored`, `MandateGranted`, `MandateRefused`, and `DelegationUsed`. `useDelegation` rejects missing, mismatched, expired, or over-cap mandates.
+- **0G Chain:** contract state and events for `AgentRegistered`, `CreditScored`, `MandateGranted`, `MandateRefused`, and `DelegationUsed`. `useDelegation` rejects missing, mismatched, expired, or over-cap mandates. `CreditGateRouter` then uses the active mandate to refuse over-cap payment attempts and move native 0G only for under-cap requests.
 - **0G Storage:** canonical signed portfolio JSON retrievable by root hash and replayed by `npm run verify:storage`.
 - **0G Compute:** risk-review adapter for YieldScout and DriftBot histories. Live reviews use the 0G Compute broker and `processResponse`; fixture reviews are clearly labeled and only support local reproducibility before funding.
 - **0G Explorer:** public transaction links for judge verification.
@@ -98,7 +101,7 @@ spend cap + mandate         onchain active mandate + refusal/use anchors
       |
       v
 over-cap request -> MANDATE_REFUSED
-under-cap request -> DELEGATION_USED
+under-cap request -> CreditGateRouter.payWithMandate -> native 0G transfer
 ```
 
 ## Local Setup
@@ -108,6 +111,7 @@ npm install
 npm run verify:credit
 npm run verify:compute
 npm run verify:storage
+npm run verify:router
 npm run demo:agent-loop
 npm run proof:export
 npm run openclaw:inspect
@@ -192,7 +196,7 @@ npm run compute:review -- --fixture
 npm run verify:compute
 ```
 
-For the live 0G Compute path, fund the `ZG_PRIVATE_KEY` wallet with at least `3 OG` plus gas, then run:
+To refresh the live 0G Compute path, fund the `ZG_PRIVATE_KEY` wallet with enough broker balance plus gas, then run:
 
 ```bash
 npm run compute:review
@@ -206,6 +210,12 @@ The mainnet verifier checks live 0G registry state, transaction receipts, active
 npm run verify:mainnet
 ```
 
+The router verifier checks the fund-moving path: the over-cap request emits a refusal with no native value sent, while the under-cap request sends native 0G to the recipient and leaves no value trapped in the router:
+
+```bash
+npm run verify:router
+```
+
 ## Mainnet Proof
 
 The 0G mainnet contract is deployed and seeded. Judges can verify the live anchors in:
@@ -216,10 +226,18 @@ The 0G mainnet contract is deployed and seeded. Judges can verify the live ancho
 
 Storage proof:
 
-- 0G Storage root: `0x37414d25ef5962398687339d851d28aee5abad81893166e2189ac7ae4d8912a0`
-- Storage upload tx: `0x2514decc1c6ef7d212fc154d06aeaa1dd2639298aae5a413d29c2f76f9cdd3bf`
-- Storage root anchor tx: `0xbda5b60205bd5566212178e1300e9e51bf806d0d1f0014bb803581eb19c430e6`
+- 0G Storage root: `0x9ab0a8d04beba5fa8dbcd7b465b0929cdda9a07e99ed2c4c33fd47e13a291500`
+- Storage upload tx: `0x53248020d2212f9214b61ee12a77d34bfd557212c4c326d8a0a5a7ecbab2818c`
+- Storage root anchor tx: `0x083b3732a484907120e621286386d6ebdb92b262b02d756a871fd7ff893163fd`
 - Verifier: `npm run verify:storage`
+
+Router proof:
+
+- CreditGateRouter: `0x7e2FD82AeE9Caa2eB72aBBefa797d9E3298f578b`
+- Router deploy tx: `0x76885d18496df6ed94fa3fa9a017f3584e7826ac8ed53b92de5f7482455f0901`
+- Over-cap refusal tx: `0x872eb2ffcdb24eff47088c73b92dc0fbdb1d51352ea0177dd6d76672454147e7`
+- Under-cap payment tx: `0x7ff16b984258a5613061faddf70a67f9545be00d058ccb4ec433d4c9861004aa`
+- Verifier: `npm run verify:router`
 
 Deployment commands are kept for reproducibility:
 
@@ -229,6 +247,8 @@ ZG_PRIVATE_KEY=0x... npm run deploy:mainnet
 ZG_PRIVATE_KEY=0x... npm run seed:mainnet
 ZG_PRIVATE_KEY=0x... npm run seed:v2-mainnet
 ZG_PRIVATE_KEY=0x... npm run storage:upload
+ZG_PRIVATE_KEY=0x... npm run deploy:router-mainnet
+ZG_PRIVATE_KEY=0x... npm run seed:router-mainnet
 ```
 
 ## OpenClaw-Compatible Module
@@ -250,7 +270,7 @@ This is intentionally a small module surface, not a competing runtime. OpenClaw 
 
 ## Contract Boundary
 
-The registry enforces active mandate use on-chain: mandate root match, cap, expiry, nonzero recipient, and no over-cap delegation use. The live registry also includes `scoreCreditFromMetrics`, which computes score and cap from public history metrics. The replay verifier remains the canonical proof that the submitted portfolio roots match the signed histories and score policy.
+The registry enforces active mandate use on-chain: mandate root match, cap, expiry, nonzero recipient, and no over-cap delegation use. `CreditGateRouter` reads that live mandate and only moves native 0G when the requested amount is inside the cap. The live registry also includes `scoreCreditFromMetrics`, which computes score and cap from public history metrics. The replay verifier remains the canonical proof that the submitted portfolio roots match the signed histories and score policy.
 
 For explicit proof boundaries and non-goals, see [THREAT_MODEL.md](THREAT_MODEL.md).
 

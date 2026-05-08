@@ -12,6 +12,7 @@ export default async function HomePage() {
   const proofReview = computeReviews.records.find((record) => record.input.agent === proof.agent.name);
   const historyCount = proof.signedHistory.length;
   const hasStorage = Boolean((mainnetAnchors as typeof mainnetAnchors & { storage?: unknown }).storage);
+  const hasRouter = Boolean((mainnetAnchors as typeof mainnetAnchors & { router?: unknown }).router);
 
   return (
     <main className="shell">
@@ -23,7 +24,7 @@ export default async function HomePage() {
           <p className="lede">
             CreditGate turns signed 0G action history into a credit score and
             spend cap. If an agent asks for too much, the gate records a public
-            refusal instead of broadcasting payment.
+            refusal instead of moving funds.
           </p>
           <div className="actions">
             <Link className="button" href="/credit">Open live gate</Link>
@@ -41,7 +42,7 @@ export default async function HomePage() {
           <div className="gate-verdict denied">
             <span>request ${proof.refusal.attemptedUsd}</span>
             <strong>DENIED</strong>
-            <p>Cap is ${proof.credit.capUsd}. No authorized payment-use receipt.</p>
+            <p>Cap is ${proof.credit.capUsd}. Router refuses before transfer.</p>
           </div>
           <div className="grade-ring">
             <span>{proof.credit.score}</span>
@@ -71,6 +72,7 @@ export default async function HomePage() {
           YieldScout earns ${proof.credit.capUsd}. DriftBot earns ${challenger.credit.capUsd}.
           Same verifier, different history, different authority.
           {hasStorage ? " The canonical record is retrievable from 0G Storage." : ""}
+          {hasRouter ? " The router now moves native 0G only for an under-cap mandate." : ""}
           {proofReview?.review.provider.network === "0G Compute"
             ? ` 0G Compute review: ${proofReview.review.riskTier} risk.`
             : " Compute review path is ready for live 0G funding."}
@@ -101,7 +103,7 @@ export default async function HomePage() {
           <div className="pipe-card alert">
             <span>04</span>
             <h3>Enforce</h3>
-            <p>Both over-cap attempts are refused inside the CreditGate-authorized path.</p>
+            <p>Over-cap attempts are refused; under-cap use can move native 0G through the router.</p>
           </div>
         </div>
       </section>
@@ -113,7 +115,7 @@ export default async function HomePage() {
           <p>
             CreditGate is the missing authority layer between agent memory and
             agent money. A clean history expands authority; a risky request gets
-            a signed refusal instead of a transaction.
+            a signed refusal instead of a transfer.
           </p>
         </div>
         <div className="authority-stack">

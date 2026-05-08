@@ -15,6 +15,7 @@
     "verify:compute": "node --import tsx scripts/verify-compute.ts",
     "verify:storage": "node --import tsx scripts/verify-storage.ts",
     "verify:mainnet": "node --import tsx scripts/verify-mainnet.ts",
+    "verify:router": "node --import tsx scripts/verify-router.ts",
     "demo:agent-loop": "node --import tsx scripts/demo-agent-loop.ts",
     "credit:ingest": "node --import tsx scripts/ingest-history.ts",
     "compute:review": "node --import tsx scripts/compute-review.ts",
@@ -22,8 +23,10 @@
     "openclaw:inspect": "node --import tsx examples/openclaw-creditgate/inspect.ts",
     "openclaw:demo": "node --import tsx examples/openclaw-creditgate/runtime-loop.ts",
     "deploy:mainnet": "node --import tsx scripts/deploy-mainnet.ts",
+    "deploy:router-mainnet": "node --import tsx scripts/deploy-router-mainnet.ts",
     "seed:mainnet": "node --import tsx scripts/seed-mainnet.ts",
     "seed:v2-mainnet": "node --import tsx scripts/seed-v2-mainnet.ts",
+    "seed:router-mainnet": "node --import tsx scripts/seed-router-mainnet.ts",
     "storage:upload": "node --import tsx scripts/storage-upload.ts"
   },
   "dependencies": {

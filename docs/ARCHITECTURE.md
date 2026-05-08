@@ -6,6 +6,9 @@
 signed agent history
       |
       v
+0G Compute risk review
+      |
+      v
 credit scoring policy
       |
       v
@@ -13,7 +16,7 @@ bounded mandate
       |
       +--> over-cap request -> MANDATE_REFUSED
       |
-      +--> under-cap request -> DELEGATION_USED
+      +--> under-cap request -> CreditGateRouter.payWithMandate -> native 0G transfer
 ```
 
 ## 0G Usage
@@ -44,19 +47,30 @@ The V2 mainnet proof emits the full loop twice: YieldScout earns a higher score 
 
 `useDelegation` is not just an event anchor. It requires an active mandate, checks the provided mandate root, rejects expired mandates, rejects over-cap amounts, and rejects zero recipients.
 
+### CreditGateRouter
+
+`CreditGateRouter` is the live fund-moving boundary:
+
+- router: `0x7e2FD82AeE9Caa2eB72aBBefa797d9E3298f578b`
+- over-cap refusal tx: `0x872eb2ffcdb24eff47088c73b92dc0fbdb1d51352ea0177dd6d76672454147e7`
+- under-cap payment tx: `0x7ff16b984258a5613061faddf70a67f9545be00d058ccb4ec433d4c9861004aa`
+- verifier: `npm run verify:router`
+
+The router reads the active mandate from `AgentCreditRegistry`, rejects mismatched, expired, over-cap, or non-owner calls, and transfers native 0G only after the cap check passes.
+
 ### 0G Storage
 
 Uploads the complete canonical portfolio proof JSON:
 
-- Storage root: `0x37414d25ef5962398687339d851d28aee5abad81893166e2189ac7ae4d8912a0`
-- object hash: `0x650e77fc2a35a002025727d5392034435570e6fb07c72b358490f8eb6a881ca8`
+- Storage root: `0x9ab0a8d04beba5fa8dbcd7b465b0929cdda9a07e99ed2c4c33fd47e13a291500`
+- object hash: `0xac1797a8a0f63a396bd323c1b43be7e3ba1164162c5dfb7e3ce41e29c23a4855`
 - verifier: `npm run verify:storage`
 
 The Storage verifier downloads the object by root hash, checks canonical JSON, compares the object hash, replays `CREDITGATE_PORTFOLIO_VALID`, and confirms the registry's Storage-root anchor points to the same Storage root.
 
 ### Boundary
 
-CreditGate controls the CreditGate-authorized path. It does not custody funds or prevent an agent owner from spending through an unrelated wallet route. See `THREAT_MODEL.md`.
+CreditGate controls the CreditGate-authorized path. The router moves native 0G only for authorized calls, but it does not custody all agent funds and cannot stop an agent owner from spending through an unrelated wallet route. See `THREAT_MODEL.md`.
 
 ### OpenClaw Compatibility
 

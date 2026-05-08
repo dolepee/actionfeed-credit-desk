@@ -30,5 +30,22 @@
     "objectBytes": 24942,
     "metadataUri": "0g-storage://0x9ab0a8d04beba5fa8dbcd7b465b0929cdda9a07e99ed2c4c33fd47e13a291500#0xac1797a8a0f63a396bd323c1b43be7e3ba1164162c5dfb7e3ce41e29c23a4855",
     "verifier": "npm run verify:storage"
+  },
+  "router": {
+    "network": "0G mainnet",
+    "address": "0x7e2FD82AeE9Caa2eB72aBBefa797d9E3298f578b",
+    "deployTxHash": "0x76885d18496df6ed94fa3fa9a017f3584e7826ac8ed53b92de5f7482455f0901",
+    "agentId": 1,
+    "mandateRoot": "0xe38a98bac92600ee3f60df9cc011a8b45d4b8055f2eb54f0d6e421e2a1e749c3",
+    "refusalRoot": "0x7b4ed17f8f987f122a6d6923e4542191bc075893eff1ef134643caedcceb438b",
+    "useRoot": "0xaef2d1395bb65386251aa2a4354227a916fd0dc7673441f0f98b1ae3f54fa4cc",
+    "attemptedUsd": 1200,
+    "amountUsd": 250,
+    "nativeValueWei": "100000000000000",
+    "nativeValueOg": "0.0001",
+    "recipient": "0x1111111111111111111111111111111111111111",
+    "refusalTxHash": "0x872eb2ffcdb24eff47088c73b92dc0fbdb1d51352ea0177dd6d76672454147e7",
+    "paymentTxHash": "0x7ff16b984258a5613061faddf70a67f9545be00d058ccb4ec433d4c9861004aa",
+    "verifier": "npm run verify:router"
   }
 }
