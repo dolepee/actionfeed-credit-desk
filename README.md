@@ -222,7 +222,6 @@ The 0G mainnet contract is deployed and seeded. Judges can verify the live ancho
 
 - `src/credit/mainnet-anchors.json`
 - `docs/0G_MAINNET_PROOF.json`
-- `docs/JUDGE_GUIDE.md`
 
 Storage proof:
 

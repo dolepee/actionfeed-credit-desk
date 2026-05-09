@@ -13,3 +13,6 @@ contracts/out
 contracts/broadcast
 .vercel
 .local
+docs/*SUBMISSION*.md
+SUBMISSION_CHECKLIST.md
+submission-checklist.*
