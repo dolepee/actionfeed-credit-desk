@@ -56,11 +56,11 @@ export default async function ProofPage() {
       <Nav />
       <section className="hero proof-hero">
         <div>
-          <div className="eyebrow">judge packet - replayable authority proof</div>
-          <h1>Verify the decision, not the pitch.</h1>
+          <div className="eyebrow">authority receipts</div>
+          <h1>Every gate decision is replayable.</h1>
           <p className="lede">
-            CreditGate ships a semantic verifier: signatures, roots, cap math,
-            refusal ordering, allowed action policy, and authorized-path refusal checks.
+            Scores, Compute reviews, Storage roots, refusals, allowed uses, and
+            router payments stay traceable without exposing private agent reasoning.
           </p>
         </div>
         {isMainnetPending ? (
@@ -231,8 +231,8 @@ export default async function ProofPage() {
 
       <section className="section">
         <div className="section-heading">
-          <div className="eyebrow">semantic verifier</div>
-          <h2>The verifier checks meaning, not just signatures.</h2>
+          <div className="eyebrow">replay tools</div>
+          <h2>The receipts can be verified locally.</h2>
           <p>
             Run: <span className="mono">npm run verify:credit</span>
             {" "}<span className="mono">npm run verify:compute</span>
